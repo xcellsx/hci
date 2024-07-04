@@ -1,0 +1,190 @@
+body {
+    background: linear-gradient(300deg, #01502f, #4cff82, #76ef72);
+    background-size: 180% 180%;
+    animation: gradient-animation 18s ease infinite;
+    color: white;
+    margin: 0;
+    padding-top: 60px; /* Adjust this value based on your navbar height */
+    padding-bottom: 60px; /* Adjust this value based on your footer height */
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    z-index: -5;
+    margin-top: 1em;
+}
+
+.navb {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    background-color: black;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    background-color: black;
+}
+
+.nav-link img {
+    filter: invert(1) brightness(2);
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px; /* Adjust this value as needed */
+    color: black;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #46a832;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #46a832;
+}
+
+thead th:first-child {
+    border-top-left-radius: 15px;
+}
+
+thead th:last-child {
+    border-top-right-radius: 15px;
+}
+
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 15px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 15px;
+}
+
+.filled {
+    background-color: rgb(224, 224, 224);
+}
+
+h2 {
+    margin-top: 1em;
+    justify-content: start;
+    text-align: left;
+    width: 100%; /* Ensure the header spans the full width */
+}
+
+button {
+    height: 3em;
+    width: 6em;
+    background-color: green;
+    border-radius: 5em;
+    border: none;
+    box-shadow: 0.2em 0.2em 1em rgb(2, 129, 4);
+    margin-top: 3em;
+}
+
+.table-g {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px; /* Adjust this value as needed */
+    color: black;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #08db8377;
+}
+
+.plus-button {
+    display: inline-block; /* Ensures button aligns properly inline with the header */
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    margin-left: 10px; /* Adjust margin as needed */
+    cursor: pointer;
+}
+
+h2 {
+    margin-top: 1em;
+    justify-content: start;
+    text-align: left;
+}
+
+button {
+    height: 3em;
+    width: 6em;
+    background-color: green;
+    border-radius: 5em;
+    border: none;
+    box-shadow: 0.2em 0.2em 1em rgb(2, 129, 4);
+    margin-top: 3em;
+}
+
+.table-g {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px; /* Adjust this value as needed */
+    color: black;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #08db8377;
+}
+
+.form-control {
+    background-color: transparent; /* Make input background transparent */
+    border: none; /* Remove default border */
+    box-shadow: none; /* Remove default box shadow */
+    padding: 0; /* Adjust padding as needed */
+    color: inherit; /* Inherit text color */
+    width: 100%; /* Ensure inputs fill the cell */
+}
+
+.edit-btn {
+    background-color: transparent;
+    border: none;
+    color: #007bff; /* Default Bootstrap primary color */
+    cursor: pointer;
+}
+
