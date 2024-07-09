@@ -112,3 +112,75 @@ document.addEventListener("DOMContentLoaded", () => {
     transactions.forEach((transaction, index) => renderTransaction(transaction, index));
     transactionCount.innerText = transactions.length;
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById('cameraStream');
+    const canvas = document.createElement('canvas');
+    const snap = document.getElementById('snap');
+
+    // Start camera stream
+    function startCamera() {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+                snap.onclick = () => captureImage(stream);
+            })
+            .catch(function(err) {
+                console.error("Error accessing the camera", err);
+                alert("Cannot access the camera. Please check device settings.");
+            });
+    }
+
+    // Capture image from video stream
+    function captureImage(stream) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageDataURL = canvas.toDataURL('image/png');
+        stream.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+        processImage(imageDataURL);
+    }
+
+    // Process the captured image
+    function processImage(imageDataURL) {
+        Tesseract.recognize(
+            imageDataURL,
+            'eng',
+            { logger: m => console.log("Tesseract.js logger:", m) }
+        ).then(({ data: { text } }) => {
+            fillTransactionForm(text);
+        }).catch(error => {
+            console.error("Error during OCR processing", error);
+        });
+    }
+
+    // Fill the transaction form with recognized data
+    function fillTransactionForm(text) {
+        const nameMatch = text.match(/[a-zA-Z]+/g);
+        const amountMatch = text.match(/\$?\d+\.?\d*/);
+        if (nameMatch) {
+            document.getElementById('transaction-name').value = nameMatch.join(' ');
+        }
+        if (amountMatch) {
+            document.getElementById('transaction-amount').value = amountMatch[0].replace(/[^\d.]/g, '');
+        }
+    }
+
+    // Modal event listeners
+    $('#cameraModal').on('show.bs.modal', startCamera);
+    $('#cameraModal').on('hidden.bs.modal', () => {
+        if (video.srcObject) {
+            video.srcObject.getTracks().forEach(track => track.stop());
+            video.srcObject = null;
+        }
+        // Ensure to re-open the transaction modal
+        $('#transactionModal').modal('show');
+    });
+});
+
+
+
+
+

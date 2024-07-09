@@ -6,6 +6,8 @@
     <title>Transactions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="cssfile/trackexpense.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2"></script>
 </head>
 <body>
     <!-- Nav Bar -->
@@ -30,12 +32,12 @@
         </div>
         
         <div id="transactions-container" class="d-flex flex-wrap">
-            
+            <!-- Dynamic transaction cards go here -->
         </div>
     </div>
 
-    <!-- Create Transaction Modal -->
-    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+     <!-- Create Transaction Modal -->
+     <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -53,12 +55,9 @@
                                 <label for="transaction-amount" class="form-label">Amount</label>
                                 <input type="number" class="form-control" id="transaction-amount" required>
                             </div>
-                            <button type="button" class="btn btn-outline-secondary ms-2" onclick="openCamera();">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
-                                    <path d="M10.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
-                                    <path d="M0 5a2 2 0 0 1 2-2h2.5l.4-1.2A1 1 0 0 1 5.9 1h4.2a1 1 0 0 1 .9.8L11.5 3H14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5zm2 0v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.9-.8L10.1 2H5.9l-.4 1.2A1 1 0 0 1 4.5 4H2a1 1 0 0 0-1 1z"/>
-                                </svg>
-                            </button>
+                            <button type="button" class="btn btn-outline-secondary ms-2" data-bs-toggle="modal" data-bs-target="#cameraModal">Capture</button>
+                            <input type="file" accept="image/*" onchange="handleFileUpload(this.files)" style="display: none;" id="file-input">
+                            <label for="file-input" class="btn btn-outline-secondary ms-2">Upload</label>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-success">Save Transaction</button>
@@ -69,27 +68,21 @@
         </div>
     </div>
 
-
-    <!-- Edit Transaction Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Camera Modal -->
+    <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Transaction</h5>
+                    <h5 class="modal-title" id="cameraModalLabel">Capture Image</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="edit-form">
-                        <div class="mb-3">
-                            <label for="edit-transaction-name" class="form-label">Transaction Name</label>
-                            <input type="text" class="form-control" id="edit-transaction-name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-transaction-amount" class="form-label">Amount ($)</label>
-                            <input type="number" step="0.01" class="form-control" id="edit-transaction-amount" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
+                    <video id="cameraStream" playsinline class="w-100"></video>
+                    <canvas id="cameraCanvas" class="d-none"></canvas>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="snap">Capture</button>
                 </div>
             </div>
         </div>
