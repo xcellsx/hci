@@ -1,0 +1,19 @@
+[
+    {
+      "goal": "Vacation",
+      "breakdown": [
+        {"item": "Flights", "cost": 500},
+        {"item": "Accommodation", "cost": 1000},
+        {"item": "Food", "cost": 300},
+        {"item": "Activities", "cost": 200}
+      ]
+    },
+    {
+      "goal": "New Car",
+      "breakdown": [
+        {"item": "Down Payment", "cost": 2000},
+        {"item": "Insurance", "cost": 500},
+        {"item": "Registration", "cost": 150}
+      ]
+    }
+]

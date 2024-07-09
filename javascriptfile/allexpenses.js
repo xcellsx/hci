@@ -40,6 +40,35 @@ document.addEventListener("DOMContentLoaded", () => {
         progressBar.appendChild(progressPercent);
         progressBarContainer.appendChild(progressBar);
 
+        const breakdownItemsContainer = document.createElement('div');
+        breakdownItemsContainer.classList.add('breakdown-items');
+        // Logic to populate breakdownItemsContainer with breakdown item elements (explained later)
+        newGoalCard.appendChild(breakdownItemsContainer);
+
+        if (goal.breakdownItems) {
+            const breakdownItemsContainer = document.createElement('div');
+            breakdownItemsContainer.classList.add('breakdown-items');
+          
+            goal.breakdownItems.forEach(item => {
+              const breakdownItem = document.createElement('div');
+              breakdownItem.classList.add('breakdown-item', 'd-flex', 'justify-content-between', 'mb-1');
+          
+              const itemName = document.createElement('p');
+              itemName.innerText = item.name;
+          
+              const itemCost = document.createElement('p');
+              itemCost.innerText = `$${item.cost.toFixed(2)}`;
+          
+              breakdownItem.appendChild(itemName);
+              breakdownItem.appendChild(itemCost);
+          
+              breakdownItemsContainer.appendChild(breakdownItem);
+            });
+          
+            newGoalCard.appendChild(breakdownItemsContainer);
+        }
+          
+
         // Eye Button
         const eyeButton = document.createElement("button");
         eyeButton.classList.add("btn", "btn-eye", "eye-btn");
