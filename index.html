@@ -3,9 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WealthQuest</title>
+    <title>Budget Buddy</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
     <link rel="stylesheet" href="./cssfile/indexstyle.css">
+    <link rel="icon" href="images/bb04.png" type="image/x-icon" sizes="128x128">
+    <style>
+        .container img {
+            margin-bottom: 5em; /* Adjust the value to reduce the gap */
+        }
+        .container input {
+            margin-top: 5px; /* Adjust the value to reduce the gap */
+        }
+        .container button {
+            margin-top: 10px; /* Adjust the value to reduce the gap */
+        }
+        .container .links {
+            margin-top: 10px; /* Adjust the value to reduce the gap */
+        }
+    </style>
     <script>
         function login() {
             var username = document.getElementById('username').value;
@@ -23,14 +38,12 @@
 </head>
 <body>
     <div class="container">
-        <img src="./images/WQBLACK.png">
-        <br>
+        <img src="./images/bb06.png" height = "500em" width = "500em">
         <input id="username" type="text" placeholder="Username" required>
         <br>
         <input id="password" type="password" placeholder="Password" required>
         <br>
         <button onclick="login()">Login</button>
-        
         <div class="links">
             <a href="signup.html" style="text-decoration: none;"><button>Sign Up</button></a>
             <a href="forgetpassword.html" style="text-decoration: none;"><button>Forget Password</button></a>
