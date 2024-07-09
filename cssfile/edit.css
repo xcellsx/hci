@@ -8,18 +8,18 @@
 
 body {
     background-color: var(--main);
-    color: var(--dark-color);
+    color: var(--darkest);
     overflow-x: hidden;
 }
 
 .navb {
     background-color: var(--darkest);
-    height: 22vh;
+    height: 20vh;
     width: 100%;
     border-bottom-left-radius: 2em;
     border-bottom-right-radius: 2em;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
-    color: var(--main)
+    color: var(--main);
 }
 
 .space {
@@ -36,68 +36,117 @@ body {
 }
 
 .container {
-    margin-left: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    top: 100vh;
+    color: var(--black)
 }
 
-
-/* need to continue */
-
-.goal-input, .amount-input {
+.goal-input,
+.amount-input {
     background-color: transparent;
     border: none;
     outline: none;
     width: 100%;
 }
-.table thead th {
+
+.table thead th,
+.table tbody td {
     white-space: nowrap;
 }
+
 .goal-cell {
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .goal-cell input {
     width: 100%;
 }
+
 .table-wrapper {
     max-height: 400px;
     overflow-y: auto;
 }
+
 .table {
     width: 100%;
-    table-layout: fixed;
+    border: 1px solid var(--main);
+    font-size: 0.85em;
 }
 
-.round {
-    height: 3em;
-    width: 3em;
+
+/* Custom cell colors */
+.table th {
+    background-color: var(--darkest); /* Light background color */
+    color: var(--main); /* Darkest text color */
+}
+
+.table tbody tr td {
+    background-color: var(--light); /* Light background color */
+    color: var(--black); /* Darkest text color */
+}
+
+.table tbody tr.selected td {
+    background-color: var(--mid); /* Mid-level background color for selected rows */
+    color: var(--darkest); /* Darkest text color for selected rows */
+}
+
+/* Add this CSS to style the checkbox */
+.table tbody tr td input[type="checkbox"] {
+    margin: 0 auto; /* Center the checkbox horizontally */
+    display: block; /* Ensure checkbox is displayed as a block element */
+    -webkit-appearance: none; /* Remove default styling for Safari */
+    -moz-appearance: none; /* Remove default styling for Firefox */
+    appearance: none; /* Remove default styling */
+    width: 16px; /* Adjust width of the checkbox */
+    height: 16px; /* Adjust height of the checkbox */
+    border: 2px solid var(--mid); /* Border color for the checkbox */
+    border-radius: 4px; /* Rounded corners for the checkbox */
+}
+
+/* Style the checked state */
+.table tbody tr td input[type="checkbox"]:checked {
+    background-color: var(--mid); /* Change background color when checked */
+}
+
+/* Hide the default check mark */
+.table tbody tr td input[type="checkbox"]::before {
+    content: ''; /* Ensure no content is displayed before the checkbox */
+    width: 12px; /* Width of the check mark */
+    height: 12px; /* Height of the check mark */
+    margin: 2px; /* Margin to position the check mark within the border */
+    background-color: var(--darkest); /* Color of the check mark */
+    border-radius: 2px; /* Rounded corners for the check mark */
+    visibility: visible; /* Ensure the check mark is visible */
+}
+
+/* Ensure the check mark is hidden when not checked */
+.table tbody tr td input[type="checkbox"]:not(:checked)::before {
+    display: none; /* Hide the check mark */
+}
+
+/* Radio button styling */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 1em;
+    height: 1em;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 0.6em solid var(--darkest);
+    background-color: var(--main);
+    outline: none;
 }
 
-/* Custom Button Styles */
-.btn-custom {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
+/* Checked state */
+input[type="radio"]:checked {
+    background-color: var(--mid); /* Change to green or desired color */
+    border-color: var(--mid); /* Change border color */
 }
 
-.btn-custom-danger {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-}
 
-.btn-custom-secondary {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-}
+
