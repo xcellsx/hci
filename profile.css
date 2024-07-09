@@ -1,0 +1,120 @@
+:root {
+  --darkest: #13714C;
+  --mid: #3AB67D;
+  --light: #A2E494;
+  --main: #E9EBED;
+  --black: #000;
+  --accent: #d97314;
+}
+
+body {
+  background-color: var(--main);
+  color: var(--dark-color);
+}
+
+.navb {
+  background-color: var(--darkest);
+  height: 20vh;
+  width: 100%;
+  border-bottom-left-radius: 2em;
+  border-bottom-right-radius: 2em;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
+  color: var(--main)
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1; /* Adjust z-index if needed */
+}
+
+.space {
+  display: flex;
+  align-items: center;
+}
+
+.space h1 {
+  margin-left: 1rem; /* Adjust this value to control the space between the arrow and the header */
+}
+
+.navb p {
+  margin-left: 1rem; /* Adjust this value to match the indentation of the header */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  width: 80%;
+  height: auto;
+  margin-top:4vh;
+  z-index: -1;
+  margin-bottom: 5em;
+  justify-content: center;
+}
+
+.head2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  background-color: var(--darkest);
+  border-top-left-radius: 0.9em;
+  border-top-right-radius: 0.9em;
+  padding-left: 0;
+}
+
+.nav-link img {
+  filter: invert(1) brightness(2);
+}
+
+button { 
+  border-radius: 20px;
+  border: 1px solid var(--darkest);
+  background: var(--darkest);
+  color: var(--light);
+  font-size: 12px;
+  font-weight: bold; 
+  padding: 12px 45px; 
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#userForm {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  color: #333;
+}
+
+input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: var(--main);
+}
+
+.btn-green {
+  width: 50%;
+  height: 50%;
+  background-color: var(--darkest);
+  color: var(--main);
+  border-radius: 2em;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
+}

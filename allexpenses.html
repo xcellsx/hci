@@ -16,7 +16,7 @@
         <p class="ml-3">View and Add Your Goals</p>
     </div>
 
-    <!-- Main Content -->
+    <!-- Active Goals -->
     <div class="container" style="color: black">
         <div class="head2 mb-3">
             <h2>Active Goals</h2>
@@ -36,17 +36,34 @@
             <!-- Dynamic goal cards go here -->
         </div>
         
+        <!-- AI Generated Goals Section -->
+        <div class="mt-5 ai-goal">
+            <h2>Suggested Goals</h2>
+            <div id="ai-goals-container" class="d-flex flex-wrap">
+                <!-- Completed goal cards go here -->
+                <!-- Example Card -->
+                
+                <div class="card-ai me-3 mb-3" style="width: 18rem; text-align: center">
+                    <div class="card-body">
+                        <h5 class="card-title">Future House</h5>
+                        <p class="card-text">Target Amount: $10000.00</p>
+                        <p class="card-text">Target Date: 01-06-2030</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Completed Goals Section -->
-        <div class="mt-5 mb-5">
+        <div class="mt-5 complete-goal">
             <h2>Completed Goals</h2>
             <div id="completed-goals-container" class="d-flex flex-wrap">
                 <!-- Completed goal cards go here -->
                 <!-- Example Card -->
-                
-                <div class="card me-3 mb-3" style="width: 18rem;">
+                <div class="card me-3 mb-3" style="width: 18rem; text-align: center">
                     <div class="card-body">
-                        <h5 class="card-title">Goal Name</h5>
-                        <p class="card-text">Amount Achieved: $xxx</p>
+                        <h5 class="card-title">Tuition Fees</h5>
+                        <p class="card-text">Amount Achieved: $6700.00</p>
+                        <p class="card-text">Date Completed: 03-02-2024</p>
                     </div>
                 </div>
             </div>
@@ -106,7 +123,9 @@
                             <label for="edit-current-amount" class="form-label">Current Amount ($)</label>
                             <input type="number" step="0.01" class="form-control" id="edit-current-amount" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <div class="d-flex justify-content-end"> <!-- Align content to the right -->
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -119,7 +138,7 @@
             <li class="nav-item"><a href="bot.html" class="nav-link px-2 text-body-secondary"><img src="./images/robot.svg" height="28px"></a></li>
             <li class="nav-item"><a href="./mainpage.html" class="nav-link px-2 text-body-secondary"><img src="./images/dice-5.svg" height="28px"></a></li>
             <li class="nav-item"><a href="track.html" class="nav-link px-2 text-body-secondary"><img src="./images/currency-dollar.svg" height="28px"></a></li>
-            <li class="nav-item"><a href="profile.html" class="nav-link px-2 text-body-secondary"><img src="./images/person-fill.svg" height="28px"></a></li>
+            <li class="nav-item"><a href="settings.html" class="nav-link px-2 text-body-secondary"><img src="./images/person-fill.svg" height="28px"></a></li>
         </ul>
     </footer>
 
