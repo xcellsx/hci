@@ -145,3 +145,23 @@ footer {
     filter: invert(1) brightness(2);
 }
 
+#camera-container {
+    position: relative;
+    width: 100%; /* Adjust as necessary */
+    height: auto; /* Adjust based on aspect ratio */
+    margin-bottom: 20px; /* Space between camera and form */
+}
+
+#video-preview {
+    width: 100%; /* Responsive video width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+#capture {
+    position: absolute;
+    bottom: -30px; /* Adjust based on your layout */
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    padding: 5px 20px; /* Larger click area */
+}
