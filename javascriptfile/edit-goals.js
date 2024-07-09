@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const goals = JSON.parse(localStorage.getItem('goals')) || [];
     let currentAmount = 0; // Initialize currentAmount globally
     let selectedView = 'weekly'; // Default view
+    let startDate, endDate; // Declare startDate and endDate variables
 
     if (goals.length > 0) {
         const goal = goals[0]; // Assuming you want to edit the first goal. Adjust as necessary.
@@ -9,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const goalName = goal.name;
         const targetAmount = goal.amount;
         currentAmount = goal.current || 0; // Initialize currentAmount from goal or 0 if not set
-        const startDate = goal.startDate || new Date().toISOString().split('T')[0];
-        const endDate = goal.endDate || new Date().toISOString().split('T')[0];
+        startDate = goal.startDate || new Date().toISOString().split('T')[0];
+        endDate = goal.endDate || new Date().toISOString().split('T')[0];
 
         document.getElementById('goal-name').textContent = goalName;
         document.getElementById('target-amount').textContent = `$${targetAmount.toFixed(2)}`;
@@ -151,8 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const newStartDate = document.getElementById('start-date').value;
             const newEndDate = document.getElementById('end-date').value;
 
-            startDate = newStartDate;
-            endDate = newEndDate;
+            startDate = newStartDate; // Update startDate with new value
+            endDate = newEndDate; // Update endDate with new value
 
             breakdown = calculateBreakdown(startDate, endDate, selectedView);
             renderBreakdown(breakdown);
