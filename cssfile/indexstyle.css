@@ -1,71 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-* {
-  padding: 0px;
-  margin: 0px;
-  box-sizing: border-box;
-}
-
-/* :root {
-  --linear-grad: linear-gradient(to right, #c03535,  #ff4b4b);
-  --grad-clr1: #c03535;
-  --grad-clr2: #ff4b4b;
-} */
-
 :root {
-  --linear-grad: linear-gradient(to right, #141E30, #243B55);
-  --grad-clr1: #141E30;
-  --grad-clr2: #243B55;
+  --darkest: #13714C;
+  --mid: #3AB67D;
+  --light: #A2E494;
+  --main: #E9EBED;
+  --black: #000;
 }
-
-/* :root {
-  --linear-grad: linear-gradient(to right, #1E3023, #3B5534);
-  --grad-clr1: #1E3023;
-  --grad-clr2: #3B5534;
-} */
-
-/* :root {
-  --linear-grad: linear-gradient(to right, #30231E, #55343B);
-  --grad-clr1: #30231E;
-  --grad-clr2: #55343B;
-} */
-
-/* :root {
-  --linear-grad: linear-gradient(to right, #301E23, #55343B);
-  --grad-clr1: #301E23;
-  --grad-clr2: #55343B;
-} */
 
 body {
+  background-color: var(--darkest);
+  color: var(--darkest);
+  overflow: hidden;
   height: 100vh; 
-  background: #f6f5f7;
   place-content: center; 
   font-family: 'Poppins', sans-serif;
-  overflow: hidden;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.box1 {
+  margin-top: 0;
 }
 
 input {
-  width: 100%;
-  padding: 12px 15px; 
-  background-color: #dadada;
+  width: 60%;
+  background-color: var(--main);
   border: none;
   outline: none;
+  margin-top: 0;
 }
 
 button { 
     border-radius: 20px;
-    border: 1px solid var(--grad-clr1);
-    background: var(--grad-clr2);
-    color: #FFF;
+    background: var(--light);
+    color: var(--black);
     font-size: 12px;
     font-weight: bold; 
     padding: 12px 45px; 
@@ -81,7 +57,7 @@ button {
 }
 
 .links button{
-    color: grey;
+    color: var(--main);
     margin-top: 1em;
     background-color: transparent;
     border: none;
