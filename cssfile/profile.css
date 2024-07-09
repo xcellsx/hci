@@ -14,7 +14,7 @@ body {
 
 .navb {
   background-color: var(--darkest);
-  height: 15vh;
+  height: 20vh;
   width: 100%;
   border-bottom-left-radius: 2em;
   border-bottom-right-radius: 2em;
@@ -48,9 +48,10 @@ body {
   margin-left: 2rem;
   width: 80%;
   height: auto;
-  margin-top: 18vh;
+  margin-top:4vh;
   z-index: -1;
   margin-bottom: 5em;
+  justify-content: center;
 }
 
 .head2 {
@@ -89,4 +90,31 @@ button {
   padding: 12px 45px; 
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+#userForm {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  color: #333;
+}
+
+input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: var(--main);
+}
+
+.btn-green {
+  width: 50%;
+  height: 50%;
+  background-color: var(--darkest);
+  color: var(--main);
+  border-radius: 2em;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
 }
