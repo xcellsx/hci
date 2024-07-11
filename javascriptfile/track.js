@@ -1,117 +1,182 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const transactionContainer = document.getElementById("transactions-container");
-    const transactionCount = document.getElementById("active-transaction-count");
+document.addEventListener('DOMContentLoaded', function () {
+    let transactions = [];
 
-    function saveTransactions(transactions) {
-        localStorage.setItem("transactions", JSON.stringify(transactions));
-    }
-
+    // Load transactions from localStorage
     function loadTransactions() {
         return JSON.parse(localStorage.getItem("transactions") || '[]');
     }
 
-    function renderTransaction(transaction, index) {
-        const newTransactionCard = document.createElement("div");
-        newTransactionCard.classList.add("transaction-card");
-        newTransactionCard.id = `transaction-${index}`;  // Assign a unique ID based on index
-
-        const transactionName = document.createElement("h4");
-        transactionName.innerText = transaction.name;
-
-        const transactionAmount = document.createElement("p");
-        transactionAmount.innerText = `Transaction Amount: $${transaction.amount.toFixed(2)}`;
-
-        const buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("button-container");
-
-        const editButton = document.createElement("button");
-        editButton.classList.add("btn", "btn-edit", "edit-btn");
-        editButton.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-            </svg>
-        `;
-
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("btn", "btn-delete", "delete-btn");
-        deleteButton.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-            </svg>
-        `;
-
-        buttonContainer.appendChild(editButton);
-        buttonContainer.appendChild(deleteButton);
-
-        newTransactionCard.appendChild(transactionName);
-        newTransactionCard.appendChild(transactionAmount);
-        newTransactionCard.appendChild(buttonContainer);
-        transactionContainer.appendChild(newTransactionCard);
-
-        editButton.addEventListener("click", () => {
-            const editModal = new bootstrap.Modal(document.getElementById("editModal"));
-            document.getElementById("edit-transaction-name").value = transaction.name;
-            document.getElementById("edit-transaction-amount").value = transaction.amount;
-            editModal.show();
-
-            document.getElementById("edit-form").onsubmit = (event) => {
-                event.preventDefault();
-                const editedName = document.getElementById("edit-transaction-name").value.trim();
-                const editedAmount = parseFloat(document.getElementById("edit-transaction-amount").value);
-
-                if (!editedName || isNaN(editedAmount)) {
-                    alert("Please enter valid transaction details.");
-                    return;
-                }
-
-                transaction.name = editedName;
-                transaction.amount = editedAmount;
-                saveTransactions(loadTransactions().map((t, idx) => idx === index ? transaction : t)); // Update the specific transaction
-
-                // Update the DOM
-                document.getElementById(`transaction-${index}`).querySelector('h4').innerText = editedName;
-                document.getElementById(`transaction-${index}`).querySelector('p').innerText = `Transaction Amount: $${editedAmount.toFixed(2)}`;
-                editModal.hide();
-            };
-        });
-
-        deleteButton.addEventListener("click", () => {
-            if (confirm(`Are you sure you want to delete ${transaction.name}?`)) {
-                const updatedTransactions = loadTransactions().filter((_, idx) => idx !== index);
-                saveTransactions(updatedTransactions);
-                transactionContainer.removeChild(newTransactionCard);
-                transactionCount.innerText = updatedTransactions.length;
-            }
-        });
+    // Save transactions to localStorage
+    function saveTransactions(transactions) {
+        localStorage.setItem("transactions", JSON.stringify(transactions));
     }
 
-    const transactionForm = document.getElementById("transaction-form");
-    transactionForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const name = document.getElementById("transaction-name").value.trim();
-        const amount = parseFloat(document.getElementById("transaction-amount").value);
-
-        if (!name || isNaN(amount)) {
-            alert("Please enter valid transaction details.");
-            return;
-        }
-
-        const transactions = loadTransactions();
-        const newTransaction = { name, amount };
-        transactions.push(newTransaction);
+    // Function to add a transaction
+    function addTransaction(name, amount, date) {
+        const transaction = { id: Date.now(), name, amount, date: new Date(date).toISOString().split('T')[0] }; // Save date as YYYY-MM-DD format
+        transactions.push(transaction);
         saveTransactions(transactions);
-        renderTransaction(newTransaction, transactions.length - 1);
+        displayTransactions();
+    }
+    // Function to clear all transactions from localStorage
+    function clearLocalStorage() {
+        localStorage.removeItem("transactions");
+        // Optionally, you can also reset your transactions array in memory
+        transactions = [];
+        // Refresh the UI to reflect the change
+        displayTransactions();
+    }
 
-        document.getElementById("transaction-name").value = '';
-        document.getElementById("transaction-amount").value = '';
-        transactionCount.innerText = transactions.length;
+    // Function to display transactions
+    // Function to display transactions
+function displayTransactions() {
+    const container = document.getElementById('transactions-container');
+    container.innerHTML = '';
+
+    // Group transactions by date
+    const groupedTransactions = transactions.reduce((acc, transaction) => {
+        const date = transaction.date;
+        if (!acc[date]) {
+            acc[date] = [];
+        }
+        acc[date].push(transaction);
+        return acc;
+    }, {});
+
+    // Sort dates in descending order
+    const sortedDates = Object.keys(groupedTransactions).sort((a, b) => new Date(b) - new Date(a));
+
+    sortedDates.forEach(date => {
+        const dateSection = document.createElement('div');
+        dateSection.className = 'date-section';
+
+        const dateHeader = document.createElement('h3');
+        dateHeader.innerText = new Date(date).toLocaleDateString(); // Format and display the date
+        dateSection.appendChild(dateHeader);
+
+        // Create a container for transactions under this date
+        const transactionsContainer = document.createElement('div');
+        transactionsContainer.className = 'transactions-container';
+
+        groupedTransactions[date].forEach(transaction => {
+            // Create a card for each transaction
+            const card = document.createElement('div');
+            card.className = 'card'; // Adjust classes for styling
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
+            // Transaction details
+            const transactionName = document.createElement('h5');
+            transactionName.className = 'card-title';
+            transactionName.innerText = transaction.name;
+            const transactionAmount = document.createElement('p');
+            transactionAmount.className = 'card-text';
+            transactionAmount.innerText = `Amount: $${transaction.amount}`;
+
+            // Buttons for edit and delete
+            const buttonGroup = document.createElement('div');
+            buttonGroup.className = 'btn-group';
+            buttonGroup.setAttribute('role', 'group');
+            const editButton = document.createElement('button');
+            editButton.type = 'button';
+            editButton.className = 'btn btn-primary btn-sm edit-btn';
+            editButton.innerText = 'Edit';
+            editButton.setAttribute('data-id', transaction.id);
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-danger btn-sm delete-btn';
+            deleteButton.innerText = 'Delete';
+            deleteButton.setAttribute('data-id', transaction.id);
+
+            // Append elements to card body and card
+            buttonGroup.appendChild(editButton);
+            buttonGroup.appendChild(deleteButton);
+            cardBody.appendChild(transactionName);
+            cardBody.appendChild(transactionAmount);
+            cardBody.appendChild(buttonGroup);
+            card.appendChild(cardBody);
+
+            // Append card to transactions container
+            transactionsContainer.appendChild(card);
+        });
+
+        // Append transactions container to date section
+        dateSection.appendChild(transactionsContainer);
+
+        // Append date section to main container
+        container.appendChild(dateSection);
+    });
+}
+
+    // Handle form submission
+    document.getElementById('transaction-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const name = document.getElementById('transaction-name').value;
+        const amount = document.getElementById('transaction-amount').value;
+        const date = document.getElementById('transaction-date').value;
+        addTransaction(name, amount, date);
+        $('#transactionModal').modal('hide');
+        document.getElementById('transaction-form').reset(); // Reset form after submission
     });
 
-    // Initially load transactions and render them
-    const transactions = loadTransactions();
-    transactions.forEach((transaction, index) => renderTransaction(transaction, index));
-    transactionCount.innerText = transactions.length;
+    // Function to delete a transaction
+    function deleteTransaction(id) {
+        transactions = transactions.filter(transaction => transaction.id !== id);
+        saveTransactions(transactions);
+        displayTransactions();
+    }
+
+    // Function to edit a transaction (assuming editing logic)
+    function editTransaction(id) {
+        // Implement your editing logic here
+        // For example, open a modal pre-filled with transaction data for editing
+        const transactionToEdit = transactions.find(transaction => transaction.id === id);
+        if (transactionToEdit) {
+            // Pre-fill modal form fields with transaction data
+            document.getElementById('transaction-name').value = transactionToEdit.name;
+            document.getElementById('transaction-amount').value = transactionToEdit.amount;
+            document.getElementById('transaction-date').value = transactionToEdit.date;
+
+            // Show modal for editing
+            $('#transactionModal').modal('show');
+
+            // Save edited transaction on form submit
+            document.getElementById('transaction-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const newName = document.getElementById('transaction-name').value;
+                const newAmount = document.getElementById('transaction-amount').value;
+                const newDate = document.getElementById('transaction-date').value;
+
+                // Update transaction object
+                transactionToEdit.name = newName;
+                transactionToEdit.amount = newAmount;
+                transactionToEdit.date = new Date(newDate).toISOString().split('T')[0];
+
+                saveTransactions(transactions);
+                displayTransactions();
+
+                $('#transactionModal').modal('hide');
+                document.getElementById('transaction-form').reset(); // Reset form after submission
+            });
+        }
+    }
+
+    // Load and display transactions on page load
+    transactions = loadTransactions();
+    displayTransactions();
+
+    // Event delegation for delete and edit buttons
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('delete-btn')) {
+            const id = parseInt(event.target.getAttribute('data-id'));
+            deleteTransaction(id);
+        } else if (event.target.classList.contains('edit-btn')) {
+            const id = parseInt(event.target.getAttribute('data-id'));
+            editTransaction(id);
+        }
+    });
 });
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const video = document.getElementById('cameraStream');
@@ -180,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
-
-
-
+// Example: Triggering clearLocalStorage() on button click
+document.getElementById('clear-transactions-btn').addEventListener('click', function() {
+    clearLocalStorage();
+});

@@ -165,3 +165,91 @@ footer {
     width: auto;
     padding: 5px 20px; /* Larger click area */
 }
+
+/* Styles for transaction cards and containers */
+
+/* Main container */
+#transactions-container {
+    margin-top: 20px;
+}
+
+/* Date section */
+.date-section {
+    margin-bottom: 20px;
+}
+
+.date-section h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Transactions container */
+.transactions-container {
+    display: box;
+    flex-direction: column;
+}
+
+/* Transaction card */
+.card {
+    height: 9em;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--darkest);
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 0.5em; /* Adjusts the gap between the elements */
+    color: var(--main);
+    box-shadow: 0px 4px 16px rgba(36, 28, 28, 0.3);
+}
+.card-body {
+    padding: 100;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.card-text {
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.btn-group {
+    margin-top: 5px;
+}
+
+.btn {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn-primary {
+    background-color: var(--darkest);
+    border-color: var(--darkest);
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: var(--darkest);
+    border-color: var(--darkest);
+    color: #fff;
+}
+
+.btn-sm {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Modal */
+.modal-dialog {
+    max-width: 600px;
+}
+
+
