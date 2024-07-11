@@ -165,3 +165,14 @@ footer {
     width: auto;
     padding: 5px 20px; /* Larger click area */
 }
+
+#track {
+    color: var(--darkest);
+
+}
+
+.track {
+    background-color: var(--light);
+    border-radius: 50%;
+    padding: 0.5em;
+}
