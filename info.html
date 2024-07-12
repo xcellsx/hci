@@ -3,46 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WealthQuest</title>
-    <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
+    <title>About Me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
     <link rel="stylesheet" href="./cssfile/info.css">
     <script src="./javascriptfile/info.js" defer></script>
+    <link rel="icon" href="images/bb04.png" type="image/x-icon" sizes="128x128">
+
 </head>
 <body>
     <div class="container">
-        <h1>More About You</h1>
-        <div class="page row">
-            <p class="numbers-not-active">1</p>
-            <p class="dash">---</p>
-            <p class="numbers-not-active">2</p>
-            <p class="dash">---</p>
-            <p class="numbers-active">3</p>
-            <p class="dash">---</p>
-            <p class="numbers-not-active">4</p>
-        </div>
+        <div class = "head">
+            <h1>About You & Your Goals</h1>
+            <div class = "prog">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--accent)" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--accent)" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--white)" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8"/>
+                </svg>
+            </div>
+        </div> 
+    </div> 
 
-        <br/>
-        <form method = post>
-            <label>Occupation</label>
-            <input type = "text" required>
-
-            <label>Income</label>
-            <input type = "text" required>
-
-            <label>Monthly Limit</label>
-            <input type = "text" required>
-
-            <label>Monthly Goal</label>
-            <input type = "text" required>
-
-            <label>Yearly Limit</label>
-            <input type = "text" required>
-
-            <label>Yearly Goal</label>
-            <input type = "text" required>
+    <div class = "form1">
+        <form method="post">
+            <label for="occupation">Occupation</label>
+            <input type="text" id="occupation" name="occupation" placeholder="Occupation" required />
+        
+            <label for="income">Income</label>
+            <input type="text" id="income" name="income" placeholder="Income (Eg. Salary, Allowance)" required />
+            
+            <label for="expenses">Monthly Expenses</label>
+            <input type="text" id="expenses" name="expenses" placeholder="Monthly Expenses" required />
+            
+            <label for="budget">Budget</label>
+            <input type="text" id="budget" name="budget" placeholder="Budget" required />
         </form>
 
-    <a href = "customiseavatar.html"><button>Next</button></a>
+        
+        <div class="button-container">
+            <button onclick="saveAbout()">Save</button>
+            <a href="home.html">
+                <button>Next</button>
+            </a>
+        </div>
 
     </div>
 </body>
