@@ -63,3 +63,16 @@ button {
     border: none;
     font-size: 10px;
 }
+
+.container img {
+  margin-bottom: 1em; /* Adjust the value to reduce the gap */
+}
+.container input {
+  margin-top: 5px; /* Adjust the value to reduce the gap */
+}
+.container button {
+  margin-top: 10px; /* Adjust the value to reduce the gap */
+}
+.container .links {
+  margin-bottom: 2em; /* Adjust the value to reduce the gap */
+}
