@@ -1,25 +1,30 @@
-function addSubcategory() {
-    const subcategoryInput = document.getElementById('newSubcategory');
-    const subcategoryValue = subcategoryInput.value.trim();
+function saveAbout() {
+    const occupation = document.getElementById('occupation').value;
+    const income = document.getElementById('income').value;
+    const expenses = document.getElementById('expenses').value;
+    const budget = document.getElementById('budget').value;
 
-    if (subcategoryValue) {
-        const subcategoryDiv = document.createElement('div');
-        subcategoryDiv.classList.add('subcategory-div');
-        subcategoryDiv.innerText = subcategoryValue;
+    const aboutData = {
+        occupation: occupation,
+        income: income,
+        expenses: expenses,
+        budget: budget
+    };
 
-        // Add delete button
-        const deleteBtn = document.createElement('span');
-        deleteBtn.classList.add('delete-btn');
-        deleteBtn.innerHTML = 'x';
-        deleteBtn.addEventListener('click', function() {
-            subcategoryDiv.remove();
-        });
-        subcategoryDiv.appendChild(deleteBtn);
+    localStorage.setItem('aboutData', JSON.stringify(aboutData));
+    alert("Your information has been saved!");
+}
 
-        const subcategoriesContainer = document.getElementById('subcategories');
-        subcategoriesContainer.appendChild(subcategoryDiv);
+function loadAbout() {
+    const savedData = JSON.parse(localStorage.getItem('aboutData'));
 
-        // Clear the input field
-        subcategoryInput.value = '';
+    if (savedData) {
+        document.getElementById('occupation').value = savedData.occupation || '';
+        document.getElementById('income').value = savedData.income || '';
+        document.getElementById('expenses').value = savedData.expenses || '';
+        document.getElementById('budget').value = savedData.budget || '';
     }
 }
+
+// Load the data when the page loads
+window.onload = loadAbout;
