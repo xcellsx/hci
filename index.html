@@ -12,10 +12,11 @@
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
 
-            if (username === 'cel' && password === '123') {
-                window.location.href = 'mainpage.html';
-            } else if (username === 'char' && password === '123') {
-                window.location.href = 'mainpage2.html';
+            var storedUsername = localStorage.getItem('username');
+            var storedPassword = localStorage.getItem('password');
+
+            if (username === storedUsername && password === storedPassword) {
+                window.location.href = 'mainpage.html'; // Redirect to the main page
             } else {
                 alert('Invalid username or password');
             }
@@ -24,7 +25,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="./images/bb06.png" height = "500em" width = "500em">
+        <img src="./images/bb06.png" height="500em" width="500em">
         <input id="username" type="text" placeholder="Username" required>
         <br>
         <input id="password" type="password" placeholder="Password" required>
