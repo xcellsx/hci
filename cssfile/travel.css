@@ -1,190 +1,213 @@
-body {
-    background: linear-gradient(300deg, #01502f, #4cff82, #76ef72);
-    background-size: 180% 180%;
-    animation: gradient-animation 18s ease infinite;
-    color: white;
-    margin: 0;
-    padding-top: 60px; /* Adjust this value based on your navbar height */
-    padding-bottom: 60px; /* Adjust this value based on your footer height */
-}
-
-@keyframes gradient-animation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.container {
+:root {
+    --darkest: #1c2a18;
+    --mid: #006600;
+    --light: #6eea8e;
+    --white: #E9EBED;
+    --black: #222222;
+    --accent: #826cf6;
+  }
+  
+  body {
+    background-color: var(--darkest);
+    color: var(--light);
+    overflow-x: hidden;
+  }
+  
+  .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    z-index: -5;
-    margin-top: 1em;
-}
-
-.navb {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    padding: 10px;
+    justify-content: start;
+    align-items: start;
+    box-sizing: border-box;
+    padding: 2em;
+  }
+  
+  .head {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    background-color: black;
-}
-
-footer {
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  
+  h1 {
+    color: var(--white);
+    font-size: 2.2em;
+    margin: 0;
+  }
+  
+  footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 10px;
-    text-align: center;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+    padding-bottom: 10px;
     z-index: 1000;
-    background-color: black;
-}
-
-.nav-link img {
+    background-color: var(--accent);
+    padding-left: 0;
+    border: none;
+  }
+  
+  .nav-link img {
     filter: invert(1) brightness(2);
-}
+  }
 
-table {
+  .head2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 20px; /* Adjust this value as needed */
-    color: black;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-    border: 1px solid #46a832;
-    padding: 8px;
     text-align: center;
-}
+    padding: 0;
+    margin: 0;
+  }
+  
+  .head2 h2 {
+    color: var(--white);
+  }
 
-th {
-    background-color: #46a832;
-}
+  #goal-count {
+    color: var(--accent);
+  }
 
-thead th:first-child {
-    border-top-left-radius: 15px;
-}
+  .btn-custom1 {
+    background-color: var(--accent);
+    color: var(--white);
+    width: 50%;
+  }
 
-thead th:last-child {
-    border-top-right-radius: 15px;
-}
+  .btn-info {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--white);
+  }
 
-tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 15px;
-}
+  .btn-secondary {
+    color: var(--white);
+  }
 
-tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 15px;
-}
-
-.filled {
-    background-color: rgb(224, 224, 224);
-}
-
-h2 {
-    margin-top: 1em;
-    justify-content: start;
-    text-align: left;
-    width: 100%; /* Ensure the header spans the full width */
-}
-
-button {
-    height: 3em;
-    width: 6em;
-    background-color: green;
-    border-radius: 5em;
-    border: none;
-    box-shadow: 0.2em 0.2em 1em rgb(2, 129, 4);
-    margin-top: 3em;
-}
-
-.table-g {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 20px; /* Adjust this value as needed */
-    color: black;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #08db8377;
-}
-
-.plus-button {
-    display: inline-block; /* Ensures button aligns properly inline with the header */
-    background-color: #28a745;
-    color: white;
-    border: none;
+  
+  #home {
+    color: var(--darkest);
+  
+  }
+  
+  .home {
+    background-color: var(--light);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    margin-left: 10px; /* Adjust margin as needed */
-    cursor: pointer;
-}
-
-h2 {
-    margin-top: 1em;
-    justify-content: start;
-    text-align: left;
-}
-
-button {
-    height: 3em;
-    width: 6em;
-    background-color: green;
-    border-radius: 5em;
-    border: none;
-    box-shadow: 0.2em 0.2em 1em rgb(2, 129, 4);
-    margin-top: 3em;
-}
-
-.table-g {
+    padding: 0.5em;
+  }
+  
+  .goal-card {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 20px; /* Adjust this value as needed */
-    color: black;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #08db8377;
+    position: relative;
+    background-color: var(--mid);
+    gap: 1em;
+    padding: 0;
+    border-radius: 1em;
+    color: var(--white);
 }
 
-.form-control {
-    background-color: transparent; /* Make input background transparent */
-    border: none; /* Remove default border */
-    box-shadow: none; /* Remove default box shadow */
-    padding: 0; /* Adjust padding as needed */
-    color: inherit; /* Inherit text color */
-    width: 100%; /* Ensure inputs fill the cell */
+.delete-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
 }
 
-.edit-btn {
-    background-color: transparent;
+.svg-icons {
+    display: flex;
+    gap: 10px;
+}
+
+#goals-container {
+    width: 100%;
+}
+
+.card {
+    width: 100%;
+    background-color: var(--mid);
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--white);
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
+    padding: 0;
+    margin: 0;
+}
+
+.goal-name, .goal-amount, .current-amount {
+    font-size: 1em;
+}
+
+.card-body h5 {
+    padding: 0;
+    margin-top: 1em;
+    color: var(--white);
+    font-weight: bold;
+}
+
+.card-body p {
+    padding: 0;
+    margin: 0;
+}
+
+.progress {
+    width: 90%;
+    height: 1em;
+    background-color: var(--darkest); /* Background color of the progress bar container */
+    border-radius: 1em; /* Rounded corners */
+    padding: 0;
+    margin: 0.5em;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0; /* Start with no visible progress */
+    background-color: var(--light); /* Color of the progress bar */
+    border-radius: 1em; /* Rounded corners */
+}
+
+.btn-eye {
+    color: var(--light);
     border: none;
-    color: #007bff; /* Default Bootstrap primary color */
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1em;
+    margin-top: 0;
 }
 
+.btn-edit {
+    color: var(--light);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1em;
+    margin-top: 0;
+}
+
+#goal-form, #edit-form {
+    color: var(--darkest)
+}
+
+.btns {
+    gap: 1em;
+    margin: 0.5em;
+    margin-top: 1em;
+}
+
+.yeet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
