@@ -1,32 +1,91 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const bankForm = document.getElementById('bankForm');
+// Load bank accounts from localStorage and display them
+function loadBankAccounts() {
+    const bankCardsRow = document.getElementById('bankCardsRow');
+    const bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
 
-    bankForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+    bankCardsRow.innerHTML = ''; // Clear existing cards
 
-        // Get form values
+    bankAccounts.forEach(account => {
+        const cardHtml = `
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${account.bankName}</h5>
+                        <p class="card-text">Account Number: ${account.accountNumber}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        bankCardsRow.insertAdjacentHTML('beforeend', cardHtml);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadBankAccounts);
+
+document.getElementById('addBank').addEventListener('click', function() {
+    var bankModal = new bootstrap.Modal(document.getElementById('bankModal'));
+    bankModal.show();
+});
+
+document.getElementById('generateOtpButton').addEventListener('click', function() {
+    // Generate a random OTP
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    alert('Generated OTP: ' + otp); // Display OTP as a popup
+    console.log('Generated OTP:', otp); // For demonstration purposes, display the OTP in the console
+
+    // Display the OTP section
+    document.getElementById('otpSection').style.display = 'block';
+    document.getElementById('generateOtpButton').style.display = 'none';
+    document.getElementById('verifyButton').style.display = 'block';
+
+    // Save the generated OTP in a hidden field or variable for verification
+    document.getElementById('bankForm').dataset.otp = otp;
+});
+
+document.getElementById('bankForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Verify the OTP
+    const enteredOtp = document.getElementById('otp').value;
+    const generatedOtp = document.getElementById('bankForm').dataset.otp;
+    
+    if (enteredOtp === generatedOtp) {
+        alert('Bank account linked successfully!');
+        
+        // Get bank details
         const bankName = document.getElementById('bankName').value;
         const accountNumber = document.getElementById('accountNumber').value;
-        const ifscCode = document.getElementById('ifscCode').value;
-        const accountHolder = document.getElementById('accountHolder').value;
 
-        // Create bank account object
-        const bankAccount = {
-            bankName: bankName,
-            accountNumber: accountNumber,
-            ifscCode: ifscCode,
-            accountHolder: accountHolder
-        };
+        // Create a new card
+        const cardHtml = `
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${bankName}</h5>
+                        <p class="card-text">Account Number: ${accountNumber}</p>
+                    </div>
+                </div>
+            </div>
+        `;
 
-        // Save bank account to localStorage
-        let bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
-        bankAccounts.push(bankAccount);
+        // Append the card to the bankCardsRow
+        document.getElementById('bankCardsRow').insertAdjacentHTML('beforeend', cardHtml);
+
+        // Store the bank details in localStorage
+        const bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
+        bankAccounts.push({ bankName, accountNumber });
         localStorage.setItem('bankAccounts', JSON.stringify(bankAccounts));
 
-        // Reset form
-        bankForm.reset();
+        // Reset the form
+        document.getElementById('bankForm').reset();
+        document.getElementById('otpSection').style.display = 'none';
+        document.getElementById('generateOtpButton').style.display = 'block';
+        document.getElementById('verifyButton').style.display = 'none';
 
-        // Inform user (optional)
-        alert('Bank account linked successfully!');
-    });
+        // Close the modal
+        var bankModal = bootstrap.Modal.getInstance(document.getElementById('bankModal'));
+        bankModal.hide();
+    } else {
+        alert('Invalid OTP. Please try again.');
+    }
 });

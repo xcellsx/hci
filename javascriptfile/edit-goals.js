@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const goalName = goal.name;
         const targetAmount = goal.amount;
-        currentAmount = goal.current || 0; // Initialize currentAmount from goal or 0 if not set
+        const currentAmount = goal.current || 0; // Initialize currentAmount from goal or 0 if not set
         startDate = goal.startDate || new Date().toISOString().split('T')[0];
         endDate = goal.endDate || new Date().toISOString().split('T')[0];
 

@@ -1,44 +1,67 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Load the user information from localStorage
-    loadUserInfo();
+document.addEventListener("DOMContentLoaded", function() {
+    const nameElement = document.getElementById("name");
+    const usernameElement = document.getElementById("username");
+    const emailElement = document.getElementById("email");
+    const passwordElement = document.getElementById("password");
+    const editIcon = document.getElementById("edit-icon");
 
-    document.getElementById('saveButton').addEventListener('click', function() {
-        // Get the values from the form
-        const name = document.getElementById('name').value;
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const phoneNumber = document.getElementById('phone').value;
-        const birthday = document.getElementById('birthday').value;
+    function displayProfileInfo() {
+        const name = localStorage.getItem('name') || 'User';
+        const username = localStorage.getItem('username') || 'Username';
+        const email = localStorage.getItem('email') || 'Email';
+        const password = localStorage.getItem('password') || '*******';
 
-        // Create an object with the new user information
-        const userInfo = {
-            name: name,
-            username: username,
-            email: email,
-            password: password,
-            phoneNumber: phoneNumber,
-            birthday: birthday,
-        };
+        nameElement.textContent = `Name: ${name}`;
+        usernameElement.textContent = `Username: ${username}`;
+        emailElement.textContent = `Email: ${email}`;
+        passwordElement.textContent = `Password: ${password}`;
+    }
 
-        // Save the user information to localStorage
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    // Load values from local storage when the page loads
+    window.onload = function() {
+        displayProfileInfo();
+    };
 
-        // Show the confirmation modal
+    editIcon.addEventListener("click", function() {
+        // Create input fields for editable content
+        const name = localStorage.getItem('name') || 'User';
+        const username = localStorage.getItem('username') || 'Username';
+        const email = localStorage.getItem('email') || 'Email';
+        const password = localStorage.getItem('password') || '*******';
+
+        nameElement.innerHTML = `<input type="text" id="nameInput" value="${name}" class="form-control">`;
+        usernameElement.innerHTML = `<input type="text" id="usernameInput" value="${username}" class="form-control">`;
+        emailElement.innerHTML = `<input type="email" id="emailInput" value="${email}" class="form-control">`;
+        passwordElement.innerHTML = `<input type="password" id="passwordInput" value="${password}" class="form-control">`;
+
+        // Append save button
+        const saveButton = document.createElement("button");
+        saveButton.className = "btn btn-primary mt-2";
+        saveButton.textContent = "Save";
+        saveButton.addEventListener("click", saveProfile);
+        passwordElement.appendChild(saveButton);
+    });
+
+    function saveProfile() {
+        const newName = document.getElementById("nameInput").value;
+        const newUsername = document.getElementById("usernameInput").value;
+        const newEmail = document.getElementById("emailInput").value;
+        const newPassword = document.getElementById("passwordInput").value;
+
+        // Save updated user data to localStorage
+        localStorage.setItem('name', newName);
+        localStorage.setItem('username', newUsername);
+        localStorage.setItem('email', newEmail);
+        localStorage.setItem('password', newPassword);
+
+        // Display updated user data
+        nameElement.textContent = `Name: ${newName}`;
+        usernameElement.textContent = `Username: ${newUsername}`;
+        emailElement.textContent = `Email: ${newEmail}`;
+        passwordElement.textContent = `Password: ********`;
+
+        // Show confirmation modal (optional)
         const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
         confirmationModal.show();
-    });
-});
-
-function loadUserInfo() {
-    const storedUserInfo = localStorage.getItem('userInfo');
-    if (storedUserInfo) {
-        const userInfo = JSON.parse(storedUserInfo);
-        document.getElementById('name').value = userInfo.name;
-        document.getElementById('username').value = userInfo.username;
-        document.getElementById('email').value = userInfo.email;
-        document.getElementById('password').value = userInfo.password;
-        document.getElementById('phone').value = userInfo.phoneNumber;
-        document.getElementById('birthday').value = userInfo.birthday;
     }
-}
+});

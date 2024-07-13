@@ -72,25 +72,37 @@ function validateEmail() {
 // document.getElementById('termsCheckbox').addEventListener('change', toggleSubmitButton);
 
 // Function to save input values to local storage
-    function saveToLocalStorage() {
-        const name = document.getElementById('name').value;
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+ // Function to save input values to local storage
+function saveToLocalStorage() {
+    const name = document.getElementById('name').value;
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-        localStorage.setItem('name', name);
-        localStorage.setItem('username', username);
-        localStorage.setItem('email', email);
-        localStorage.setItem('password', password);
-    }
+    localStorage.setItem('name', name);
+    localStorage.setItem('username', username);
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+}
 
-    // Function to load input values from local storage
-    function loadFromLocalStorage() {
-        document.getElementById('name').value = localStorage.getItem('name') || '';
-        document.getElementById('username').value = localStorage.getItem('username') || '';
-        document.getElementById('email').value = localStorage.getItem('email') || '';
-        document.getElementById('password').value = localStorage.getItem('password') || '';
-    }
+// Function to load input values from local storage
+function loadFromLocalStorage() {
+    document.getElementById('name').value = localStorage.getItem('name') || '';
+    document.getElementById('username').value = localStorage.getItem('username') || '';
+    document.getElementById('email').value = localStorage.getItem('email') || '';
+    document.getElementById('password').value = localStorage.getItem('password') || '';
+}
+
+// Attach event listeners to save data
+document.querySelectorAll('.form input').forEach(input => {
+    input.addEventListener('input', function() {
+        saveToLocalStorage();
+    });
+});
+
+window.onload = function() {
+    loadFromLocalStorage();
+};
 
     function goToNextPage() {
         window.location.href = 'owncategories.html';
