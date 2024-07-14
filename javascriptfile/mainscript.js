@@ -1,34 +1,41 @@
-        let currentDate = new Date();
+let currentDate = new Date();
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    
+
+        const categoryIcons = {
+            "Food": "images/cookie.svg",
+            "Birthday": "images/gift.svg",
+            "Shopping": "images/cart.svg",
+            "Transportation": "images/car-front.svg",
+            "Healthcare": "images/heart-pulse.svg"
+        };
+
         document.addEventListener("DOMContentLoaded", function() {
             renderCalendar();
-            loadExpenditureData();
-            calculateTotalSpent(); // Call to calculate total spent
+            calculateTotalSpentForJuly(); // Calculate total spent for July
         });
-    
+
         function renderCalendar() {
             const monthYear = document.getElementById('monthYear');
             const days = document.getElementById('days');
-    
+
             monthYear.innerHTML = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-    
+
             const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
             const lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    
+
             days.innerHTML = '';
-    
+
             for (let i = 0; i < firstDay; i++) {
                 days.innerHTML += '<div></div>';
             }
-    
+
             const today = new Date(); // Get today's date
-    
+
             for (let i = 1; i <= lastDate; i++) {
                 const dayDiv = document.createElement('div');
                 dayDiv.textContent = i;
                 dayDiv.onclick = () => showCategories(i);
-    
+
                 // Disable future dates
                 const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
                 if (selectedDate > today) {
@@ -37,126 +44,151 @@
                 } else if (currentDate.getDate() === i && currentDate.getMonth() === currentDate.getMonth()) {
                     dayDiv.classList.add('current-date');
                 }
-    
+
                 days.appendChild(dayDiv);
             }
         }
-    
+
         function prevMonth() {
             currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar();
-            calculateTotalSpent(); // Recalculate total spent
+            calculateTotalSpentForJuly(); // Recalculate total spent for July
         }
-    
+
         function nextMonth() {
             currentDate.setMonth(currentDate.getMonth() + 1);
             renderCalendar();
-            calculateTotalSpent(); // Recalculate total spent
+            calculateTotalSpentForJuly(); // Recalculate total spent for July
         }
-    
-let selectedDay = null; // Add a variable to store the selected day
 
-function showCategories(day) {
-  selectedDay = day; 
-  const expenditureContent = document.getElementById('expenditureContent');
-  const key = `expenditureData_${currentDate.getFullYear()}_${currentDate.getMonth()}_${day}`;
-  
-  const today = new Date();
-  const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-  if (selectedDate > today) {
-      return;
-  }
+        let selectedDay = null; // Add a variable to store the selected day
 
-  if (!localStorage.getItem(key)) {
-      const selectedCategories = Object.keys(categoryIcons)
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 3);
-      const expenditureData = [];
+        function showCategories(day) {
+            selectedDay = day; 
+            const expenditureContent = document.getElementById('expenditureContent');
+            const key = `expenditureData_${currentDate.getFullYear()}_${currentDate.getMonth()}_${day}`;
+            
+            const today = new Date();
+            const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+            if (selectedDate > today) {
+                return;
+            }
 
-      expenditureContent.innerHTML = '';
-      const dateHeader = document.createElement('h5');
-      dateHeader.textContent = `Expenses for ${monthNames[currentDate.getMonth()]} ${day}, ${currentDate.getFullYear()}`;
-      expenditureContent.appendChild(dateHeader);
+            if (!localStorage.getItem(key)) {
+                const selectedCategories = Object.keys(categoryIcons)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 3);
+                const expenditureData = [];
 
-      selectedCategories.forEach(category => {
-          const categoryContainer = document.createElement('div');
-          categoryContainer.className = 'category-container';
+                expenditureContent.innerHTML = '';
+                const dateHeader = document.createElement('h5');
+                dateHeader.textContent = `Expenses for ${monthNames[currentDate.getMonth()]} ${day}, ${currentDate.getFullYear()}`;
+                expenditureContent.appendChild(dateHeader);
 
-          const categoryIcon = document.createElement('img');
-          categoryIcon.src = categoryIcons[category]; // Use the mapping for icons
-          categoryIcon.alt = category;
+                selectedCategories.forEach(category => {
+                    const categoryContainer = document.createElement('div');
+                    categoryContainer.className = 'category-container';
 
-          const amount = (Math.random() * 50).toFixed(2);
-          const categoryDiv = document.createElement('div');
-          categoryDiv.className = 'category';
-          categoryDiv.textContent = `${category}: $${amount}`;
+                    const categoryIcon = document.createElement('img');
+                    categoryIcon.src = categoryIcons[category]; // Use the mapping for icons
+                    categoryIcon.alt = category;
 
-          categoryContainer.appendChild(categoryIcon);
-          categoryContainer.appendChild(categoryDiv);
-          expenditureContent.appendChild(categoryContainer);
+                    const amount = (Math.random() * 50).toFixed(2);
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'category';
+                    categoryDiv.textContent = `${category}: $${amount}`;
 
-          expenditureData.push({ name: category, amount, icon: categoryIcons[category] });
-      });
+                    categoryContainer.appendChild(categoryIcon);
+                    categoryContainer.appendChild(categoryDiv);
+                    expenditureContent.appendChild(categoryContainer);
 
-      localStorage.setItem(key, JSON.stringify(expenditureData));
-  } else {
-      loadExpenditureData(key, true);
-  }
-}
+                    expenditureData.push({ name: category, amount, icon: categoryIcons[category] });
+                });
 
-function loadExpenditureData(key = null, regenerateIcons = false) {
-  const expenditureContent = document.getElementById('expenditureContent');
+                localStorage.setItem(key, JSON.stringify(expenditureData));
+            } else {
+                loadExpenditureData(key, true);
+            }
+        }
 
-  if (selectedDay === null) {
-      expenditureContent.innerHTML = '';
-      return;
-  }
+        function loadExpenditureData(key = null, regenerateIcons = false) {
+            const expenditureContent = document.getElementById('expenditureContent');
 
-  if (!key) {
-      key = `expenditureData_${currentDate.getFullYear()}_${currentDate.getMonth()}_${selectedDay}`;
-  }
+            if (selectedDay === null) {
+                expenditureContent.innerHTML = '';
+                return;
+            }
 
-  const expenditureData = JSON.parse(localStorage.getItem(key));
-  expenditureContent.innerHTML = '';
+            if (!key) {
+                key = `expenditureData_${currentDate.getFullYear()}_${currentDate.getMonth()}_${selectedDay}`;
+            }
 
-  const dateHeader = document.createElement('h5');
-  dateHeader.textContent = `Expenses for ${monthNames[currentDate.getMonth()]} ${selectedDay}, ${currentDate.getFullYear()}`;
-  expenditureContent.appendChild(dateHeader);
+            const expenditureData = JSON.parse(localStorage.getItem(key));
+            expenditureContent.innerHTML = '';
 
-  if (expenditureData) {
-      expenditureData.forEach(entry => {
-          const categoryContainer = document.createElement('div');
-          categoryContainer.className = 'category-container';
+            const dateHeader = document.createElement('h5');
+            dateHeader.textContent = `Expenses for ${monthNames[currentDate.getMonth()]} ${selectedDay}, ${currentDate.getFullYear()}`;
+            expenditureContent.appendChild(dateHeader);
 
-          const categoryIcon = document.createElement('img');
-          categoryIcon.src = entry.icon; // Use stored icon
-          categoryIcon.alt = entry.name;
+            if (expenditureData) {
+                expenditureData.forEach(entry => {
+                    const categoryContainer = document.createElement('div');
+                    categoryContainer.className = 'category-container';
 
-          const categoryDiv = document.createElement('div');
-          categoryDiv.className = 'category';
-          categoryDiv.textContent = `${entry.name}: $${entry.amount}`;
+                    const categoryIcon = document.createElement('img');
+                    categoryIcon.src = entry.icon; // Use stored icon
+                    categoryIcon.alt = entry.name;
 
-          categoryContainer.appendChild(categoryIcon);
-          categoryContainer.appendChild(categoryDiv);
-          expenditureContent.appendChild(categoryContainer);
-      });
-  } else {
-      const noDataMessage = document.createElement('div');
-      noDataMessage.textContent = 'No expenditure data available for this date.';
-      expenditureContent.appendChild(noDataMessage);
-  }
-}
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'category';
+                    categoryDiv.textContent = `${entry.name}: $${entry.amount}`;
 
+                    categoryContainer.appendChild(categoryIcon);
+                    categoryContainer.appendChild(categoryDiv);
+                    expenditureContent.appendChild(categoryContainer);
+                });
+            } else {
+                const noDataMessage = document.createElement('div');
+                noDataMessage.textContent = 'No expenditure data available for this date.';
+                expenditureContent.appendChild(noDataMessage);
+            }
+        }
 
+        function generateRandomExpenditureForJuly() {
+            const daysInJuly = 31; // Number of days in July
+            const randomExpenditures = [];
+            
+            for (let day = 1; day <= daysInJuly; day++) {
+                // Generate random expenditure data for each day
+                const selectedCategories = Object.keys(categoryIcons)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 3);
+                const expenditureData = selectedCategories.map(category => ({
+                    name: category,
+                    amount: (Math.random() * 50).toFixed(2),
+                    icon: categoryIcons[category]
+                }));
+                
+                randomExpenditures.push(expenditureData);
+                
+                // Store the generated data for July in localStorage
+                const key = `expenditureData_${currentDate.getFullYear()}_6_${day}`; // July is month 6 (0-based index)
+                localStorage.setItem(key, JSON.stringify(expenditureData));
+            }
+            
+            return randomExpenditures;
+        }
 
-
-        function calculateTotalSpent() {
+        function calculateTotalSpentForJuly() {
             const totalSpentElement = document.getElementById('totalSpent');
             let total = 0;
-            const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
 
-            for (let day = 1; day <= daysInMonth; day++) {
-                const key = `expenditureData_${currentDate.getFullYear()}_${currentDate.getMonth()}_${day}`;
+            // Generate random expenditures for July
+            generateRandomExpenditureForJuly();
+
+            // Sum up the total expenditures
+            for (let day = 1; day <= 31; day++) {
+                const key = `expenditureData_${currentDate.getFullYear()}_6_${day}`;
                 const expenditureData = JSON.parse(localStorage.getItem(key));
 
                 if (expenditureData) {
@@ -166,5 +198,5 @@ function loadExpenditureData(key = null, regenerateIcons = false) {
                 }
             }
 
-            totalSpentElement.textContent = `Total Spent This Month: $${total.toFixed(2)}`;
+            totalSpentElement.textContent = `Total Spent in July: $${total.toFixed(2)}`;
         }
