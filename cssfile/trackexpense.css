@@ -1,178 +1,180 @@
 :root {
-    --darkest: #13714C;
-    --mid: #3AB67D;
-    --light: #A2E494;
-    --main: #E9EBED;
-    --black: #000;
-    --accent: #d97314;
-}
-
-body {
-    background-color: var(--main);
-    color: var(--dark-color);
-}
-
-.navb {
+    --darkest: #1c2a18;
+    --mid: #006600;
+    --light: #6eea8e;
+    --white: #E9EBED;
+    --black: #222222;
+    --accent: #826cf6;
+  }
+  
+  body {
     background-color: var(--darkest);
-    height: 20vh;
-    width: 100%;
-    border-bottom-left-radius: 2em;
-    border-bottom-right-radius: 2em;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
-    color: var(--main);
-}
-
-.fixed-top {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1; /* Adjust z-index if needed */
-}
-
-.space {
-    display: flex;
-    align-items: center;
-}
-
-.space h1 {
-    margin-left: 1rem; /* Adjust this value to control the space between the arrow and the header */
-}
-
-.navb p {
-    margin-left: 1rem; /* Adjust this value to match the indentation of the header */
-}
-
-.container {
+    color: var(--light);
+    overflow-x: hidden;
+  }
+  
+  .container {
     display: flex;
     flex-direction: column;
-    margin-left: 2rem;
-    width: 80%;
-    height: auto;
-    margin-top: 24vh;
-    padding-bottom: 10vh; /* Add padding at the bottom */
-    z-index: -1; /* Corrected z-index to ensure it is not below the footer */
-}
-
-.head2 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     width: 100%;
-}
-
-.svg-icons {
-    display: flex;
-    gap: 10px;
-}
-
-.transaction-card {
-    height: 9em;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: var(--darkest);
-    border-radius: 1em;
+    justify-content: start;
+    align-items: start;
+    box-sizing: border-box;
+    padding: 2em;
+  }
+  
+  .head {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    gap: 0.5em; /* Adjusts the gap between the elements */
-    color: var(--main);
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-.transaction-name, .transaction-amount {
-    font-size: 1em;
-    margin-bottom: 8px;
-}
-
-.progress-bar-container {
     width: 100%;
-    height: 2em; /* Adjust height of the progress bar container */
-    background-color: var(--main); /* Background color of the progress bar container */
-    margin-bottom: 12px; /* Optional: Adjust spacing between transaction cards */
-    position: relative; /* Ensure position relative for absolute positioning */
-    border-radius: 1em; /* Rounded corners */
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0; /* Start with no visible progress */
-    background-color: var(--light); /* Color of the progress bar */
-    position: absolute; /* Position absolute for precise placement */
-    left: 0; /* Start from the left edge */
-    top: 0; /* Align to the top */
-    border-radius: 1em; /* Rounded corners */
-}
-
-.progress-percent {
-    position: absolute;
-    top: 50%; /* Position in the middle vertically */
-    left: 50%; /* Position in the middle horizontally */
-    transform: translate(-50%, -50%); /* Center align text */
-    color: var(--darkest); /* Text color */
-}
-
-.btn-eye, .btn-edit, .btn-delete {
-    color: var(--main);
-    padding: 0.25rem 0.5rem;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-edit:active, .btn-delete:active {
-    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2); /* Box shadow on click */
-}
-
-footer {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+  
+  h1 {
+    color: var(--white);
+    font-size: 2.2em;
+    margin: 0;
+  }
+  
+  footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    background-color: var(--darkest);
-    border-top-left-radius: 0.9em;
-    border-top-right-radius: 0.9em;
+    background-color: var(--accent);
     padding-left: 0;
-}
+    border: none;
+  }
 
-.nav-link img {
+  .nav-item {
+    gap: 10em;
+  }
+  
+  .nav-link img {
     filter: invert(1) brightness(2);
-}
+  }
 
-#camera-container {
-    position: relative;
-    width: 100%; /* Adjust as necessary */
-    height: auto; /* Adjust based on aspect ratio */
-    margin-bottom: 20px; /* Space between camera and form */
-}
+  .head2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    font-size: 1.5em;
+    align-items: center;
+  }
 
-#video-preview {
-    width: 100%; /* Responsive video width */
-    height: auto; /* Maintain aspect ratio */
-}
+  .yeet {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    height: auto;
+    align-items: center;
+  }
 
-#capture {
-    position: absolute;
-    bottom: -30px; /* Adjust based on your layout */
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    padding: 5px 20px; /* Larger click area */
-}
+  h2 {
+    color: var(--white);
+  }
 
-#track {
-    color: var(--darkest);
-
-}
-
-.track {
+  .btn-custom {
     background-color: var(--light);
-    border-radius: 50%;
+    width: 50%;
+  }
+  
+  #home {
+    color: var(--light);
+  
+  }
+  
+  .home {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    align-items: center;
+    align-content: center;
+    height: auto;
+    width: 100%;
+    border-radius: 1em;
     padding: 0.5em;
+    color: var(--light);
+  }
+
+  .home1 {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    align-items: center;
+    align-content: center;
+    height: auto;
+    width: 100%;
+    border-radius: 1em;
+    padding: 0.5em;
+  }
+  
+  .goal-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    background-color: var(--mid);
+    gap: 1em;
+    padding: 0;
+    border-radius: 1em;
+    color: var(--white);
+}
+
+h5 {
+  color: var(--white)
+}
+
+.delete-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+
+.dates {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    text-align: left;
+}
+
+
+.dates h3 {
+    margin-top: 1em;
+    color: var(--light);
+    font-size: 0.8em;
+}
+
+.transaction-card {
+    margin-bottom: 0.5em;
+    background-color: var(--white);
+    border-radius: 1em;
+    color: var(--darkest);
+    font-size: 0.85em;
+}
+
+h5 {
+    color: var(--accent);;
+    margin-top: 0;
+    padding: 0;
 }
