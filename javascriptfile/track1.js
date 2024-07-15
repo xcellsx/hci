@@ -1,10 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const transactionContainer = document.getElementById("transactionContainer");
+    const transactionContainer = document.getElementById("transactions-container");
     const transactionCount = document.getElementById("active-transaction-count");
-    const transactionForm = document.getElementById("transaction-form");
-    const video = document.getElementById('cameraStream');
-    const canvas = document.createElement('canvas');
-    const snap = document.getElementById('snap');
 
     function saveTransactions(transactions) {
         localStorage.setItem("transactions", JSON.stringify(transactions));
@@ -89,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const transactionForm = document.getElementById("transaction-form");
     transactionForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const name = document.getElementById("transaction-name").value.trim();
@@ -114,8 +111,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const transactions = loadTransactions();
     transactions.forEach((transaction, index) => renderTransaction(transaction, index));
     transactionCount.innerText = transactions.length;
+});
 
-    // Start camera functionality
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById('cameraStream');
+    const canvas = document.createElement('canvas');
+    const snap = document.getElementById('snap');
+
+    // Start camera stream
     function startCamera() {
         navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
             .then(function(stream) {
@@ -145,27 +148,39 @@ document.addEventListener("DOMContentLoaded", () => {
         Tesseract.recognize(
             imageDataURL,
             'eng',
-            { logger: info => console.log(info) }
+            { logger: m => console.log("Tesseract.js logger:", m) }
         ).then(({ data: { text } }) => {
-            const transactions = loadTransactions();
-            const [name, amount] = text.split('\n');
-            if (name && !isNaN(amount)) {
-                const newTransaction = { name: name.trim(), amount: parseFloat(amount.trim()) };
-                transactions.push(newTransaction);
-                saveTransactions(transactions);
-                renderTransaction(newTransaction, transactions.length - 1);
-                transactionCount.innerText = transactions.length;
-            } else {
-                alert("Unable to recognize transaction details.");
-            }
+            fillTransactionForm(text);
+        }).catch(error => {
+            console.error("Error during OCR processing", error);
         });
     }
 
-    startCamera();
+    // Fill the transaction form with recognized data
+    function fillTransactionForm(text) {
+        const nameMatch = text.match(/[a-zA-Z]+/g);
+        const amountMatch = text.match(/\$?\d+\.?\d*/);
+        if (nameMatch) {
+            document.getElementById('transaction-name').value = nameMatch.join(' ');
+        }
+        if (amountMatch) {
+            document.getElementById('transaction-amount').value = amountMatch[0].replace(/[^\d.]/g, '');
+        }
+    }
 
-    // Add event listener to the add icon to open the transaction modal
-    const addIcon = document.getElementById("add");
-    addIcon.addEventListener("click", () => {
+    // Modal event listeners
+    $('#cameraModal').on('show.bs.modal', startCamera);
+    $('#cameraModal').on('hidden.bs.modal', () => {
+        if (video.srcObject) {
+            video.srcObject.getTracks().forEach(track => track.stop());
+            video.srcObject = null;
+        }
+        // Ensure to re-open the transaction modal
         $('#transactionModal').modal('show');
     });
 });
+
+
+
+
+
