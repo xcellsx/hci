@@ -1,4 +1,7 @@
-// Load bank accounts from localStorage and display them
+document.addEventListener('DOMContentLoaded', function() {
+    loadBankAccounts();
+});
+
 function loadBankAccounts() {
     const bankCardsRow = document.getElementById('bankCardsRow');
     const bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
@@ -12,15 +15,17 @@ function loadBankAccounts() {
                     <div class="card-body">
                         <h5 class="card-title">${account.bankName}</h5>
                         <p class="card-text">Account Number: ${account.accountNumber}</p>
+                        <p class="card-text">Amount: $${account.amount.toFixed(2)}</p>
                     </div>
                 </div>
             </div>
         `;
         bankCardsRow.insertAdjacentHTML('beforeend', cardHtml);
     });
-}
 
-document.addEventListener('DOMContentLoaded', loadBankAccounts);
+    // Store the number of active accounts
+    localStorage.setItem('activeAccounts', bankAccounts.length);
+}
 
 document.getElementById('addBank').addEventListener('click', function() {
     var bankModal = new bootstrap.Modal(document.getElementById('bankModal'));
@@ -55,6 +60,7 @@ document.getElementById('bankForm').addEventListener('submit', function(event) {
         // Get bank details
         const bankName = document.getElementById('bankName').value;
         const accountNumber = document.getElementById('accountNumber').value;
+        const amount = parseFloat((Math.random() * (10000 - 100) + 100).toFixed(2)); // Generate random amount between 100 and 10000
 
         // Create a new card
         const cardHtml = `
@@ -63,6 +69,7 @@ document.getElementById('bankForm').addEventListener('submit', function(event) {
                     <div class="card-body">
                         <h5 class="card-title">${bankName}</h5>
                         <p class="card-text">Account Number: ${accountNumber}</p>
+                        <p class="card-text">Amount: $${amount.toFixed(2)}</p>
                     </div>
                 </div>
             </div>
@@ -73,8 +80,11 @@ document.getElementById('bankForm').addEventListener('submit', function(event) {
 
         // Store the bank details in localStorage
         const bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
-        bankAccounts.push({ bankName, accountNumber });
+        bankAccounts.push({ bankName, accountNumber, amount });
         localStorage.setItem('bankAccounts', JSON.stringify(bankAccounts));
+
+        // Update the number of active accounts
+        localStorage.setItem('activeAccounts', bankAccounts.length);
 
         // Reset the form
         document.getElementById('bankForm').reset();
