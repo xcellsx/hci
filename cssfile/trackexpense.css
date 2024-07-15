@@ -89,6 +89,20 @@
     background-color: var(--light);
     width: 50%;
   }
+
+  .btn-custom1 {
+    background-color: var(--accent);
+    color: var(--white);
+  }
+
+  .btn-custom2 {
+    background-color: var(--light);
+    margin-top: 1.8em;
+  }
+
+  .btn-outline-secondary {
+    margin-top: 1.8em;
+  }
   
   #home {
     color: var(--light);
@@ -163,6 +177,7 @@ h5 {
     margin-top: 1em;
     color: var(--light);
     font-size: 0.8em;
+    text-align: left;
 }
 
 .transaction-card {
@@ -178,3 +193,18 @@ h5 {
     margin-top: 0;
     padding: 0;
 }
+
+h3 {
+  color: var(--accent);
+  font-size: 1.5em;
+}
+
+.modal-title {
+  color: var(--black)
+}
+
+label {
+  color: var(--black);
+}
+
+
