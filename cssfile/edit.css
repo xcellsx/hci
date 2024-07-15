@@ -42,14 +42,14 @@ input[type="date"] {
 
 /* Custom cell colors */
 .table th {
-    background-color: var(--mid); /* Light background color */
-    color: var(--white); /* Darkest text color */
+    background-color: var(--accent); /* Light background color */
+    color: var(--black); /* Darkest text color */
     text-align: center;
 }
 
 .table tbody tr td {
-    background-color: var(--light); /* Light background color */
-    color: var(--black); /* Darkest text color */
+    background-color: var(--mid); /* Light background color */
+    color: var(--white); /* Darkest text color */
     text-align: center;
     padding: 0.5em 0;
     margin: 0;
@@ -104,29 +104,45 @@ input[type="radio"] {
     border-radius: 50%;
     background-color: var(--mid);
     border: none;
-    outline: none;
     margin-left: 4em;
 }
 
 /* Checked state */
 input[type="radio"]:checked {
-    background-color: var(--light);
+    background-color: var(--accent);
 }
 
 :root {
-    --darkest: #1c2a18;
-    --mid: #006600;
-    --light: #6eea8e;
-    --white: #E9EBED;
-    --black: #222222;
-    --accent: #826cf6;
+  --darkest: #1c2a18;
+  --mid: #006600;
+  --light: #6eea8e;
+  --white: #E9EBED;
+  --black: #222222;
+  --accent: burlywood;
+}
+
+body {
+  background: linear-gradient(300deg, var(--darkest), var(--light), var(--mid));
+  background-size: 100% 200%;
+  animation: gradientAnimation 30s ease infinite;
+  margin: 0;
+  padding: 0;
+  color: var(--black);
+  overflow-x: hidden;
+  height: 100%;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  body {
-    background-color: var(--darkest);
-    color: var(--light);
-    overflow-x: hidden;
+  50% {
+    background-position: 100% 50%;
   }
+  100% {
+    background-position: 0% 50%;
+  }
+}
   
   .container {
     display: flex;
@@ -155,23 +171,11 @@ input[type="radio"]:checked {
 
   
   h1 {
-    color: var(--white);
+    color: var(--black);
     font-size: 2.2em;
     margin: 0;
   }
   
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    z-index: 1000;
-    background-color: var(--accent);
-    padding-left: 0;
-    border: none;
-  }
   
   .nav-link img {
     filter: invert(1) brightness(2);
@@ -193,7 +197,7 @@ input[type="radio"]:checked {
 
   .btn-custom1 {
     background-color: var(--accent);
-    color: var(--white);
+    color: var(--black);
     width: 100%;
   }
 

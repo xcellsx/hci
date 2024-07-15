@@ -4,14 +4,32 @@
   --light: #6eea8e;
   --white: #E9EBED;
   --black: #222222;
-  --accent: #826cf6;
+  --accent: burlywood;
 }
 
 body {
-  background-color: var(--darkest);
-  color: var(--light);
+  background: linear-gradient(300deg, var(--darkest), var(--light), var(--mid));
+  background-size: 100% 200%;
+  animation: gradientAnimation 30s ease infinite;
+  margin: 0;
+  padding: 0;
+  color: var(--black);
   overflow-x: hidden;
+  height: 100%;
 }
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+  
 
 .container {
   display: flex;
@@ -35,7 +53,7 @@ body {
 }
 
 h1 {
-  color: var(--white);
+  color: var(--black);
   font-size: 2.2em;
   margin: 0;
 }
@@ -72,17 +90,19 @@ footer {
 
 
 .head2 h2 {
-  color: var(--white);
+  color: var(--black);
 }
 
 button {
-  background-color: var(--light);
+  background-color: var(--accent);
+  box-shadow: 2px 2px 4px rgba(28,42,24, 0.4); /* Add text shadow */
+
   width: 50%;
 }
 
 
 #home {
-  color: var(--light);
+  color: var(--mid);
 
 }
 
@@ -99,7 +119,7 @@ button {
   width: 100%;
   border-radius: 1em;
   padding: 0.5em;
-  color: var(--light);
+  color: var(--mid);
 }
 
 .home1 {
@@ -118,5 +138,7 @@ button {
 }
 
 h5 {
-color: var(--white)
+color: var(--mid)
 }
+
+h4 {color: var(--mid)}

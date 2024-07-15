@@ -1,15 +1,31 @@
 :root {
-  --darkest: #1c2a18;
-  --mid: #006600;
-  --light: #6eea8e;
-  --white: #E9EBED;
+  --darkest: rgb(28, 42, 24);
+  --mid: rgb(0, 102, 0);
+  --light: rgb(110, 234, 142);
+  --white: rgb(233, 235, 237);
   --black: #222222;
-  --accent: #826cf6;
+  --accent: burlywood;
 }
 
 body {
-  background-color: var(--darkest);
-  color: var(--light);
+  background: linear-gradient(300deg, var(--darkest), var(--light), var(--mid));
+  background-size: 100% 100%;
+  animation: gradientAnimation 30s ease infinite;
+  margin: 0;
+  padding: 0;
+  color: var(--black)
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .container {
@@ -34,7 +50,7 @@ body {
 }
 
 h1 {
-  color: var(--white);
+  color: var(--black);
   font-size: 2.2em;
   margin: 0;
 }
@@ -49,7 +65,7 @@ footer {
   z-index: 1000;
   background-color: var(--accent);
   padding-left: 0;
-  border: none;
+  border: 0px;
 }
 
 .nav-link img {
@@ -67,7 +83,7 @@ footer {
 }
 
 .calendar {
-  width: 100%;
+  width: 98%;
   border-radius: 1em;
   background-color: var(--darkest);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -122,20 +138,30 @@ footer {
 
 .current-date {
   background-color: var(--accent);
+  color: var(--black);
 }
 
 .card::after {
   display: flex;
-  width: 100%;
+  margin-top: 10em;
   padding-left: 3em;
   padding-right: 3em;
   padding-bottom: 3em;
-  background-color: var(--white);
-  margin-bottom: 3em;
+  box-shadow: 0 10px 10px var(--darkest);
+
+  
 }
 
 .card::before {
-  display: none
+  display: none;
+  margin-top: 10em;
+  width: 100%;
+
+}
+
+.card {
+  border-radius: 1em;
+
 }
 
 .category-container {
@@ -152,12 +178,17 @@ footer {
 #expenditureContent {
   display: flex;
   width: 100%;
-  padding: 0 2.5em;
-  margin-bottom: 5em;
+  padding: 0 3.7em;
+  margin-top: 1em; 
+  margin-bottom: 1em; 
+  padding-bottom: 1em;
+  background-color: var(--mid);
+  color: var(--white);
+
 }
 
 #home {
-  color: var(--light);
+  color: var(--mid);
 
 }
 
@@ -174,7 +205,7 @@ footer {
   width: 100%;
   border-radius: 1em;
   padding: 0.5em;
-  color: var(--light);
+  color: var(--mid);
 }
 
 .home1 {
@@ -190,4 +221,24 @@ footer {
   width: 100%;
   border-radius: 1em;
   padding: 0.5em;
+}
+
+h5 {
+  color: var(--white);
+}
+
+#charts-container {
+  padding: 1em;
+  padding-bottom: 2em;
+  margin-top: 0;
+  background-color: var(--light);
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+  margin-bottom: 5em;
+  box-shadow: 0 -5px 10px var(--darkest);  /* Adjust values as needed */
+  height: auto;
+}
+
+H2 {
+  TEXT-ALIGN: CENTER
 }

@@ -4,7 +4,7 @@
   --light: #6eea8e;
   --white: #E9EBED;
   --black: #222222;
-  --accent: #826cf6;
+  --accent: burlywood;
 }
 
 body {
@@ -83,14 +83,14 @@ h1 {
 .category {
   padding: 10px 15px;
   background-color: var(--accent);
-  color: var(--white);
+  color: var(--black);
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .category:hover {
-  background-color: #3600b3;
+  background-color: rgb(196, 139, 64);
 }
 
 .button-container {
@@ -131,7 +131,7 @@ button {
 
 .selected-category {
   background-color: var(--accent);
-  color: var(--white);
+  color: var(--black);
   border-radius: 5px;
   padding: 5px 10px;
   margin: 5px;

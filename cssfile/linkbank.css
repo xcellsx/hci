@@ -4,14 +4,32 @@
   --light: #6eea8e;
   --white: #E9EBED;
   --black: #222222;
-  --accent: #826cf6;
+  --accent: burlywood;
 }
 
 body {
-  background-color: var(--darkest);
-  color: var(--light);
+  background: linear-gradient(300deg, var(--darkest), var(--light), var(--mid));
+  background-size: 100% 450%;
+  animation: gradientAnimation 30s ease infinite;
+  margin: 0;
+  padding: 0;
+  color: var(--black);
   overflow-x: hidden;
+  height: 100%;
 }
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 
 .container {
   display: flex;
@@ -57,7 +75,7 @@ body {
 }
 
 h1 {
-  color: var(--white);
+  color: var(--black);
   font-size: 2.2em;
   margin: 0;
 }
@@ -93,7 +111,7 @@ footer {
 }
 
 .head2 h2 {
-  color: var(--white);
+  color: var(--black);
 }
 
 .btn-custom {
@@ -112,9 +130,6 @@ footer {
   padding: 0.5em;
 }
 
-h5 {
-color: var(--white)
-}
 
 .delete-btn {
   display: none;
@@ -139,12 +154,15 @@ button {
 }
 
 .card {
-  background-color: var(--accent);
+  background-color: rgba(0,102,0, 0.5);
 }
 
 .card h5 {
-  margin: 0;
-  
+  margin-bottom: 1em;
+  margin-top: 0;
+  color: var(--accent);
+  text-shadow: 2px 2px 4px rgba(28,42,24, 0.4); /* Add text shadow */
+
 }
 
 .card p {
