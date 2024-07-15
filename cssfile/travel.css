@@ -202,23 +202,41 @@
     border-radius: 1em; /* Rounded corners */
 }
 
-.btn-eye {
-    color: var(--light);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-bottom: 1em;
-    margin-top: 0;
+.butts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: auto;
+  align-items: center;
+  width: 70%;
+  margin-top: 1em;
 }
 
-.btn-edit {
-    color: var(--light);
-    border: none;
+.box {
+  display: flex;
+  justify-content: center;
+}
+ .btn-eye {
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-bottom: 1em;
-    margin-top: 0;
+    border: none;
+    padding-left: 0.5em;
+
+    }
+ 
+.btn-edit {
+    transition: background-color 0.3s ease;
+    border: none;
+    padding: 0;
+    padding-left: 0.4em;
 }
+
+.btn-delete {
+  transition: background-color 0.3s ease;
+  border: none;
+  padding:0;
+}
+
 
 #goal-form, #edit-form {
     color: var(--darkest)

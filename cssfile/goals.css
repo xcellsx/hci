@@ -4,7 +4,7 @@
     --light: #6eea8e;
     --white: #E9EBED;
     --black: #222222;
-    --accent: #826cf6;
+    --accent: burlywood;
   }
   
   body {
@@ -76,9 +76,14 @@
     background-color: var(--light);
     width: 50%;
   }
+
+  .btn-custom1 {
+    background-color: var(--accent);
+    color: var(--white);
+  }
   
   #home {
-    color: var(--light);
+    color: var(--mid);
   
   }
   
@@ -95,7 +100,7 @@
     width: 100%;
     border-radius: 1em;
     padding: 0.5em;
-    color: var(--light);
+    color: var(--mid);
   }
   
   .home1 {
@@ -141,4 +146,14 @@ h5 {
     display: block;
 }
 
+.modal-title {
+  color: var(--black);
+}
 
+label {
+  color: var(--black)
+}
+
+p {
+  color: burlywood
+}
