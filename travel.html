@@ -8,38 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
     <link href="cssfile/travel.css" rel="stylesheet">
     <link rel="icon" href="images/bb04.png" type="image/x-icon" sizes="128x128">
-    <style>
-          .home {
-    background-color: var(--light);
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    font-size: 0.8em;
-    align-items: center;
-    align-content: center;
-    height: auto;
-    width: 100%;
-    border-radius: 1em;
-    padding: 0.5em;
-  }
-
-  .home1 {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    font-size: 0.8em;
-    align-items: center;
-    align-content: center;
-    height: auto;
-    width: 100%;
-    border-radius: 1em;
-    padding: 0.5em;
-  }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -49,9 +17,9 @@
                     <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
                 </svg>
             </a>
-            <div class = "yeet">
-            <h1 id="goal-name" style="margin-left: 10px;">Travel</h1>
-            <p>Goal Breakdown</p>
+            <div class="yeet">
+                <h1 id="goal-name" style="margin-left: 10px;">Travel</h1>
+                <p>Goal Breakdown</p>
             </div>
         </div>
     
@@ -61,7 +29,7 @@
             <div class="svg-icons">
                 <a href="#" class="text-decoration-none text-black" id="add-goal" data-bs-toggle="modal" data-bs-target="#goalModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--white)" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0 a8 8 0 0 0 0 16"/>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                     </svg>
                 </a>
@@ -72,7 +40,7 @@
             Total Active Goals: <span id="active-goal-count">0</span>
         </div>
 
-        <div id="goals-container">
+        <div id="goals-container" class = "mb-5">
             <!-- Dynamic goal cards go here -->
         </div>
 
@@ -87,18 +55,18 @@
                     <div class="modal-body">
                         <form id="goal-form">
                             <div class="mb-3">
-                                <label for="goal-name" class="form-label">Goal Name</label>
-                                <input type="text" class="form-control" id="goal-name" required>
+                                <label for="new-goal-name" class="form-label">Goal Name</label>
+                                <input type="text" class="form-control" id="new-goal-name" required>
                             </div>
                             <div class="mb-3">
-                                <label for="goal-amount" class="form-label">Goal Amount</label>
-                                <input type="number" class="form-control" id="goal-amount" required>
+                                <label for="new-goal-amount" class="form-label">Goal Amount</label>
+                                <input type="number" class="form-control" id="new-goal-amount" required>
                             </div>
                             <div class="mb-3">
-                                <label for="current-amount" class="form-label">Current Amount</label>
-                                <input type="number" class="form-control" id="current-amount" required>
+                                <label for="new-current-amount" class="form-label">Current Amount</label>
+                                <input type="number" class="form-control" id="new-current-amount" required>
                             </div>
-                            <div class="d-flex justify-content-end"> <!-- Align content to the right -->
+                            <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn btn-custom1">Add Goal</button>
                             </div>
                         </form>
@@ -129,7 +97,7 @@
                                 <label for="edit-current-amount" class="form-label">Current Amount ($)</label>
                                 <input type="number" step="0.01" class="form-control" id="edit-current-amount" required>
                             </div>
-                            <div class="d-flex justify-content-end"> <!-- Align content to the right -->
+                            <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn btn-custom1">Save Changes</button>
                             </div>
                         </form>
@@ -137,35 +105,177 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <footer>
-            <ul class="nav justify-content-center gap-3">
-                <li class="nav-item"><a href="goals.html" class="nav-link home"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" id = "home" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
-                    <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
-                  </svg>Goals</a></li>
-      
-                <li class="nav-item"><a href="bot.html" class="nav-link text-body-secondary home1"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
-                    <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"/>
-                    <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/>
-                  </svg>Chatbot</a></li>
-                
-                <li class="nav-item"><a href="./mainpage.html" class="nav-link text-body-secondary home1"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
-                  </svg>Home</a></li>
-      
-                <li class="nav-item"><a href="track.html" class="nav-link text-body-secondary home1"><svg xmlns="http://www.w3.org/2000/svg"  width="30" height="30" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
-                    <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
-                  </svg>Expenses</a></li>
-                
-                <li class="nav-item"><a href="settings.html" class="nav-link text-body-secondary home1"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                    <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-                    <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
-                  </svg>Settings</a></li>
-            </ul>
-        </footer>
+    <footer>
+        <ul class="nav justify-content-center gap-3">
+            <li class="nav-item"><a href="goals.html" class="nav-link home"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" id="home" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
+            </svg>Goals</a></li>
+
+            <li class="nav-item"><a href="bot.html" class="nav-link text-body-secondary home1"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
+                <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"/>
+                <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/>
+            </svg>Chatbot</a></li>
+            
+            <li class="nav-item"><a href="./mainpage.html" class="nav-link text-body-secondary home1"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+            </svg>Home</a></li>
+
+            <li class="nav-item"><a href="track.html" class="nav-link text-body-secondary home1"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+                <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
+            </svg>Expenses</a></li>
+            
+            <li class="nav-item"><a href="settings.html" class="nav-link text-body-secondary home1"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+            </svg>Settings</a></li>
+        </ul>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="javascriptfile/travel.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const goalForm = document.getElementById('goal-form');
+            const goalModal = new bootstrap.Modal(document.getElementById('goalModal'));
+            const editForm = document.getElementById('edit-form');
+            const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            const goalCountElement = document.getElementById('active-goal-count');
+            const goalsContainer = document.getElementById('goals-container');
+            let goalCount = 0;
+            let currentEditingCard = null;
+    
+            function createGoalCard(newName, goalAmount, currentAmount) {
+                const progressPercent = (currentAmount / goalAmount) * 100;
+    
+                const goalCard = document.createElement('div');
+                goalCard.className = 'card me-3 mb-3';
+                goalCard.style.textAlign = 'center';
+                goalCard.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">${newName}</h5>
+                        <p class="card-text">Goal Amount: $${goalAmount.toFixed(2)}</p>
+                        <p class="card-text">Current Amount: $${currentAmount.toFixed(2)}</p>
+                        <p class="card-text">Progress: ${Math.round(progressPercent)}%</p>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: ${progressPercent}%" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progressPercent}"></div>
+                        </div>
+                        <div class="box">
+                            <div class="butts">
+                                <a href="edit-goals.html" class="btn-eye">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="var(--light)" class="bi bi-eye" viewBox="0 0 16 16">
+                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                    </svg>
+                                </a>
+                                <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="var(--light)" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                    </svg>
+                                </button>
+                                <button class="btn btn-delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="var(--white)" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    goalsContainer.appendChild(goalCard);
+    
+                    // Edit button functionality
+                    goalCard.querySelector('.btn-edit').addEventListener('click', function () {
+                        const cardTitle = goalCard.querySelector('.card-title').textContent;
+                        const goalText = goalCard.querySelector('.card-text').textContent.split('$');
+                        const goalAmountText = goalText[1];
+                        const currentAmountText = goalCard.querySelector('.card-text:nth-of-type(2)').textContent.split('$')[1];
+    
+                        document.getElementById('edit-goal-name').value = cardTitle;
+                        document.getElementById('edit-goal-amount').value = parseFloat(goalAmountText);
+                        document.getElementById('edit-current-amount').value = parseFloat(currentAmountText);
+    
+                        currentEditingCard = goalCard;
+                    });
+    
+                    // Delete button functionality
+                    goalCard.querySelector('.btn-delete').addEventListener('click', function () {
+                        goalCard.remove();
+                        goalCount--;
+                        goalCountElement.textContent = goalCount;
+                        saveGoals();
+                    });
+    
+                    goalCount++;
+                    goalCountElement.textContent = goalCount;
+                }
+    
+                function saveGoals() {
+                    const goalCards = document.querySelectorAll('#goals-container .card');
+                    const goals = Array.from(goalCards).map(card => {
+                        return {
+                            newName: card.querySelector('.card-title').textContent,
+                            amount: parseFloat(card.querySelector('.card-text').textContent.split('$')[1]),
+                            currentAmount: parseFloat(card.querySelector('.card-text:nth-of-type(2)').textContent.split('$')[1])
+                        };
+                    });
+                    localStorage.setItem('goals', JSON.stringify(goals));
+                    localStorage.setItem('travelGoalCount', goalCount);
+                }
+    
+                goalForm.addEventListener('submit', function (event) {
+                    event.preventDefault();
+    
+                    const newName = document.getElementById('new-goal-name').value;
+                    const goalAmount = parseFloat(document.getElementById('new-goal-amount').value);
+                    const currentAmount = parseFloat(document.getElementById('new-current-amount').value);
+    
+                    if (isNaN(goalAmount) || isNaN(currentAmount) || goalAmount <= 0) {
+                        alert('Please enter valid amounts.');
+                        return;
+                    }
+    
+                    createGoalCard(newName, goalAmount, currentAmount);
+                    saveGoals();
+    
+                    goalForm.reset();
+                    goalModal.hide();
+                });
+    
+                // Edit form submit event listener
+                editForm.addEventListener('submit', function (event) {
+                    event.preventDefault();
+    
+                    const newName = document.getElementById('edit-goal-name').value;
+                    const goalAmount = parseFloat(document.getElementById('edit-goal-amount').value);
+                    const currentAmount = parseFloat(document.getElementById('edit-current-amount').value);
+    
+                    if (isNaN(goalAmount) || isNaN(currentAmount) || goalAmount <= 0) {
+                        alert('Please enter valid amounts.');
+                        return;
+                    }
+    
+                    currentEditingCard.querySelector('.card-title').textContent = newName;
+                    currentEditingCard.querySelector('.card-text').textContent = `Goal Amount: $${goalAmount.toFixed(2)}`;
+                    currentEditingCard.querySelector('.card-text:nth-of-type(2)').textContent = `Current Amount: $${currentAmount.toFixed(2)}`;
+                    const progressPercent = (currentAmount / goalAmount) * 100;
+                    currentEditingCard.querySelector('.progress-bar').style.width = `${progressPercent}%`;
+                    currentEditingCard.querySelector('.progress-bar').setAttribute('aria-valuenow', progressPercent);
+                    currentEditingCard.querySelector('.card-text:nth-of-type(3)').textContent = `Progress: ${Math.round(progressPercent)}%`;
+    
+                    saveGoals();
+                    editModal.hide();
+                });
+    
+                // Load saved goals from local storage
+                const savedGoals = JSON.parse(localStorage.getItem('goals') || '[]');
+                savedGoals.forEach(goal => {
+                    createGoalCard(goal.newName, goal.amount, goal.currentAmount);
+                });
+            });
+        </script>
+    
+    
 </body>
 </html>
