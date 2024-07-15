@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Append save button
         const saveButton = document.createElement("button");
-        saveButton.className = "btn btn-primary mt-2";
+        saveButton.className = "btn btn-custom mt-2";
         saveButton.textContent = "Save";
         saveButton.addEventListener("click", saveProfile);
         passwordElement.appendChild(saveButton);

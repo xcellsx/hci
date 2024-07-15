@@ -239,18 +239,18 @@ function generateMonthlyCategoryChart() {
 
     // Colors for each category
     const backgroundColors = [
-        'rgba(255, 99, 132, 0.2)',  // Red
-        'rgba(54, 162, 235, 0.2)',  // Blue
-        'rgba(255, 206, 86, 0.2)',  // Yellow
-        'rgba(75, 192, 192, 0.2)',  // Green
-        'rgba(153, 102, 255, 0.2)', // Purple
+        'rgba(0, 102, 0, 1)',  // Red
+        'rgba(28, 42, 2, 1)',  // Blue
+        'rgba(0, 102, 0, 0.75)',  // Yellow
+        'rgba(0, 102, 0, 0.5)',  // Green
+        'rgba(28, 42, 2, 0.5)',  // Blue
     ];
     const borderColors = [
-        'rgba(255, 99, 132, 1)',  // Red
-        'rgba(54, 162, 235, 1)',  // Blue
-        'rgba(255, 206, 86, 1)',  // Yellow
-        'rgba(75, 192, 192, 1)',  // Green
-        'rgba(153, 102, 255, 1)', // Purple
+        'rgba(0, 102, 0, 1)',  // Red
+        'rgba(28, 42, 2, 1)',  // Blue
+        'rgba(0, 102, 0, 0.75)',  // Yellow
+        'rgba(0, 102, 0, 0.5)',  // Green
+        'rgba(28, 42, 2, 0.5)',  // Blue
     ];
 
     // Create the chart
@@ -299,7 +299,7 @@ function generateMonthlyCategoryChart() {
                         let percentage = (value * 100 / sum).toFixed(2) + "%";
                         return percentage;
                     },
-                    color: '#fff',
+                    color: '#E9EBED', // Change this to the desired label color
                     labels: {
                         title: {
                             font: {
@@ -313,5 +313,4 @@ function generateMonthlyCategoryChart() {
         plugins: [ChartDataLabels]
     });
 }
-
 

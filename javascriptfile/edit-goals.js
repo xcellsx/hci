@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (goals.length > 0) {
         const goal = goals[0]; // Assuming you want to edit the first goal. Adjust as necessary.
 
-        const goalName = goal.name;
+        const goalName = goal.newName;
         const targetAmount = goal.amount;
-        const currentAmount = goal.current || 0; // Initialize currentAmount from goal or 0 if not set
+        const currentAmount = goal.currentAmount || 0; // Initialize currentAmount from goal or 0 if not set
         startDate = goal.startDate || new Date().toISOString().split('T')[0];
         endDate = goal.endDate || new Date().toISOString().split('T')[0];
 
