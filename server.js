@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 app.get('/api-key', async (req, res) => {
     try {
-        const apiKey = await getSecret('hci-iteration2', 'OPENAI_API_KEY');
+        const apiKey = await getSecret('hci-iteration2', 'openai');
         res.json({ apiKey });
     } catch (error) {
         console.error('Failed to retrieve API key:', error);
