@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const goalName = goal.newName;
         const targetAmount = goal.amount;
-        const currentAmount = goal.currentAmount || 0; // Initialize currentAmount from goal or 0 if not set
+        currentAmount = goal.currentAmount || 0; // Initialize currentAmount from goal or 0 if not set
         startDate = goal.startDate || new Date().toISOString().split('T')[0];
         endDate = goal.endDate || new Date().toISOString().split('T')[0];
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const weekEndYear = weekEndDate.getFullYear().toString().slice(-2);
 
                     const period = `${weekStartDate.getDate()}/${weekStartDate.getMonth() + 1}/${weekStartYear} - ${weekEndDate.getDate()}/${weekEndDate.getMonth() + 1}/${weekEndYear}`;
-                    breakdown.push({ period, amount: weeklyAmount.toFixed(2) });
+                    breakdown.push({ period, amount: weeklyAmount.toFixed(2), checked: false });
                     current.setDate(current.getDate() + 7);
                 }
             } else if (view === 'monthly') {
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const month = current.toLocaleString('default', { month: 'long' });
                     const year = current.getFullYear();
                     const period = `${month} ${year}`;
-                    breakdown.push({ period, amount: monthlyAmount.toFixed(2) });
+                    breakdown.push({ period, amount: monthlyAmount.toFixed(2), checked: false });
                     current.setMonth(current.getMonth() + 1);
                 }
             } else if (view === 'yearly') {
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 while (current <= endDate) {
                     const year = current.getFullYear();
                     const period = `${year}`;
-                    breakdown.push({ period, amount: yearlyAmount.toFixed(2) });
+                    breakdown.push({ period, amount: yearlyAmount.toFixed(2), checked: false });
                     current.setFullYear(current.getFullYear() + 1);
                 }
             }
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function renderBreakdown(breakdown) {
             const breakdownTable = document.getElementById('breakdown-table');
             breakdownTable.innerHTML = '';
-            breakdown.forEach(item => {
+            breakdown.forEach((item, index) => {
                 const row = document.createElement('tr');
 
                 // Checkbox column
@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         item.checked = false; // Update item state in breakdown
                     }
                     document.getElementById('current-amount').textContent = `$${currentAmount.toFixed(2)}`;
-                    goal.current = currentAmount; // Update current amount in the goal object
-                    goal.breakdown = breakdown; // Update breakdown in the goal object
+                    goal.currentAmount = currentAmount; // Update current amount in the goal object
+                    goal.breakdown[index].checked = item.checked; // Update breakdown in the goal object
                     localStorage.setItem('goals', JSON.stringify(goals)); // Update local storage
                 });
                 cellCheckbox.appendChild(checkbox);
