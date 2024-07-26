@@ -12,13 +12,14 @@
 </head>
 <body>
     <div class="container">
-        <a href = "index.html"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+        <div class = box>
+        <a href = "index.html"><svg xmlns="http://www.w3.org/2000/svg" id = back width="30" height="30" fill="var(--dark-blue)" class="bi bi-arrow-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
           </svg></a>
-        <div class = "head">
-            <h1>Create Your Account</h1>
-            <div class = "prog">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--white)" class="bi bi-circle-fill" viewBox="0 0 16 16">
+        <div class = "rect">
+            <h1>Sign Up</h1>
+            <div class = "dots">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--dark-blue)" class="bi bi-circle-fill" viewBox="0 0 16 16">
                     <circle cx="8" cy="8" r="8"/>
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
@@ -28,59 +29,36 @@
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                 </svg>
             </div>
+        </div>
         </div> 
     </div> 
 
-        <div class = "form">
-            <form method="post">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Name" required />
+    <div class = "form">
+        <form method="post">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Name" required />
+        
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Username" required />
             
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Username" required />
-                
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Email" required />
-                
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password" required />
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email" required />
             
-                <!-- <label for="phone">Phone Number</label>
-                <input type="text" id="phone" name="phone-number" placeholder="Phone Number" required />
-                                
-                <label for="birthday">Birthday</label>
-                <input type="date" name="birthday" id="birthday" placeholder="Birthday" required />
-                
-                <label for="bank">Bank</label>
-                <input type="text" name="bank" id="bank" placeholder="Bank" required />
-                
-                <label for="account_number">Account Number</label>
-                <input type="text" id="account_number" name="account_number" placeholder="Bank Account Number" required />
-                
-                <label>OTP</label>
-                <div class="otp-container">
-                    <input type="number" name="otp" placeholder="OTP" id="otp-input" required />
-                    <button type="button" onclick="generateOTP()">OTP</button>
-                </div>
-                <div class="button">
-                    <button type="button" onclick="resendOTP()">Resend OTP</button>
-                    <button type="button" onclick="verifyOTP()">Submit</button>
-                </div>
-                <p id="message"></p> -->
-                
-                <label>
-                    <input type="checkbox" name="check" id="termsCheckbox" onclick="toggleSubmitButton()">I agree to the terms and conditions
-                </label>            
-                
-                <button type="button" id="nextButton" onclick="goToNextPage()" disabled>Next</button>
-            </form>
-        </div>
-    <!-- </div> -->
-
-    <script>
-        function goToNextPage() {
-            window.location.href = 'owncategories.html';
-        }
-    </script>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required />
+        
+            <label>
+                <input type="checkbox" name="check" id="termsCheckbox" onclick="toggleSubmitButton()"><span style = "padding:0; font-size: 0.9em;">I agree to the terms and conditions</span>
+            </label>            
+            
+            <div class = "button-end">
+                <button type="button" id="nextButton" onclick="goToNextPage()" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--white)" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

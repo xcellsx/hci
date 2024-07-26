@@ -1,40 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
-  --darkest: #13714C;
-  --mid: #3AB67D;
-  --light: #A2E494;
-  --main: #E9EBED;
-  --black: #000;
-  --accent: burlywood;
+  --dark-blue: #435059;
+  --dark-green: #7D8274;
+  --olive: #A9A793;
+  --blue: #9BC1C3;
+  --white: #F6F8EF;
+  --brown: #655C4E;
 }
 
 body {
-  background: linear-gradient(300deg, var(--darkest), var(--light), var(--mid));
-  background-size: 100% 150%;
-  animation: gradientAnimation 30s ease infinite;
-  margin: 0;
-  padding: 0;
-  color: var(--black)
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-body {
-  color: var(--darkest);
-  overflow: hidden;
-  place-content: center; 
-  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--blue);
+  color: var(--dark-blue);
+  font-family: "Poppins", sans-serif;
 }
 
 .container {
@@ -42,31 +23,33 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
+  margin-top: 3em;
 }
 
-.box1 {
-  margin-top: 0;
+img {
+  height: 16em;
+  width: 20em;
+  margin-bottom: 3em;
 }
 
 input {
-  width: 60%;
-  background-color: var(--main);
+  width: 80%;
+  background-color: var(--white);
   border: none;
   outline: none;
-  margin-top: 0;
 }
 
 button { 
-    border-radius: 20px;
-    background: var(--accent);
-    color: var(--black);
-    font-size: 12px;
-    font-weight: bold; 
-    padding: 12px 45px; 
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  border-radius: 0.5em;
+  background: var(--dark-blue);
+  color: var(--white);
+  font-size: 0.8em;
+  padding: 12px 45px; 
+  font-family: "Poppins", sans-serif;
+  border: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .links {
@@ -77,24 +60,9 @@ button {
 }
 
 .links button{
-    color: var(--black);
+    color: var(--dark-blue);
     margin-top: 1em;
     background-color: transparent;
     border: none;
-    font-size: 10px;
-}
-
-.container img {
-  margin-bottom: 1em; /* Adjust the value to reduce the gap */
-  margin-top: 4em;
-  filter: invert(1);
-}
-.container input {
-  margin-top: 5px; /* Adjust the value to reduce the gap */
-}
-.container button {
-  margin-top: 10px; /* Adjust the value to reduce the gap */
-}
-.container .links {
-  margin-bottom: 2em; /* Adjust the value to reduce the gap */
+    font-size: 9px;
 }

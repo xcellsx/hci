@@ -8,34 +8,34 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
     <link href="cssfile/linkbank.css" rel="stylesheet">
     <link rel="icon" href="images/bb04.png" type="image/x-icon" sizes="128x128">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="head">
-            <div class="rect">
-                <a href="settings.html" style="text-decoration: none; color: var(--darkest);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
-                    </svg>
-                </a>
-                
-                <svg id="addBank" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--darkest)" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+    <div class="head">
+        <div class="rect">
+            <a href="settings.html" style="text-decoration: none; color: var(--darkest);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
                 </svg>
-            </div>
-
-            <div class="yeet">
-                <h1 style="margin-left: 10px;">Link Bank</h1>
-            </div>
+            </a>
+            
+            <svg id="addBank" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--darkest)" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+            </svg>
         </div>
 
-        <div class="head2 row">
-            <div id="bankCardsContainer">
-            <h2>Linked Bank Accounts</h2>
+        <div class="yeet">
+            <h1 style="margin-left: 10px;">Link Bank</h1>
+            <p id="activeAccountsCounter" style="margin-left: 10px;">Active Accounts: 0</p>
+        </div>
+    </div>
+
+    <div class="head2 row">
+        <div id="bankCardsContainer">
             <div class="row" id="bankCardsRow">
                 <!-- Bank cards will be appended here -->
-            </div>
             </div>
         </div>
     </div>
@@ -51,30 +51,71 @@
                 <div class="modal-body">
                     <form id="bankForm">
                         <div class="mb-3">
-                            <label for="bankName" class="form-label">Bank Name</label>
-                            <input type="text" class="form-control" id="bankName" name="bankName" required>
+                            <label for="linkBankName" class="form-label">Bank Name</label>
+                            <input type="text" class="form-control" id="linkBankName" name="linkBankName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="accountNumber" class="form-label">Account Number</label>
-                            <input type="text" class="form-control" id="accountNumber" name="accountNumber" required>
+                            <label for="linkAccountNumber" class="form-label">Account Number</label>
+                            <input type="text" class="form-control" id="linkAccountNumber" name="linkAccountNumber" required>
                         </div>
                         <div class="mb-3">
-                            <label for="accountHolder" class="form-label">Account Holder Name</label>
-                            <input type="text" class="form-control" id="accountHolder" name="accountHolder" required>
+                            <label for="linkCardNum" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="linkCardNum" name="linkCardNum" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="linkCardExp" class="form-label">Card Expiry Date (MM/YY)</label>
+                            <input type="text" class="form-control" id="linkCardExp" name="linkCardExp" required>
                         </div>
                         <div class="mb-3" id="otpSection" style="display: none;">
                             <label for="otp" class="form-label">OTP</label>
                             <input type="text" class="form-control" id="otp" name="otp" required>
                         </div>
                         <button type="button" id="generateOtpButton" class="btn btn-custom">Generate OTP</button>
+                        <button type="button" id="regenerateOtpButton" class="btn btn-custom" style="display: none;">Regenerate OTP</button>
                         <button type="submit" id="verifyButton" class="btn btn-custom" style="display: none;">Verify OTP</button>
                     </form>
                 </div>
+                
             </div>
         </div>
     </div>
 
+    <!-- Edit/Delete Modal -->
+<div class="modal fade" id="editDeleteModal" tabindex="-1" aria-labelledby="editDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDeleteModalLabel">Edit/Delete Bank Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editDeleteForm">
+                    <div class="mb-3">
+                        <label for="editBankName" class="form-label">Bank Name</label>
+                        <input type="text" class="form-control" id="editBankName" name="editBankName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAccountNumber" class="form-label">Account Number</label>
+                        <input type="text" class="form-control" id="editAccountNumber" name="editAccountNumber" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCardNum" class="form-label">Card Number</label>
+                        <input type="text" class="form-control" id="editCardNum" name="editCardNum" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCardExp" class="form-label">Card Expiry Date (MM/YY)</label>
+                        <input type="text" class="form-control" id="editCardExp" name="editCardExp" required>
+                    </div>
+                    <button type="submit" class="btn btn-custom">Save Changes</button>
+                    <button type="button" id="deleteBankButton" class="btn btn-danger">Delete Bank</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src = "javascriptfile/linkbank.js"></script>
+    <script src="javascriptfile/linkbank.js"></script>
 </body>
 </html>

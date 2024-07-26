@@ -1,61 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 :root {
-    --darkest: #1c2a18;
-    --mid: #006600;
-    --light: #6eea8e;
-    --white: #E9EBED;
-    --black: #222222;
-    --accent: burlywood;
-  }
-  
-  body {
-    background: linear-gradient(300deg, var(--darkest), var(--light), var(--mid));
-    background-size: 100% 150%;
-    animation: gradientAnimation 30s ease infinite;
-    margin: 0;
-    padding: 0;
-    color: var(--black);
-    overflow-x: hidden;
-  }
-  
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: start;
-    align-items: start;
-    box-sizing: border-box;
-    padding: 2em;
-  }
-  
-  .head {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-  }
-  
-  h1 {
-    color: var(--black);
-    font-size: 2.2em;
-    margin: 0;
-  }
-  
+  --dark-blue: #435059;
+  --dark-green: #7D8274;
+  --olive: #A9A793;
+  --blue: #9BC1C3;
+  --white: #F6F8EF;
+  --brown: #655C4E;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--white);
+  color: var(--dark-blue);
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  padding: 0;
+  margin:0
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  padding: 1em;
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.cat-tabs {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px;
+}
+
+.btn-2 {
+  background-color: var(--dark-blue);
+  box-shadow: 2px 2px 4px rgba(28, 42, 24, 0.4);
+  border: none;
+  color: white; /* Ensure text color is readable */
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.btn-2:active,
+.btn-2:hover {
+  background-color: var(--dark-green);
+  box-shadow: 2px 2px 4px rgba(28, 42, 24, 0.4);
+  border: none;
+  outline: none; /* Remove default focus outline */
+}
+
+h1 {
+  font-weight: bold;
+  padding-left: 0.5em;
+  color: var(--dark-blue);
+}
+
   footer {
     position: fixed;
     bottom: 0;
@@ -64,117 +69,105 @@
     padding-top: 10px;
     padding-bottom: 10px;
     z-index: 1000;
-    background-color: var(--accent);
+    background-color: var(--olive);
     padding-left: 0;
     border: none;
-  }
-  
-  .nav-link img {
-    filter: invert(1) brightness(2);
   }
 
   .head2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     width: 100%;
-    text-align: center;
+    text-align: left;
     padding: 0;
     margin: 0;
-  }
-  
-  .head2 h2 {
-    color: var(--black);
+    align-items: center;
+    padding-left: 2em;
   }
 
-  .btn-custom {
-    background-color: var(--light);
-    width: 50%;
+  #add-goal {
+    padding-right: 2em;
   }
 
-  .btn-custom1 {
-    background-color: var(--accent);
-    color: var(--black);
-  }
-  
-  #home {
-    color: var(--mid);
-  
-  }
-  
-  .home {
+  .head3 {
     display: flex;
     flex-direction: column;
-    text-align: center;
+    width: 100%;
+    text-align: left;
+    padding: 1em;
     margin: 0;
-    padding: 0;
-    font-size: 0.8em;
-    align-items: center;
-    align-content: center;
+    padding-left: 2em;
+    padding-right: 2em;
+    margin-bottom: 5em;
+  }
+
+  .goalcard {
+    background-color: var(--blue);
+    border-radius: 1em;
+    padding: 1em;
+    padding-top: 1.5em;
+  }
+
+  .grp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     height: auto;
-    width: 100%;
-    border-radius: 1em;
-    padding: 0.5em;
-    color: var(--mid);
   }
-  
-  .home1 {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    font-size: 0.8em;
-    align-items: center;
-    align-content: center;
-    height: auto;
-    width: 100%;
-    border-radius: 1em;
-    padding: 0.5em;
-  }
-  
-  .goal-card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
-    background-color: var(--mid);
-    gap: 1em;
-    padding: 0;
-    border-radius: 1em;
-    color: var(--white);
+
+#home {
+  color: var(--white);
 }
 
-h5 {
-  color: var(--white)
+.home {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8em;
+  align-items: center;
+  align-content: center;
+  height: auto;
+  width: 100%;
+  border-radius: 1em;
+  padding: 0.5em;
+  color: var(--white);
 }
 
-.delete-btn {
-    display: none;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+#home1 {
+  color: var(--dark-green);
 }
 
-.goal-card.dragging .delete-btn {
-    display: block;
+.home1 {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8em;
+  align-items: center;
+  align-content: center;
+  height: auto;
+  width: 100%;
+  border-radius: 1em;
+  padding: 0.5em;
+  color: var(--dark-green);
 }
 
-.modal-title {
-  color: var(--black);
+.wow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2em;
 }
 
-label {
-  color: var(--black)
+.grp p {
+  margin: 0;
 }
 
-p {
-  color: var(--black)
+.goalcard {
+  margin-bottom: 1em;
 }
 
-.goal-card p {
-  color: burlywood
-
-}

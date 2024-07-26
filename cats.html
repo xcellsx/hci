@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
+    <link rel="stylesheet" href="./cssfile/cats.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./javascriptfile/cats.js" defer></script>
+    <link rel="icon" href="images/bb04.png" type="image/x-icon" sizes="128x128">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <a href="about-you.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--dark-blue)" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                </svg>
+            </a>
+            <div class="rect">
+                <h1>Dreams</h1>
+                <div class="dots">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--dark-blue)" class="bi bi-circle-fill">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--dark-blue)" class="bi bi-circle-fill">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--dark-blue)" class="bi bi-circle-fill">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cats">
+        <p class="header">Selected Categories</p>
+        <div class="category-cloud">
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-utensils"></i> Food</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-train"></i> Train</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-bus"></i> Bus</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-car"></i> Car</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-plane"></i> Plane</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-shopping-cart"></i> Grocery</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-shopping-bag"></i> Shopping</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-university"></i> Bank</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-tools"></i> Repair</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-heartbeat"></i> Health</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-globe"></i> Travel</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-music"></i> Music</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-book"></i> Books</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-dumbbell"></i> Fitness</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-gamepad"></i> Gaming</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-chart-line"></i> Investment</span>
+            <span class="category" onclick="toggleCategory(this)"><i class="fas fa-pills"></i> Medication</span>
+        </div>
+        <p class="header">Your selected Dreams will be reflected in Goals</p>
+
+        <div class="button-end">
+            <button type="button" id="nextButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--white)" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

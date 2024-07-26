@@ -1,133 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 :root {
-    --darkest: #13714C;
-    --mid: #3AB67D;
-    --light: #A2E494;
-    --main: #E9EBED;
-    --black: #000;
-    --accent: #d97314;
-  }
-  
-  body {
-    background-color: var(--main);
-    color: var(--dark-color);
-  }
-  
-  .navb {
-    background-color: var(--darkest);
-    height: 20vh;
-    width: 100%;
-    border-bottom-left-radius: 2em;
-    border-bottom-right-radius: 2em;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
-    color: var(--main)
-  }
-  
-  .fixed-top {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1; /* Adjust z-index if needed */
-  }
-  
-  .space {
-    display: flex;
-    align-items: center;
-  }
-  
-  .space h1 {
-    margin-left: 1rem; /* Adjust this value to control the space between the arrow and the header */
-  }
-  
-  .navb p {
-    margin-left: 1rem; /* Adjust this value to match the indentation of the header */
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    margin-left: 2rem;
-    width: 80%;
-    height: auto;
-    margin-top:4vh;
-    z-index: -1;
-    margin-bottom: 5em;
-    justify-content: center;
-  }
-  
-  .head2 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    background-color: var(--darkest);
-    border-top-left-radius: 0.9em;
-    border-top-right-radius: 0.9em;
-    padding-left: 0;
-  }
-  
-  .nav-link img {
-    filter: invert(1) brightness(2);
-  }
-  
-  button { 
-    border-radius: 20px;
-    border: 1px solid var(--darkest);
-    background: var(--darkest);
-    color: var(--light);
-    font-size: 12px;
-    font-weight: bold; 
-    padding: 12px 45px; 
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  
-  #userForm {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-top: 10px;
-    color: #333;
-  }
-  
-  input {
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: var(--main);
-  }
-  
-  .btn-green {
-    width: 50%;
-    height: 50%;
-    background-color: var(--darkest);
-    color: var(--main);
-    border-radius: 2em;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.3);
-  }
-
-  .s {
-    height: 50vh;
-  }
-
-h3 {
-  font-size: 1em;
+  --dark-blue: #435059;
+  --dark-green: #7D8274;
+  --olive: #A9A793;
+  --blue: #9BC1C3;
+  --white: #F6F8EF;
+  --brown: #655C4E;
 }
 
-.card {
-  height: 5em;
-  width: 5em;
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--white);
+  color: var(--dark-blue);
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1em 3em;
+  border-radius: 0 0 2em 2em;
+  padding-top: 2em;
+  text-align: left;
+  border: none;
+}
+
+.box {
+  color: var(--dark-blue);
+  border-radius: 1em;
+  padding: 1em;
+}
+
+.r-cat-card {
+  background-color: var(--blue);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.r-save-card {
+  background-color: var(--olive);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.r-spend-card {
+  background-color: var(--brown);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  color: var(--white);
+}
+
+.r-goal-card {
+  background-color: var(--dark-green);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  color: var(--white);
+}
+
+
+h1 {
+  color: var(--dark-blue);
+  font-size: 2.2em;
+  margin: 0;
+  margin-top: 0.5em;
+}
+
+
+.head2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 0 1.2em;
+  margin: 0;
+  font-size: 1.2em;
 }

@@ -1,103 +1,217 @@
-    document.addEventListener('DOMContentLoaded', () => {
-        loadGoals();
+document.addEventListener('DOMContentLoaded', function () {
+    generateCategoryTabs();
+    loadGoals();
 
-        const goalForm = document.getElementById('goal-form');
-        goalForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const categoryName = document.getElementById('category-name').value.trim();
-
-            if (categoryName) {
-                addCategoryToStorage(categoryName);
-                addCategoryToDOM(categoryName);
-                const modal = bootstrap.Modal.getInstance(document.getElementById('goalModal'));
-                modal.hide();
-                goalForm.reset();
-            }
-        });
+    document.getElementById('goal-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        addGoal();
     });
 
-    function loadGoals() {
+    function generateCategoryTabs() {
         const selectedCategories = JSON.parse(localStorage.getItem('selectedCategories')) || [];
-        const goalsOverview = document.getElementById('goals-overview');
-        goalsOverview.innerHTML = '';
+        const categories = new Set(selectedCategories);
 
-        selectedCategories.forEach((category, index) => {
-            addCategoryToDOM(category, index);
+        const catTabsContainer = document.querySelector('.cat-tabs');
+        catTabsContainer.innerHTML = ''; // Clear existing tabs
+
+        categories.forEach(category => {
+            const button = document.createElement('button');
+            button.className = 'btn btn-2 m-1 category';
+            button.textContent = category;
+            button.addEventListener('click', function () {
+                toggleCategory(button);
+                filterGoals();
+            });
+            catTabsContainer.appendChild(button);
+        });
+
+        // Populate the category dropdown in the modal
+        const categoryDropdown = document.getElementById('goal-category');
+        categoryDropdown.innerHTML = ''; // Clear existing options
+        categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            categoryDropdown.appendChild(option);
         });
     }
 
-    function addCategoryToStorage(category) {
-        const selectedCategories = JSON.parse(localStorage.getItem('selectedCategories')) || [];
-        selectedCategories.push(category);
-        localStorage.setItem('selectedCategories', JSON.stringify(selectedCategories));
-    }
+    function addGoal() {
+        const goalName = document.getElementById('goal-name').value;
+        const goalEndDate = document.getElementById('goal-end-date').value;
+        const goalTarget = parseFloat(document.getElementById('goal-target').value);
+        const goalCurrentAmount = parseFloat(document.getElementById('goal-current-amount').value);
+        const goalCategory = document.getElementById('goal-category').value;
 
-    function addCategoryToDOM(category, index) {
-        const goalsOverview = document.getElementById('goals-overview');
-        const goalCard = document.createElement('div');
-        goalCard.classList.add('goal-card', 'p-3', 'mb-3', 'position-relative');
-        goalCard.setAttribute('draggable', 'true');
-
-        // Define category URLs
-        const categoryUrls = {
-            "School": "school.html",
-            "Travel": "travel.html",
+        const newGoal = {
+            name: goalName,
+            endDate: goalEndDate, // Ensure endDate is saved here
+            targetAmount: goalTarget,
+            currentAmount: goalCurrentAmount,
+            category: goalCategory
         };
 
-        const url = categoryUrls[category] || "#"; // Default to "#" if category not found
+        // Save the new goal to localStorage
+        const goals = JSON.parse(localStorage.getItem('goals')) || [];
+        goals.push(newGoal);
+        localStorage.setItem('goals', JSON.stringify(goals));
 
-        // Retrieve the goal count for the Travel category from local storage
-        const travelGoalCount = localStorage.getItem('travelGoalCount') || 0;
+        // Add the new goal to the appropriate goals section
+        const isComplete = newGoal.currentAmount >= newGoal.targetAmount;
+        displayGoal(newGoal, isComplete);
 
-        goalCard.innerHTML = `
-            <h5 class="goal-name">${category}</h5>
-            <p class="goal-count">${category === 'Travel' ? `Total Active Goals: ${travelGoalCount}` : ''}</p>
-            <button class="btn btn-danger delete-btn position-absolute top-50 end-0 translate-middle-y d-none" data-index="${index}">Delete</button>
-            <a href="${url}" class="btn btn-custom">See Goals</a>
+        // Update charts and counters
+        updateGoalCountersAndCharts();
+
+        // Reset the form and close the modal
+        document.getElementById('goal-form').reset();
+        var goalModal = bootstrap.Modal.getInstance(document.getElementById('goalModal'));
+        goalModal.hide();
+    }
+
+    function loadGoals() {
+        const goals = JSON.parse(localStorage.getItem('goals')) || [];
+        displayGoals(goals);
+        // Update charts and counters
+        updateGoalCountersAndCharts();
+    }
+
+    function displayGoals(goals) {
+        const activeGoalsContainer = document.getElementById('active-goals');
+        const completedGoalsContainer = document.getElementById('completed-goals');
+        activeGoalsContainer.innerHTML = '';
+        completedGoalsContainer.innerHTML = '';
+
+        goals.forEach(goal => {
+            const isComplete = goal.currentAmount >= goal.targetAmount;
+            displayGoal(goal, isComplete);
+        });
+    }
+
+    function displayGoal(goal, isComplete) {
+        const goalCardHtml = `
+            <div class="goalcard" onclick="location.href='edit.html?goal=${encodeURIComponent(JSON.stringify(goal))}'">
+                <div class="grp">
+                    <p>${goal.name}</p>
+                    <p><b>${((goal.currentAmount / goal.targetAmount) * 100).toFixed(2)}%</b></p>
+                </div>
+                <div class="grp">
+                    <p>${goal.endDate}</p>
+                    <p><b>$${goal.currentAmount.toFixed(2)}</b></p>
+                </div>
+                <div class="grp">
+                    <p>${goal.category}</p>
+                    <p><b>$${goal.targetAmount.toFixed(2)}</b></p>
+                </div>
+            </div>
         `;
 
-        goalsOverview.appendChild(goalCard);
-
-        goalCard.addEventListener('dragstart', handleDragStart);
-        goalCard.addEventListener('dragend', handleDragEnd);
-        goalCard.querySelector('.delete-btn').addEventListener('click', () => showConfirmDeleteModal(index));
-    }
-
-    function handleDragStart(event) {
-        event.currentTarget.classList.add('dragging');
-    }
-
-    function handleDragEnd(event) {
-        const goalCard = event.currentTarget;
-        goalCard.classList.remove('dragging');
-
-        const deleteBtn = goalCard.querySelector('.delete-btn');
-        const currentPosition = goalCard.getBoundingClientRect();
-        const containerPosition = goalCard.parentElement.getBoundingClientRect();
-        const threshold = containerPosition.width * 0.2;  // 20% of the container width
-
-        if (currentPosition.right - containerPosition.left > threshold) {
-            deleteBtn.classList.remove('d-none');
+        if (isComplete) {
+            document.getElementById('completed-goals').insertAdjacentHTML('beforeend', goalCardHtml);
         } else {
-            deleteBtn.classList.add('d-none');
+            document.getElementById('active-goals').insertAdjacentHTML('beforeend', goalCardHtml);
         }
     }
 
-    function showConfirmDeleteModal(index) {
-        const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-        const confirmDeleteButton = document.getElementById('confirm-delete');
-
-        confirmDeleteButton.onclick = () => {
-            deleteCategory(index);
-            confirmDeleteModal.hide();
-        };
-
-        confirmDeleteModal.show();
+    function toggleCategory(element) {
+        element.classList.toggle("selected");
+        updateCategoryStyle(element);
     }
 
-    function deleteCategory(index) {
+    function updateCategoryStyle(element) {
+        if (element.classList.contains("selected")) {
+            element.style.backgroundColor = "var(--dark-blue)";
+            element.style.color = "white";
+        } else {
+            element.style.backgroundColor = "";
+            element.style.color = "";
+        }
+    }
+
+    function saveCategories() {
+        const selectedCategories = document.querySelectorAll(".category.selected");
+        const categories = Array.from(selectedCategories).map(category => category.textContent.trim());
+        localStorage.setItem('selectedCategories', JSON.stringify(categories));
+    }
+
+    function goToNextPage() {
+        saveCategories();
+        window.location.href = 'loading.html'; // Replace 'loading.html' with the actual URL of your loading page
+    }
+
+    document.getElementById('nextButton').addEventListener('click', goToNextPage);
+
+    window.toggleCategory = toggleCategory;
+
+    function loadSelectedCategories() {
         const selectedCategories = JSON.parse(localStorage.getItem('selectedCategories')) || [];
-        selectedCategories.splice(index, 1);
-        localStorage.setItem('selectedCategories', JSON.stringify(selectedCategories));
-        loadGoals();
+        const categoryElements = document.querySelectorAll(".category");
+        categoryElements.forEach(category => {
+            if (selectedCategories.includes(category.textContent.trim())) {
+                category.classList.add("selected");
+                updateCategoryStyle(category);
+            }
+        });
     }
+
+    loadSelectedCategories();
+
+    function updateGoalCountersAndCharts() {
+        const goals = JSON.parse(localStorage.getItem('goals')) || [];
+        const activeGoals = goals.filter(goal => goal.currentAmount < goal.targetAmount);
+        const completedGoals = goals.filter(goal => goal.currentAmount >= goal.targetAmount);
+
+        const activeGoalsCount = activeGoals.length;
+        const completedGoalsCount = completedGoals.length;
+
+        const activeGoalCategories = activeGoals.reduce((acc, goal) => {
+            acc[goal.category] = (acc[goal.category] || 0) + 1;
+            return acc;
+        }, {});
+
+        const completedGoalCategories = completedGoals.reduce((acc, goal) => {
+            acc[goal.category] = (acc[goal.category] || 0) + 1;
+            return acc;
+        }, {});
+
+        renderPieChart('activeGoalsChart', activeGoalCategories, `Active Goals: ${activeGoalsCount}`);
+        renderPieChart('completedGoalsChart', completedGoalCategories, `Completed Goals: ${completedGoalsCount}`);
+    }
+
+    function renderPieChart(canvasId, data, title) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(data),
+                datasets: [{
+                    data: Object.values(data),
+                    backgroundColor: ['#435059', '#7D8274', '#A9A793', '#9BC1C3', '#655C4E'],
+                    hoverBackgroundColor: ['#435059', '#7D8274', '#A9A793', '#9BC1C3', '#655C4E']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false // Hide the legend
+                    },
+                    title: {
+                        display: true,
+                        text: title
+                    }
+                }
+            }
+        });
+    }
+
+    function filterGoals() {
+        const selectedCategories = Array.from(document.querySelectorAll(".category.selected")).map(category => category.textContent.trim());
+        const goals = JSON.parse(localStorage.getItem('goals')) || [];
+
+        const filteredGoals = selectedCategories.length > 0 ? goals.filter(goal => selectedCategories.includes(goal.category)) : goals;
+
+        displayGoals(filteredGoals);
+        updateGoalCountersAndCharts(); // Ensure charts and counters are updated based on filtered goals
+    }
+});

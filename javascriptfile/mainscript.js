@@ -1,316 +1,110 @@
-let currentDate = new Date();
-const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function getBankColor(bankName) {
+    switch (bankName.toLowerCase()) {
+        case 'ocbc':
+            return 'var(--dark-blue)';
+        case 'dbs':
+            return 'var(--blue)';
+        case 'maybank':
+            return 'var(--brown)';
+        case 'uob':
+            return 'var(--olive)';
+        case 'standard chartered':
+            return 'var(--dark-green)';
+        case 'posb':
+            return 'var(--blue)';
+        default:
+            return 'var(--white)'; // Default color if bank name doesn't match
+    }
+}
 
-const categoryIcons = {
-    "Food": "images/cookie.svg",
-    "Birthday": "images/gift.svg",
-    "Shopping": "images/cart.svg",
-    "Transportation": "images/car-front.svg",
-    "Healthcare": "images/heart-pulse.svg"
+function loadUserName() {
+    const userName = localStorage.getItem('name') || 'Guest';
+    document.getElementById('welcomeMessage').textContent = `Welcome, ${userName}`;
+    document.getElementById('modalUserName').textContent = userName;
+}
+
+window.onload = function() {
+    loadUserName();
 };
 
-document.addEventListener("DOMContentLoaded", function() {
-    renderCalendar();
-    calculateTotalSpentForJuly(); // Calculate total spent for July
-    generateMonthlyCategoryChart(); // Generate monthly category chart
+document.addEventListener('DOMContentLoaded', function() {
+    displayBankDetails();
+    displayTodaysTransactions();
 });
 
-function renderCalendar() {
-    const monthYear = document.getElementById('monthYear');
-    const days = document.getElementById('days');
+function displayBankDetails() {
+    const bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
+    const carouselInner = document.querySelector('.carousel-inner');
+    const carouselIndicators = document.querySelector('.carousel-indicators');
 
-    monthYear.innerHTML = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+    // Clear existing items
+    carouselInner.innerHTML = '';
+    carouselIndicators.innerHTML = '';
 
-    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
-    const lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-
-    days.innerHTML = '';
-
-    for (let i = 0; i < firstDay; i++) {
-        days.innerHTML += '<div></div>';
-    }
-
-    const today = new Date(); // Get today's date
-
-    for (let i = 1; i <= lastDate; i++) {
-        const dayDiv = document.createElement('div');
-        dayDiv.textContent = i;
-        dayDiv.onclick = () => showCategories(i);
-
-        // Disable future dates
-        const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
-        if (selectedDate > today) {
-            dayDiv.classList.add('disabled');
-            dayDiv.onclick = null; // Disable click
-        } else if (currentDate.getDate() === i && currentDate.getMonth() === currentDate.getMonth()) {
-            dayDiv.classList.add('current-date');
-        }
-
-        days.appendChild(dayDiv);
-    }
-}
-
-function prevMonth() {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar();
-    calculateTotalSpentForJuly(); // Recalculate total spent for July
-    generateMonthlyCategoryChart(); // Recalculate the chart
-}
-
-function nextMonth() {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar();
-    calculateTotalSpentForJuly(); // Recalculate total spent for July
-    generateMonthlyCategoryChart(); // Recalculate the chart
-}
-
-let selectedDay = null; // Add a variable to store the selected day
-
-function showCategories(day) {
-    selectedDay = day; 
-    const expenditureContent = document.getElementById('expenditureContent');
-    const key = `expenditureData_${currentDate.getFullYear()}_${currentDate.getMonth()}_${day}`;
-    
-    const today = new Date();
-    const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    if (selectedDate > today) {
-        return;
-    }
-
-    if (!localStorage.getItem(key)) {
-        const selectedCategories = Object.keys(categoryIcons)
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 3);
-        const expenditureData = [];
-
-        expenditureContent.innerHTML = '';
-        const dateHeader = document.createElement('h5');
-        dateHeader.textContent = `Expenses for ${monthNames[currentDate.getMonth()]} ${day}, ${currentDate.getFullYear()}`;
-        expenditureContent.appendChild(dateHeader);
-
-        selectedCategories.forEach(category => {
-            const categoryContainer = document.createElement('div');
-            categoryContainer.className = 'category-container';
-
-            const categoryIcon = document.createElement('img');
-            categoryIcon.src = categoryIcons[category]; // Use the mapping for icons
-            categoryIcon.alt = category;
-
-            const amount = (Math.random() * 50).toFixed(2);
-            const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'category';
-            categoryDiv.textContent = `${category}: $${amount}`;
-
-            categoryContainer.appendChild(categoryIcon);
-            categoryContainer.appendChild(categoryDiv);
-            expenditureContent.appendChild(categoryContainer);
-
-            expenditureData.push({ name: category, amount, icon: categoryIcons[category] });
-        });
-
-        localStorage.setItem(key, JSON.stringify(expenditureData));
+    if (bankAccounts.length === 0) {
+        showAddBankModal();
     } else {
-        loadExpenditureData(key, true);
-    }
-}
+        bankAccounts.forEach((account, index) => {
+            const isActive = index === 0 ? 'active' : '';
+            const cardColor = getBankColor(account.bankName);
+            const textColor = (cardColor === 'var(--dark-blue)' || cardColor === 'var(--brown)' || cardColor === 'var(--dark-green)') ? 'var(--white)' : 'var(--dark-blue)';
 
-function loadExpenditureData(key = null, regenerateIcons = false) {
-    const expenditureContent = document.getElementById('expenditureContent');
+            const itemHtml = `
+                <div class="carousel-item ${isActive}">
+                    <div class="bank-card" style="background-color: ${cardColor}; color: ${textColor};">
+                        <div class="bank-card-name right-align">${account.bankName}</div>
+                        <div class="bank-card-number">${formatCardNumber(account.cardNumber)}</div>
+                        <div class="card-content">
+                            <div class="bank-card-expiry">Expires: ${account.cardExpiry || 'N/A'}</div>
+                            <div class="bank-amount right-align">$${account.amount.toFixed(2)}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
 
-    if (selectedDay === null) {
-        expenditureContent.innerHTML = '';
-        return;
-    }
-
-    if (!key) {
-        key = `expenditureData_${currentDate.getFullYear()}_${currentDate.getMonth()}_${selectedDay}`;
-    }
-
-    const expenditureData = JSON.parse(localStorage.getItem(key));
-    expenditureContent.innerHTML = '';
-
-    const dateHeader = document.createElement('h5');
-    dateHeader.textContent = `Expenses for ${monthNames[currentDate.getMonth()]} ${selectedDay}, ${currentDate.getFullYear()}`;
-    expenditureContent.appendChild(dateHeader);
-
-    if (expenditureData) {
-        expenditureData.forEach(entry => {
-            const categoryContainer = document.createElement('div');
-            categoryContainer.className = 'category-container';
-
-            const categoryIcon = document.createElement('img');
-            categoryIcon.src = entry.icon; // Use stored icon
-            categoryIcon.alt = entry.name;
-
-            const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'category';
-            categoryDiv.textContent = `${entry.name}: $${entry.amount}`;
-
-            categoryContainer.appendChild(categoryIcon);
-            categoryContainer.appendChild(categoryDiv);
-            expenditureContent.appendChild(categoryContainer);
+            carouselInner.insertAdjacentHTML('beforeend', itemHtml);
+            
+            const indicatorHtml = `
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" class="${isActive}" aria-current="true" aria-label="Slide ${index + 1}"></button>
+            `;
+            carouselIndicators.insertAdjacentHTML('beforeend', indicatorHtml);
         });
-    } else {
-        const noDataMessage = document.createElement('div');
-        noDataMessage.textContent = 'No expenditure data available for this date.';
-        expenditureContent.appendChild(noDataMessage);
     }
 }
 
-function generateRandomExpenditureForJuly() {
-    const daysInJuly = 31; // Number of days in July
-    const randomExpenditures = [];
-    
-    for (let day = 1; day <= daysInJuly; day++) {
-        // Generate random expenditure data for each day
-        const selectedCategories = Object.keys(categoryIcons)
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 3);
-        const expenditureData = selectedCategories.map(category => ({
-            name: category,
-            amount: (Math.random() * 50).toFixed(2),
-            icon: categoryIcons[category]
-        }));
-        
-        randomExpenditures.push(expenditureData);
-        
-        // Store the generated data for July in localStorage
-        const key = `expenditureData_${currentDate.getFullYear()}_6_${day}`; // July is month 6 (0-based index)
-        localStorage.setItem(key, JSON.stringify(expenditureData));
-    }
-    
-    return randomExpenditures;
+function formatCardNumber(cardNumber) {
+    return cardNumber.replace(/(.{4})/g, '$1 ').trim();
 }
 
-function calculateTotalSpentForJuly() {
-    const totalSpentElement = document.getElementById('totalSpent');
-    let total = 0;
+function displayTodaysTransactions() {
+    const transactions = JSON.parse(localStorage.getItem('todaysTransactions')) || [];
+    const transactionContainer = document.querySelector('.transaction');
 
-    // Generate random expenditures for July
-    generateRandomExpenditureForJuly();
+    transactionContainer.innerHTML = ''; // Clear existing transactions
 
-    // Sum up the total expenditures
-    for (let day = 1; day <= 31; day++) {
-        const key = `expenditureData_${currentDate.getFullYear()}_6_${day}`;
-        const expenditureData = JSON.parse(localStorage.getItem(key));
+    transactions.forEach(transaction => {
+        const cardColor = getBankColor(transaction.bank);
+        const textColor = (cardColor === 'var(--blue)' || cardColor === 'olive' || cardColor === 'white') ? 'var(--dark-blue)' : 'var(--white)';
 
-        if (expenditureData) {
-            expenditureData.forEach(entry => {
-                total += parseFloat(entry.amount);
-            });
-        }
-    }
+        const transactionCard = document.createElement('div');
+        transactionCard.className = 'transaction-card';
+        transactionCard.style.backgroundColor = cardColor;
+        transactionCard.style.color = textColor;
+        transactionCard.innerHTML = `
+            <div class="transaction-name">${transaction.name}</div>
+            <div class="transaction-date">${transaction.date}</div>
+            <div class="transaction-cat">${transaction.category}</div>
+            <div class="transaction-content box">
+                <div class="transaction-bank"><b>${transaction.bank}</b></div>
+                <div class="transaction-amount"><b>$${transaction.amount}</b></div>
+            </div>
+        `;
 
-    totalSpentElement.textContent = `Total Spent in July: $${total.toFixed(2)}`;
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    renderCalendar();
-    calculateTotalSpentForJuly(); // Calculate total spent for July
-    generateMonthlyCategoryChart(); // Generate monthly category chart
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    renderCalendar();
-    calculateTotalSpentForJuly(); // Calculate total spent for July
-    generateMonthlyCategoryChart(); // Generate monthly category chart
-});
-
-function generateMonthlyCategoryChart() {
-    const categories = Object.keys(categoryIcons);
-    const categoryData = {};
-
-    // Initialize category data
-    categories.forEach(category => {
-        categoryData[category] = 0;
-    });
-
-    // Aggregate total amounts for each category
-    for (let day = 1; day <= 31; day++) {
-        const key = `expenditureData_${currentDate.getFullYear()}_6_${day}`;
-        const expenditureData = JSON.parse(localStorage.getItem(key));
-
-        if (expenditureData) {
-            expenditureData.forEach(entry => {
-                categoryData[entry.name] += parseFloat(entry.amount);
-            });
-        }
-    }
-
-    // Colors for each category
-    const backgroundColors = [
-        'rgba(0, 102, 0, 1)',  // Red
-        'rgba(28, 42, 2, 1)',  // Blue
-        'rgba(0, 102, 0, 0.75)',  // Yellow
-        'rgba(0, 102, 0, 0.5)',  // Green
-        'rgba(28, 42, 2, 0.5)',  // Blue
-    ];
-    const borderColors = [
-        'rgba(0, 102, 0, 1)',  // Red
-        'rgba(28, 42, 2, 1)',  // Blue
-        'rgba(0, 102, 0, 0.75)',  // Yellow
-        'rgba(0, 102, 0, 0.5)',  // Green
-        'rgba(28, 42, 2, 0.5)',  // Blue
-    ];
-
-    // Create the chart
-    const ctx = document.getElementById('monthlyExpenditureChart').getContext('2d');
-    const data = {
-        labels: categories,
-        datasets: [{
-            label: 'Total Expenditure in July',
-            data: categories.map(category => categoryData[category]),
-            backgroundColor: backgroundColors,
-            borderColor: borderColors,
-            borderWidth: 1
-        }]
-    };
-
-    new Chart(ctx, {
-        type: 'doughnut', // Change to 'doughnut'
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            if (context.parsed !== null) {
-                                label += '$' + context.parsed.toFixed(2);
-                            }
-                            return label;
-                        }
-                    }
-                },
-                datalabels: {
-                    formatter: (value, ctx) => {
-                        let sum = 0;
-                        let dataArr = ctx.chart.data.datasets[0].data;
-                        dataArr.forEach(data => {
-                            sum += data;
-                        });
-                        let percentage = (value * 100 / sum).toFixed(2) + "%";
-                        return percentage;
-                    },
-                    color: '#E9EBED', // Change this to the desired label color
-                    labels: {
-                        title: {
-                            font: {
-                                size: '14'
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
+        transactionContainer.appendChild(transactionCard);
     });
 }
 
+function showAddBankModal() {
+    const addBankModal = new bootstrap.Modal(document.getElementById('addBankModal'));
+    addBankModal.show();
+}

@@ -1,58 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 :root {
-  --darkest: rgb(28, 42, 24);
-  --mid: rgb(0, 102, 0);
-  --light: rgb(110, 234, 142);
-  --white: rgb(233, 235, 237);
-  --black: #222222;
-  --accent: burlywood;
+  --dark-blue: #435059;
+  --dark-green: #7D8274;
+  --olive: #A9A793;
+  --blue: #9BC1C3;
+  --white: #F6F8EF;
+  --brown: #655C4E;
 }
 
 body {
-  background: linear-gradient(300deg, var(--darkest), var(--light), var(--mid));
-  background-size: 100% 100%;
-  animation: gradientAnimation 30s ease infinite;
-  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--white);
+  color: var(--dark-blue);
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
   padding: 0;
-  color: var(--black)
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  margin:0
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  justify-content: start;
-  align-items: start;
-  box-sizing: border-box;
-  padding: 2em;
-}
-
-.head {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  text-align: center;
-  padding: 0;
+  justify-content: left;
+  padding: 1em;
   margin: 0;
+  margin-bottom: 5em;
 }
 
 h1 {
-  color: var(--black);
-  font-size: 2.2em;
-  margin: 0;
+  font-weight: bold;
+  padding-left: 0.5em;
+  color: var(--dark-blue)
+}
+
+.left-align {
+  text-align: left;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.carousel-item {
+  height: 20em;
+  width: 20.5em;
+
+}
+
+.bank-card {
+  height: 12em;
+  width: 20em;
+  margin-top: 2em;
+  background-color: var(--white);
+  color: var(--dark-blue);
+  border-radius: 1em;
+  box-shadow: 0.1em 0.1em 0.1em 0.1em rgba(67, 80, 89, 0.2); /* Adjusted the shadow */
+}
+
+.bank-card-name {
+  padding-right: 1em;
+  padding-top: 1.5em;
+  font-size: 1.5em;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bank-card-number {
+  margin-top: 2.2em;
+  padding-left: 1.5em;
+  font-size: 1em;
+  text-decoration: none;
+}
+
+.bank-card-expiry {
+  padding-left: 1.5em;
+}
+
+.bank-amount {
+  padding-right: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.carousel-indicators .active {
+  background-color: var(--dark-green); /* Change the background color of the active indicator */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    opacity: 0; /* Reduce the opacity */
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 0; /* Set opacity to 1 on hover */
+}
+
+#carouselExampleIndicators {
+  height: 18em;
+  width: 22em;
+  padding-left: 1em;
+  padding-bottom: 3em;
+}
+
+.app-icons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  margin-bottom: 3em;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4em; /* Adjust the size as needed */
+  height: 4em; /* Adjust the size as needed */
+  border-radius: 50%;
+  background-color: var(--olive);
+  box-shadow: 0.1em 0.1em rgba(67, 80, 89, 0.2); /* Adjusted the shadow */
+}
+
+.icon-text {
+  font-size: 0.7em;
+  text-align: center;
+  padding-top: 0.5em;
+}
+
+h2 {
+  font-weight: 400;
+  text-align: left;
+  width: 80%;
+  color: var(--dark-blue)
+}
+
+.transaction {
+  width: 125%;
+}
+
+.transaction-card {
+  height: 1em;
+  background-color: var(--white);
+  border-radius: 1em;
+  padding: 1em;
+  padding-top: 0.8em;
+  padding-bottom: 4em;
+  box-shadow: 0.1em 0.1em rgba(67, 80, 89, 0.2); /* Adjusted the shadow */
+  margin-bottom: 0.5em;
+}
+
+.transaction-name {
+  font-size: 0.8em;
+}
+
+.transaction-date {
+  font-size: 0.5em;
+  padding-top: 0.5em;
+}
+
+.transaction-cat {
+  margin-top: 0.2em;
+  font-size: 0.5em;
+}
+
+.transaction-bank {
+  font-size: 0.5em;
+  font-weight: bold;
+  padding-top: 0;
+}
+
+.transaction-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+  margin-top: 0;
+}
+
+.transaction-amount {
+  font-size: 0.8em;
+  padding-top: 0;
+  font-weight: bold;
 }
 
 footer {
@@ -63,133 +205,13 @@ footer {
   padding-top: 10px;
   padding-bottom: 10px;
   z-index: 1000;
-  background-color: var(--accent);
+  background-color: var(--olive);
   padding-left: 0;
-  border: 0px;
-}
-
-.nav-link img {
-  filter: invert(1) brightness(2);
-}
-
-.calendar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 5em;
-  position: relative;
-  padding: 0;
-  margin: 0;
-}
-
-.calendar {
-  width: 98%;
-  border-radius: 1em;
-  background-color: var(--darkest);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  color: var(--light);
-  box-sizing: border-box;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--white);
-  border-radius: 10px 10px 0 0;
-}
-
-.header button {
-  background: none;
   border: none;
-  color: var(--white);
-  font-size: 1em;
-  cursor: pointer;
-}
-
-.weekdays, .days {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.weekdays div, .days div {
-  width: 14.28%;
-  text-align: center;
-  padding: 10px 0;
-}
-
-.weekdays div {
-  font-weight: bold;
-  color: var(--white);
-}
-
-.days div {
-  border-radius: 50%;
-  line-height: 2.1em;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.days div:hover {
-  background-color: grey;
-  cursor: pointer;
-}
-
-.current-date {
-  background-color: var(--accent);
-  color: var(--black);
-}
-
-.card::after {
-  display: flex;
-  margin-top: 10em;
-  padding-left: 3em;
-  padding-right: 3em;
-  padding-bottom: 3em;
-  box-shadow: 0 10px 10px var(--darkest);
-
-  
-}
-
-.card::before {
-  display: none;
-  margin-top: 10em;
-  width: 100%;
-
-}
-
-.card {
-  border-radius: 1em;
-
-}
-
-.category-container {
-  display: flex;
-  align-items: center;
-  margin: 0.5em 0;
-}
-.category-container img {
-  margin-right: 1em;
-  width: 2em; /* Set a fixed width for clarity */
-  height: 2em; /* Set a fixed height for clarity */
-}
-
-#expenditureContent {
-  display: flex;
-  width: 100%;
-  padding: 0 3.7em;
-  margin-top: 1em; 
-  margin-bottom: 1em; 
-  padding-bottom: 1em;
-  background-color: var(--mid);
-  color: var(--white);
-
 }
 
 #home {
-  color: var(--mid);
-
+  color: var(--white);
 }
 
 .home {
@@ -205,7 +227,11 @@ footer {
   width: 100%;
   border-radius: 1em;
   padding: 0.5em;
-  color: var(--mid);
+  color: var(--white);
+}
+
+#home1 {
+  color: var(--dark-green);
 }
 
 .home1 {
@@ -221,24 +247,15 @@ footer {
   width: 100%;
   border-radius: 1em;
   padding: 0.5em;
+  color: var(--dark-green);
 }
 
-h5 {
+.btn-1 {
+  background-color: var(--dark-blue);
   color: var(--white);
 }
 
-#charts-container {
-  padding: 1em;
-  padding-bottom: 2em;
-  margin-top: 0;
-  background-color: var(--light);
-  border-top-left-radius: 1em;
-  border-top-right-radius: 1em;
-  margin-bottom: 5em;
-  box-shadow: 0 -5px 10px var(--darkest);  /* Adjust values as needed */
-  height: auto;
-}
-
-H2 {
-  TEXT-ALIGN: CENTER
+.btn-1:active {
+  background-color: var(--olive);
+  color: var(--white);
 }

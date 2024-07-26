@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
+    <link rel="stylesheet" href="./cssfile/about-you.css">
+    <script src="./javascriptfile/about-you.js" defer></script>
+    <link rel="icon" href="images/bb04.png" type="image/x-icon" sizes="128x128">
+</head>
+<body>
+    <div class="container">
+        <div class = "box">
+            <a href="signup.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--dark-blue)" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                </svg>
+            </a>
+            <div class="rect">
+                <h1>About You</h1>
+                <div class="dots">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--dark-blue)" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--dark-blue)" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="form1">
+        <form method="post">
+            <label for="occupation">Occupation</label>
+            <select id="occupation" name="occupation" required>
+                <option value="" disabled selected>Select your occupation</option>
+                <option value="student">Student</option>
+                <option value="employed">Employed</option>
+                <option value="unemployed">Unemployed</option>
+                <option value="self-employed">Self-Employed</option>
+                <option value="na">NA</option>
+            </select>
+
+            <label for="income">Income</label>
+            <input type="text" id="income" name="income" placeholder="Income (Eg. Salary, Allowance)" required />
+            
+            <label for="cur-exp">Current Monthly Expenses</label>
+            <input type="text" id="cur-exp" name="cur-exp" placeholder="Eg. $5000.00" required />
+            
+            <label for="tar-exp">Target Monthly Expenses</label>
+            <input type="text" id="tar-exp" name="tar-exp" placeholder="Eg. $4000.00" required />
+
+            <div class="button-end">
+                <button type="button" id="nextButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--white)" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
