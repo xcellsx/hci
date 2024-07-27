@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --dark-blue: #435059;
+  --dark-green: #7D8274;
+  --olive: #A9A793;
+  --blue: #9BC1C3;
+  --white: #F6F8EF;
+  --brown: #655C4E;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--white);
+  color: var(--dark-blue);
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1em 3em;
+  border-radius: 0 0 2em 2em;
+  padding-top: 2em;
+  text-align: left;
+  border: none;
+}
+
+.box {
+  color: var(--dark-blue);
+  border-radius: 1em;
+  padding: 1em;
+}
+
+.r-cat-card {
+  background-color: var(--blue);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.r-save-card {
+  background-color: var(--olive);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.r-spend-card {
+  background-color: var(--brown);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  color: var(--white);
+}
+
+.r-goal-card {
+  background-color: var(--dark-green);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  color: var(--white);
+}
+
+
+h1 {
+  color: var(--dark-blue);
+  font-size: 2.2em;
+  margin: 0;
+  margin-top: 0.5em;
+}
+
+
+.head2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 0 1.2em;
+  margin: 0;
+  font-size: 1.2em;
+}

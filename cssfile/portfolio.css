@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --dark-blue: #435059;
+  --dark-green: #7D8274;
+  --olive: #A9A793;
+  --blue: #9BC1C3;
+  --white: #F6F8EF;
+  --brown: #655C4E;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--white);
+    color: var(--dark-blue);
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+  }
+
+  .rect {
+    margin-left: 3em;
+  }
+.header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.header .row .col {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--brown);
+}
+
+.section h4 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: vaR(--dark-blue);
+}
+
+.card {
+    border: none;
+    height: 6em;
+    width: 6em;
+    border-radius: 10px;
+    background-color: var(--blue);
+    text-align: center;
+    align-content: center;
+}
+
+.card .icon {
+    font-size: 2rem;
+    color: var(--dark-blue);
+    margin: 0.5rem;
+}
+
+.card p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--dark-blue);
+}
+
+.card.selected {
+    border: 2px solid var(--dark-green);
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .header h2, .header h3 {
+        font-size: 1.25rem;
+    }
+    
+    .card .icon {
+        font-size: 1.5rem;
+    }
+    
+    .card p {
+        font-size: 0.875rem;
+    }
+}
+
+.detail-view {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: var(--olive);
+    color: var(--white);
+}
+
+.btn-primary {
+    background-color: var(--dark-blue);
+    border: var(--dark-blue);
+}
+
+.btn-secondary {
+    background-color: var(--dark-green);
+    border: var(--dark-green)
+}

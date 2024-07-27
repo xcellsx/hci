@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const dateString = date.toLocaleDateString();
+        const allTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
         const transactions = [];
 
         // Generate at least 5 transactions for the selected day
@@ -121,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             transactions.push(transaction);
+            allTransactions.push(transaction);
 
             const transactionCard = document.createElement('div');
             transactionCard.className = 'transaction-card';
@@ -139,11 +141,11 @@ document.addEventListener('DOMContentLoaded', function() {
             transactionList.appendChild(transactionCard);
         }
 
-        localStorage.setItem('todaysTransactions', JSON.stringify(transactions));
+        localStorage.setItem('transactions', JSON.stringify(allTransactions));
 
         updateTotalAmount();
         generateExpenseChart();
-        updateMonthlySpending(transactions);
+        updateMonthlySpending(allTransactions);
     }
 
     function getBankColor(bankName) {
