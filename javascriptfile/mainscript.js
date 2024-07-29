@@ -1,3 +1,4 @@
+// mainscript.js
 function getBankColor(bankName) {
     switch (bankName.toLowerCase()) {
         case 'ocbc':
@@ -77,7 +78,7 @@ function formatCardNumber(cardNumber) {
 }
 
 function displayTodaysTransactions() {
-    const transactions = JSON.parse(localStorage.getItem('todaysTransactions')) || [];
+    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
     const transactionContainer = document.querySelector('.transaction');
 
     transactionContainer.innerHTML = ''; // Clear existing transactions
