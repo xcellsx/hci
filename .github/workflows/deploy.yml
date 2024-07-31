@@ -15,7 +15,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Deploy to Netlify
         env:
@@ -24,4 +27,4 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           npm install -g netlify-cli
-          netlify deploy --prod --dir=. --functions=functions
+          netlify deploy --prod --dir=.
