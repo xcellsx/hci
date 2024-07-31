@@ -12,5 +12,8 @@
   },
   "engines": {
     "node": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "mkdir -p build && cp -r src/* build/"
   }
 }
