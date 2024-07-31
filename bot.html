@@ -106,7 +106,7 @@
     
         async function getBotResponse(userMsg) {
             const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-            const response = await fetch('/.netlify/functions/chat', {
+            const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -118,7 +118,6 @@
             return data.response;
         }
     </script>
-    
     
 </body>
 </html>
