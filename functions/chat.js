@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
     const { message, chatHistory } = JSON.parse(event.body);
     const apiKey = process.env.OPENAI_API_KEY;
 
