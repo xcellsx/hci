@@ -1,33 +1,48 @@
-steps:
-# Step 1: Sync static files to the Cloud Storage bucket
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['-m', 'rsync', '-r', '.', 'gs://hci-iteration2/public']
+name: Deploy to Google Cloud
 
-# Step 2: Install dependencies for the Node.js server
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['install']
+on: [push]
 
-# Step 3: Build the Docker image for the Node.js server
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'build', '-t', 'gcr.io/hci-iteration2/hci', '.'
-  ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-# Step 4: Push the Docker image to Google Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'push', 'gcr.io/hci-iteration2/hci'
-  ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-# Step 5: Deploy the Node.js server to Cloud Run
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: [
-    'run', 'deploy', 'hci-00001-jvm',
-    '--image', 'gcr.io/hci-iteration2/hci',
-    '--platform', 'managed',
-    '--region', 'us-central1',
-    '--allow-unauthenticated'
-  ]
+      # Step 1: Sync static files to the Cloud Storage bucket
+      - name: Sync static files to Cloud Storage
+        run: |
+          echo "${{ secrets.GCLOUD_AUTH }}" > $HOME/gcloud.json
+          gcloud auth activate-service-account --key-file=$HOME/gcloud.json
+          gcloud config set project hci-iteration2
+          gsutil -m rsync -r . gs://hci-iteration2/public
 
-options:
-  logging: CLOUD_LOGGING_ONLY
+      # Step 2: Install dependencies for the Node.js server
+      - name: Install dependencies
+        run: npm install
+
+      # Step 3: Build the Docker image for the Node.js server
+      - name: Build Docker image
+        run: docker build -t gcr.io/hci-iteration2/hci .
+
+      # Step 4: Push the Docker image to Google Container Registry
+      - name: Push Docker image to GCR
+        run: docker push gcr.io/hci-iteration2/hci
+
+      # Step 5: Deploy the Node.js server to Cloud Run
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud auth configure-docker
+          gcloud run deploy hci-00001-jvm \
+            --image gcr.io/hci-iteration2/hci \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated
+
+      # Step 6: Set OpenAI API Key
+      - name: Set OpenAI API Key
+        run: echo "::set-env name=OPENAI_API_KEY::${{ secrets.OPENAI }}"
+
+    options:
+      logging: CLOUD_LOGGING_ONLY
