@@ -11,19 +11,19 @@ async function getSecret(projectId, secretId) {
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 
-app.get('/api-key', async (req, res) => {
-    try {
-        const apiKey = await getSecret('hci-iteration2', 'openai');
-        res.json({ apiKey });
-    } catch (error) {
-        console.error('Failed to retrieve API key:', error);
-        res.status(500).send('Internal Server Error');
-    }
+// Securely return the OpenAI API key
+app.get('/api-key', (req, res) => {
+  res.json({ apiKey: process.env.OPENAI_API_KEY });
 });
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
