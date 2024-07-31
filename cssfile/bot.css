@@ -7,6 +7,7 @@
   --blue: #9BC1C3;
   --white: #F6F8EF;
   --brown: #655C4E;
+  --accent: #435059;
 }
 
 body {
@@ -18,7 +19,7 @@ body {
   font-family: "Poppins", sans-serif;
   overflow-x: hidden;
   padding: 0;
-  margin:0
+  margin: 0;
 }
 
 .container {
@@ -30,14 +31,14 @@ body {
 }
 
 .head {
-margin: 1em;
-margin-bottom: 0;
+  margin: 1em;
+  margin-bottom: 0;
 }
 
 h1 {
   font-weight: bold;
   padding-left: 0.5em;
-  color: var(--dark-blue)
+  color: var(--dark-blue);
 }
 
 .head2 {
@@ -97,7 +98,7 @@ footer {
   padding: 0.5em;
   color: var(--dark-green);
 }
-  
+
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -112,68 +113,69 @@ footer {
   margin-right: 1em;
   margin-bottom: 5em;
   background-color: var(--blue);
-
 }
 
 .chat-box {
-    width: 100%;
-    max-height: 20em;
-    overflow-y: auto;
-    margin-bottom: 1em;
-    padding: 10px;
-    border-radius: 1em;
-  }
+  width: 100%;
+  max-height: 20em;
+  overflow-y: auto;
+  margin-bottom: 1em;
+  padding: 10px;
+  border-radius: 1em;
+}
 
 .bot-msg, .user-msg {
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 5px;
-}
-.bot-msg {
-    background-color: var(--olive);
-    align-self: flex-start;
-    color: var(--white);
-}
-.user-msg {
-    background-color: var(--white);
-    align-self: flex-end;
-    color: var(--dark-blue);
-}
-.input-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin: 1em;
-    margin-top: 20em;
-}
-input[type="text"] {
-    padding: 0.8em;
-    border-radius: 5px;
-    border: none;
-    margin-left: 1em;
-    width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-button { 
-    border: none;
-    background-color: rgba(0, 0, 0, 0.1);
-    width: auto;
-    padding: 0;
-    border-radius: 5em;
-    margin-right: 1em;
-  }
+.bot-msg {
+  background-color: var(--olive);
+  align-self: flex-start;
+  color: var(--white);
+}
+
+.user-msg {
+  background-color: var(--white);
+  align-self: flex-end;
+  color: var(--dark-blue);
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 1em;
+}
+
+input[type="text"] {
+  padding: 0.8em;
+  border-radius: 5px;
+  border: none;
+  margin-left: 1em;
+  width: 100%;
+}
+
+button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: auto;
+  padding: 0;
+  border-radius: 5em;
+  margin-right: 1em;
+}
 
 #send {
-    color: var(--dark-blue);
+  color: var(--dark-blue);
 }
 
 #bot {
-    color: var(--dark-blue);
-
+  color: var(--dark-blue);
 }
 
 .bot {
-    background-color: var(--light);
-    border-radius: 50%;
-    padding: 0.5em;
+  background-color: var(--light);
+  border-radius: 50%;
+  padding: 0.5em;
 }
