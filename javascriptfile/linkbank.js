@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadBankAccounts();
 
-    // Add click event listener to the addBank SVG
     document.getElementById('addBank').addEventListener('click', showBankModal);
 
-    // Validate account number length and display digit count
     document.getElementById('linkAccountNumber').addEventListener('input', function() {
-        const accountNumber = this.value.replace(/\D/g, ''); // Remove all non-digit characters
+        const accountNumber = this.value.replace(/\D/g, '');
         const digitCount = accountNumber.length;
         document.getElementById('accountNumberCounter').textContent = `${digitCount} / 12`;
         if (digitCount < 6 || digitCount > 12) {
@@ -16,25 +14,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Format card number with spaces every 4 digits
     document.getElementById('linkCardNum').addEventListener('input', function() {
-        let cardNumber = this.value.replace(/\D/g, ''); // Remove all non-digit characters
+        let cardNumber = this.value.replace(/\D/g, '');
         if (cardNumber.length > 16) {
-            cardNumber = cardNumber.slice(0, 16); // Ensure it doesn't exceed 16 digits
+            cardNumber = cardNumber.slice(0, 16);
         }
-        this.value = cardNumber.replace(/(.{4})/g, '$1 ').trim(); // Add space every 4 digits
+        this.value = cardNumber.replace(/(.{4})/g, '$1 ').trim();
     });
 
-    // Validate card expiry date
     document.getElementById('linkCardExp').addEventListener('input', function() {
         const expiryDate = this.value;
         const [month, year] = expiryDate.split('/').map(Number);
         const today = new Date();
         const currentMonth = today.getMonth() + 1;
-        const currentYear = today.getFullYear() % 100; // Get last two digits of the year
+        const currentYear = today.getFullYear() % 100;
 
         if (
-            !expiryDate.match(/^(0[1-9]|1[0-2])\/\d{2}$/) || // Match MM/YY format
+            !expiryDate.match(/^(0[1-9]|1[0-2])\/\d{2}$/) || 
             (year < currentYear || (year === currentYear && month <= currentMonth))
         ) {
             this.setCustomValidity("Invalid expiry date. The date must be in MM/YY format and not in the current month/year.");
@@ -43,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Handle OTP generation and verification
     document.getElementById('generateOtpButton').addEventListener('click', function() {
         generateOtp();
     });
@@ -57,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
         verifyOtp();
     });
 
-    // Confirm deletion
     document.getElementById('confirmDeleteButton').addEventListener('click', function() {
         const index = document.getElementById('confirmDeleteModal').dataset.index;
         deleteBankAccount(index);
@@ -73,18 +67,15 @@ function showBankModal() {
 
 function generateOtp() {
     const otp = Math.floor(100000 + Math.random() * 900000);
-    alert('Generated OTP: ' + otp); // Display OTP as a popup
-    console.log('Generated OTP:', otp); // For demonstration purposes, display the OTP in the console
+    alert('Generated OTP: ' + otp);
+    console.log('Generated OTP:', otp);
 
-    // Display the OTP section
     document.getElementById('otpSection').style.display = 'block';
     document.getElementById('generateOtpButton').style.display = 'none';
     document.getElementById('verifyButton').style.display = 'block';
 
-    // Save the generated OTP in a hidden field or variable for verification
     document.getElementById('bankForm').dataset.otp = otp;
 
-    // Enable the regenerate OTP button after 10 seconds
     setTimeout(function() {
         document.getElementById('regenerateOtpButton').style.display = 'block';
     }, 10000);
@@ -97,44 +88,54 @@ function verifyOtp() {
     if (enteredOtp === generatedOtp) {
         alert('Bank account linked successfully!');
 
-        // Get bank details
         const bankName = document.getElementById('linkBankName').value;
-        const accountNumber = document.getElementById('linkAccountNumber').value.replace(/\s/g, ''); // Remove spaces for storage
-        const cardNumber = document.getElementById('linkCardNum').value.replace(/\s/g, ''); // Remove spaces for storage
-        const cardExpiry = document.getElementById('linkCardExp').value; // Get the card expiry date
-        const amount = parseFloat((Math.random() * (10000 - 100) + 100).toFixed(2)); // Generate random amount between 100 and 10000
+        const accountNumber = document.getElementById('linkAccountNumber').value.replace(/\s/g, '');
+        const cardNumber = document.getElementById('linkCardNum').value.replace(/\s/g, '');
+        const cardExpiry = document.getElementById('linkCardExp').value;
+        const amount = parseFloat((Math.random() * (10000 - 100) + 100).toFixed(2));
 
-        // Store the bank details in localStorage
         const bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
         bankAccounts.push({ bankName, accountNumber, cardNumber, cardExpiry, amount });
         localStorage.setItem('bankAccounts', JSON.stringify(bankAccounts));
 
-        // Reload the bank accounts to display the new card
         loadBankAccounts();
 
-        // Reset the form
         document.getElementById('bankForm').reset();
         document.getElementById('otpSection').style.display = 'none';
         document.getElementById('generateOtpButton').style.display = 'block';
         document.getElementById('verifyButton').style.display = 'none';
         document.getElementById('regenerateOtpButton').style.display = 'none';
 
-        // Close the modal
         var bankModal = bootstrap.Modal.getInstance(document.getElementById('bankModal'));
         bankModal.hide();
+
+        showPopupMessage("View your transactions in Expenses!");
     } else {
         alert('Invalid OTP. Please try again.');
     }
+}
+
+function showPopupMessage(message) {
+    const popup = document.createElement('div');
+    popup.className = 'popup-message';
+    popup.innerText = message;
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        popup.classList.add('fade-out');
+        setTimeout(() => {
+            popup.remove();
+        }, 1000);
+    }, 3000);
 }
 
 function loadBankAccounts() {
     const bankCardsRow = document.getElementById('bankCardsRow');
     const bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
 
-    // Update the active accounts counter
     document.getElementById('activeAccountsCounter').textContent = `Active Accounts: ${bankAccounts.length}`;
 
-    // Clear existing cards
     bankCardsRow.innerHTML = '';
 
     bankAccounts.forEach((account, index) => {
@@ -165,7 +166,6 @@ function loadBankAccounts() {
         bankCardsRow.insertAdjacentHTML('beforeend', cardHtml);
     });
 
-    // Attach swipe event listeners to each card
     document.querySelectorAll('.swipe-card').forEach(card => {
         const hammer = new Hammer(card);
         hammer.on('swiperight', function() {
@@ -174,14 +174,12 @@ function loadBankAccounts() {
             card.classList.add('swipe-right');
         });
 
-        // Attach click event listener to each card to show edit/delete modal
         card.addEventListener('click', function() {
             const index = card.closest('.col-md-4').dataset.index;
             showEditDeleteModal(index);
         });
     });
 
-    // Attach delete event listeners to each delete button
     document.querySelectorAll('.delete-account').forEach(button => {
         button.addEventListener('click', function() {
             const card = this.closest('.col-md-4');
@@ -206,7 +204,7 @@ function getBankColor(bankName) {
         case 'posb':
             return 'var(--blue)';
         default:
-            return 'var(--white)'; // Default color if bank name doesn't match
+            return 'var(--white)';
     }
 }
 
@@ -227,24 +225,20 @@ function showEditDeleteModal(index) {
     const bankAccounts = JSON.parse(localStorage.getItem('bankAccounts')) || [];
     const account = bankAccounts[index];
 
-    // Populate the modal with the account details
     document.getElementById('editBankName').value = account.bankName;
     document.getElementById('editAccountNumber').value = account.accountNumber;
     document.getElementById('editCardNum').value = formatCardNumber(account.cardNumber);
     document.getElementById('editCardExp').value = account.cardExpiry;
 
-    // Show the modal
     var editDeleteModal = new bootstrap.Modal(document.getElementById('editDeleteModal'));
     editDeleteModal.show();
 
-    // Handle form submission to save changes
     document.getElementById('editDeleteForm').onsubmit = function(event) {
         event.preventDefault();
         saveBankAccountChanges(index);
         editDeleteModal.hide();
     };
 
-    // Handle delete button click
     document.getElementById('deleteBankButton').onclick = function() {
         deleteBankAccount(index);
         editDeleteModal.hide();
@@ -257,7 +251,7 @@ function saveBankAccountChanges(index) {
 
     account.bankName = document.getElementById('editBankName').value;
     account.accountNumber = document.getElementById('editAccountNumber').value;
-    account.cardNumber = document.getElementById('editCardNum').value.replace(/\s/g, ''); // Remove spaces for storage
+    account.cardNumber = document.getElementById('editCardNum').value.replace(/\s/g, '');
     account.cardExpiry = document.getElementById('editCardExp').value;
 
     bankAccounts[index] = account;

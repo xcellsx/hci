@@ -133,7 +133,7 @@ footer {
 .bot-msg {
   background-color: var(--olive);
   align-self: flex-start;
-  color: var(--white);
+  color: var(--dark-blue);
 }
 
 .user-msg {

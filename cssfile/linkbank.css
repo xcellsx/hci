@@ -163,3 +163,23 @@ label {
   margin-top: -10px;
   margin-bottom: 10px;
 }
+
+/* Add this to your linkbank.css */
+
+.popup-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: var(--brown);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.popup-message.fade-out {
+  opacity: 0;
+}

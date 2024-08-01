@@ -135,3 +135,9 @@ button {
   padding: 0.5em;
   color: var(--dark-green);
 }
+
+#butt {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
