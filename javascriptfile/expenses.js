@@ -267,6 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", () => {
     const transactionContainer = document.getElementById("transactions-container");
     const transactionCount = document.getElementById("active-transaction-count");
+    const userTransactionList = document.getElementById("userTransactionList");
 
     function saveTransactions(transactions) {
         localStorage.setItem("transactions", JSON.stringify(transactions));
@@ -276,86 +277,40 @@ document.addEventListener("DOMContentLoaded", () => {
         return JSON.parse(localStorage.getItem("transactions") || '[]');
     }
 
-    function renderTransaction(transaction, index) {
-        const newTransactionCard = document.createElement("div");
-        newTransactionCard.classList.add("transaction-card");
-        newTransactionCard.id = `transaction-${index}`;  // Assign a unique ID based on index
+    function renderUserTransaction(transaction, index) {
+        const transactionCard = document.createElement('div');
+        transactionCard.className = 'transaction-card';
+        transactionCard.id = `user-transaction-${index}`;
 
-        const transactionName = document.createElement("h4");
-        transactionName.innerText = transaction.name;
-
-        const transactionAmount = document.createElement("p");
-        transactionAmount.innerText = `Transaction Amount: $${transaction.amount.toFixed(2)}`;
-
-        const buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("button-container");
-
-        const editButton = document.createElement("button");
-        editButton.classList.add("btn", "btn-edit", "edit-btn");
-        editButton.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-            </svg>
+        transactionCard.innerHTML = `
+            <div class="transaction-name">${transaction.name}</div>
+            <div class="transaction-date">${transaction.date}</div>
+            <div class="transaction-cat">${transaction.category}</div>
+            <div class="transaction-payment">${transaction.paymentMethod}</div>
+            <div class="transaction-content box">
+                <div class="transaction-amount"><b>$${transaction.amount.toFixed(2)}</b></div>
+            </div>
         `;
 
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("btn", "btn-delete", "delete-btn");
-        deleteButton.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-            </svg>
-        `;
-
-        buttonContainer.appendChild(editButton);
-        buttonContainer.appendChild(deleteButton);
-
-        newTransactionCard.appendChild(transactionName);
-        newTransactionCard.appendChild(transactionAmount);
-        newTransactionCard.appendChild(buttonContainer);
-        transactionContainer.appendChild(newTransactionCard);
-
-        editButton.addEventListener("click", () => {
-            const editModal = new bootstrap.Modal(document.getElementById("editModal"));
-            document.getElementById("edit-transaction-name").value = transaction.name;
-            document.getElementById("edit-transaction-amount").value = transaction.amount;
-            editModal.show();
-
-            document.getElementById("edit-form").onsubmit = (event) => {
-                event.preventDefault();
-                const editedName = document.getElementById("edit-transaction-name").value.trim();
-                const editedAmount = parseFloat(document.getElementById("edit-transaction-amount").value);
-
-                if (!editedName || isNaN(editedAmount)) {
-                    alert("Please enter valid transaction details.");
-                    return;
-                }
-
-                transaction.name = editedName;
-                transaction.amount = editedAmount;
-                saveTransactions(loadTransactions().map((t, idx) => idx === index ? transaction : t)); // Update the specific transaction
-
-                // Update the DOM
-                document.getElementById(`transaction-${index}`).querySelector('h4').innerText = editedName;
-                document.getElementById(`transaction-${index}`).querySelector('p').innerText = `Transaction Amount: $${editedAmount.toFixed(2)}`;
-                editModal.hide();
-            };
-        });
-
-        deleteButton.addEventListener("click", () => {
+        transactionCard.addEventListener('click', () => {
             if (confirm(`Are you sure you want to delete ${transaction.name}?`)) {
-                const updatedTransactions = loadTransactions().filter((_, idx) => idx !== index);
-                saveTransactions(updatedTransactions);
-                transactionContainer.removeChild(newTransactionCard);
-                transactionCount.innerText = updatedTransactions.length;
+                const transactions = loadTransactions().filter((_, idx) => idx !== index);
+                saveTransactions(transactions);
+                userTransactionList.removeChild(transactionCard);
+                updateTotalAmount();
             }
         });
+
+        userTransactionList.appendChild(transactionCard);
     }
 
     const transactionForm = document.getElementById("transaction-form");
     transactionForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const name = document.getElementById("transaction-name").value.trim();
+        const category = document.getElementById("transaction-category").value;
         const amount = parseFloat(document.getElementById("transaction-amount").value);
+        const paymentMethod = document.getElementById("transaction-payment").value;
 
         if (!name || isNaN(amount)) {
             alert("Please enter valid transaction details.");
@@ -363,19 +318,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const transactions = loadTransactions();
-        const newTransaction = { name, amount };
+        const newTransaction = { name, category, amount, paymentMethod, date: new Date().toISOString().split('T')[0] };
         transactions.push(newTransaction);
         saveTransactions(transactions);
-        renderTransaction(newTransaction, transactions.length - 1);
+        renderUserTransaction(newTransaction, transactions.length - 1);
 
         document.getElementById("transaction-name").value = '';
         document.getElementById("transaction-amount").value = '';
         transactionCount.innerText = transactions.length;
+
+        // Update total amount
+        updateTotalAmount();
+
+        // Close the transaction modal
+        const transactionModal = bootstrap.Modal.getInstance(document.getElementById('transactionModal'));
+        transactionModal.hide();
     });
+
+    function updateTotalAmount() {
+        const transactionList = document.getElementById('userTransactionList').children;
+        let totalAmount = 0;
+
+        for (let transaction of transactionList) {
+            const amount = parseFloat(transaction.querySelector('.transaction-amount').textContent.replace('$', ''));
+            totalAmount += amount;
+        }
+
+        totalAmountElement.textContent = totalAmount.toFixed(2);
+    }
 
     // Initially load transactions and render them
     const transactions = loadTransactions();
-    transactions.forEach((transaction, index) => renderTransaction(transaction, index));
+    transactions.forEach((transaction, index) => renderUserTransaction(transaction, index));
     transactionCount.innerText = transactions.length;
 });
 
