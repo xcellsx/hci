@@ -267,14 +267,14 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", () => {
     const transactionContainer = document.getElementById("transactions-container");
     const transactionCount = document.getElementById("active-transaction-count");
-    const userTransactionList = document.getElementById("userTransactionList");
+    const userTransactionList = document.getElementById("userInputTransactionList");
 
-    function saveTransactions(transactions) {
-        localStorage.setItem("transactions", JSON.stringify(transactions));
+    function saveUserTransactions(transactions) {
+        localStorage.setItem("userTransactions", JSON.stringify(transactions));
     }
 
-    function loadTransactions() {
-        return JSON.parse(localStorage.getItem("transactions") || '[]');
+    function loadUserTransactions() {
+        return JSON.parse(localStorage.getItem("userTransactions") || '[]');
     }
 
     function renderUserTransaction(transaction, index) {
@@ -294,8 +294,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         transactionCard.addEventListener('click', () => {
             if (confirm(`Are you sure you want to delete ${transaction.name}?`)) {
-                const transactions = loadTransactions().filter((_, idx) => idx !== index);
-                saveTransactions(transactions);
+                const transactions = loadUserTransactions().filter((_, idx) => idx !== index);
+                saveUserTransactions(transactions);
                 userTransactionList.removeChild(transactionCard);
                 updateTotalAmount();
             }
@@ -304,12 +304,12 @@ document.addEventListener("DOMContentLoaded", () => {
         userTransactionList.appendChild(transactionCard);
     }
 
-    const transactionForm = document.getElementById("transaction-form");
+    const transactionForm = document.getElementById("add-transaction-form");
     transactionForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        const name = document.getElementById("transaction-name").value.trim();
+        const name = document.getElementById("new-transaction-name").value.trim();
         const category = document.getElementById("transaction-category").value;
-        const amount = parseFloat(document.getElementById("transaction-amount").value);
+        const amount = parseFloat(document.getElementById("new-transaction-amount").value);
         const paymentMethod = document.getElementById("transaction-payment").value;
 
         if (!name || isNaN(amount)) {
@@ -317,13 +317,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const transactions = loadTransactions();
+        const transactions = loadUserTransactions();
         const newTransaction = { name, category, amount, paymentMethod, date: new Date().toISOString().split('T')[0] };
         transactions.push(newTransaction);
-        saveTransactions(transactions);
+        saveUserTransactions(transactions);
         renderUserTransaction(newTransaction, transactions.length - 1);
 
-        document.getElementById("transaction-name").value = '';
+        document.getElementById("new-transaction-name").value = '';
         document.getElementById("transaction-amount").value = '';
         transactionCount.innerText = transactions.length;
 
@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function updateTotalAmount() {
-        const transactionList = document.getElementById('userTransactionList').children;
+        const transactionList = document.getElementById('userInputTransactionList').children;
         let totalAmount = 0;
 
         for (let transaction of transactionList) {
@@ -348,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Initially load transactions and render them
-    const transactions = loadTransactions();
+    const transactions = loadUserTransactions();
     transactions.forEach((transaction, index) => renderUserTransaction(transaction, index));
     transactionCount.innerText = transactions.length;
 });
@@ -385,23 +385,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Process the captured image
     function processImage(imageDataURL) {
-        Tesseract.recognize(
-            imageDataURL,
-            'eng',
-            { logger: m => console.log("Tesseract.js logger:", m) }
-        ).then(({ data: { text } }) => {
-            fillTransactionForm(text);
-        }).catch(error => {
-            console.error("Error during OCR processing", error);
-        });
+        const image = new Image();
+        image.src = imageDataURL;
+        image.onload = () => {
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+            // Preprocess the image
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                data[i] = data[i + 1] = data[i + 2] = brightness > 128 ? 255 : 0;
+            }
+            ctx.putImageData(imageData, 0, 0);
+
+            Tesseract.recognize(
+                canvas,
+                'eng',
+                { logger: m => console.log("Tesseract.js logger:", m) }
+            ).then(({ data: { text } }) => {
+                console.log("OCR Text:", text);
+                fillTransactionForm(text);
+            }).catch(error => {
+                console.error("Error during OCR processing", error);
+            });
+        };
     }
 
     // Fill the transaction form with recognized data
     function fillTransactionForm(text) {
-        const nameMatch = text.match(/[a-zA-Z]+/g);
-        const amountMatch = text.match(/\$?\d+\.?\d*/);
+        const nameMatch = text.match(/[a-zA-Z\s]+/g);
+        const amountMatch = text.match(/\$?\d+(\.\d{1,2})?/);
         if (nameMatch) {
-            document.getElementById('transaction-name').value = nameMatch.join(' ');
+            document.getElementById('new-transaction-name').value = nameMatch.join(' ').trim();
         }
         if (amountMatch) {
             document.getElementById('transaction-amount').value = amountMatch[0].replace(/[^\d.]/g, '');

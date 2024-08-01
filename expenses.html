@@ -13,6 +13,20 @@
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-doughnutlabel-rebourne@2.0.3"></script>
+<style>
+    .transaction-card {
+        background-color: var(--dark-blue);
+        color: var(--white);
+    }
+
+    .btn-circle {
+        background-color: var(--white);
+        border-radius: 50%;
+        height: 4em;
+        width: 4em;
+        box-shadow: 0.2em 0.5em 1em grey;
+    }
+</style>
 </head>
 <body>
     <div class="head">
@@ -26,7 +40,7 @@
         <div class="total-e">Spent: $<span id="totalAmount">0.00</span></div>
         <div class="addExpenses">
             <!-- Use Modal / OCR to Upload -->
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transactionModal" id="add-transaction">
+            <button class="btn btn-circle" data-bs-toggle="modal" data-bs-target="#transactionModal" id="add-transaction">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                     <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 13A6 6 0 1 1 8 2a6 6 0 0 1 0 12zm3-6a.5.5 0 0 1-.5.5H8.5v2.5a.5.5 0 0 1-1 0V8.5H5a.5.5 0 0 1 0-1h2.5V5a.5.5 0 0 1 1 0v2.5H10a.5.5 0 0 1 .5.5z"/>
                 </svg>
@@ -43,7 +57,7 @@
     <div class="w-100 mb-5" style="margin-bottom: 4em;" id="transactionList">
         <!-- Generated transactions will appear here -->
     </div>
-    <div class="w-100 mb-5" style="margin-bottom: 4em;" id="userTransactionList">
+    <div class="w-100" style="margin-bottom: 10em;" id="userInputTransactionList">
         <h2>User Transactions</h2>
         <!-- User self-input transactions will appear here -->
     </div>
@@ -56,10 +70,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>      
                 <div class="modal-body">
-                    <form id="transaction-form">
+                    <form id="add-transaction-form">
                         <div class="mb-3">
                             <label for="transaction-name" class="form-label">Transaction Name</label>
-                            <input type="text" class="form-control" id="transaction-name" required>
+                            <input type="text" class="form-control" id="new-transaction-name" required>
                         </div>
                         <div class="mb-3">
                             <label for="transaction-category" class="form-label">Category</label>
@@ -73,8 +87,8 @@
                         </div>
                         <div class="mb-3 d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <label for="transaction-amount" class="form-label">Amount</label>
-                                <input type="number" class="form-control" id="transaction-amount" required>
+                                <label for="new-transaction-amount" class="form-label">Amount</label>
+                                <input type="number" class="form-control" id="new-transaction-amount" required>
                             </div>
                             <button type="button" class="btn btn-custom2 ms-2" data-bs-toggle="modal" data-bs-target="#cameraModal">Capture</button>
                         </div>
