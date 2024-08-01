@@ -15,34 +15,65 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-doughnutlabel-rebourne@2.0.3"></script>
 </head>
 <body>
-<div class="head">
-    <h1>Expenses</h1>
-    <div class="week" id="weekContainer">
-        <!-- Dates will be appended here -->
+    <div class="head">
+        <h1>Expenses</h1>
+        <div class="week" id="weekContainer">
+            <!-- Dates will be appended here -->
+        </div>
     </div>
-</div>
-
-<div class="wow">
-    <div class="total-e">Spent: $<span id="totalAmount">0.00</span></div>
-    <div class="addExpenses">
-        <!-- Use Modal / OCR to Upload -->
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cameraModal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 13A6 6 0 1 1 8 2a6 6 0 0 1 0 12zm3-6a.5.5 0 0 1-.5.5H8.5v2.5a.5.5 0 0 1-1 0V8.5H5a.5.5 0 0 1 0-1h2.5V5a.5.5 0 0 1 1 0v2.5H10a.5.5 0 0 1 .5.5z"/>
-            </svg>
-        </button>
+    
+    <div class="wow">
+        <div class="total-e">Spent: $<span id="totalAmount">0.00</span></div>
+        <div class="addExpenses">
+            <!-- Use Modal / OCR to Upload -->
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transactionModal" id="add-transaction">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 13A6 6 0 1 1 8 2a6 6 0 0 1 0 12zm3-6a.5.5 0 0 1-.5.5H8.5v2.5a.5.5 0 0 1-1 0V8.5H5a.5.5 0 0 1 0-1h2.5V5a.5.5 0 0 1 1 0v2.5H10a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </button>
+        </div>
     </div>
-</div>
+    
 
+    <div class="summary">
+        <!-- Generate Pie Chart Based on Cumulative Weekly Expenses -->
+        <canvas id="expenseChart" style="background-color: transparent;" width="400" height="400"></canvas>
+    </div>
 
-<div class="summary">
-    <!-- Generate Pie Chart Based on Cumulative Weekly Expenses -->
-    <canvas id="expenseChart" style="background-color: transparent;" width="400" height="400"></canvas>
-</div>
+    <div id="transactionContainer" style="margin-bottom: 4em;" class="w-100 mb-5"></div>
+    <div class="w-100 mb-5" style="margin-bottom: 4em;" id="transactionList">
+        <!-- Generated transactions will appear here -->
+    </div>
 
-<div class="transaction-list" style="margin-bottom: 4em;" id="transactionList">
-    <!-- Generated transactions will appear here -->
-</div>
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalLabel">Add New Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>      
+                <div class="modal-body">
+                    <form id="transaction-form">
+                        <div class="mb-3">
+                            <label for="transaction-name" class="form-label">Transaction Name</label>
+                            <input type="text" class="form-control" id="transaction-name" required>
+                        </div>
+                        <div class="mb-3 d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <label for="transaction-amount" class="form-label">Amount</label>
+                                <input type="number" class="form-control" id="transaction-amount" required>
+                            </div>
+                            <button type="button" class="btn btn-custom2 ms-2" data-bs-toggle="modal" data-bs-target="#cameraModal">Capture</button>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-custom1">Save Transaction</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
 <!-- Camera Modal -->
 <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
@@ -92,5 +123,118 @@
 
 <script src="javascriptfile/expenses.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const transactionContainer = document.getElementById("transactionContainer");
+
+        function loadTransactions() {
+            const transactions = localStorage.getItem("transactions");
+            return transactions ? JSON.parse(transactions) : [];
+        }
+
+        function saveTransactions(transactions) {
+            localStorage.setItem("transactions", JSON.stringify(transactions));
+        }
+
+        function renderTransaction(transaction) {
+            const newTransactionCard = document.createElement("div");
+            newTransactionCard.className = "transaction-card card p-2";
+
+            const transactionName = document.createElement("h5");
+            transactionName.className = "card-title";
+            transactionName.textContent = transaction.name;
+
+            const transactionAmount = document.createElement("p");
+            transactionAmount.className = "card-text";
+            transactionAmount.textContent = `$${transaction.amount.toFixed(2)}`;
+
+            newTransactionCard.appendChild(transactionName);
+            newTransactionCard.appendChild(transactionAmount);
+
+            return newTransactionCard;
+        }
+
+        function renderTransactions() {
+            transactionContainer.innerHTML = "";
+            const transactions = loadTransactions();
+            const transactionsByDate = {};
+            let totalAmount = 0;
+
+            transactions.forEach(transaction => {
+                totalAmount += transaction.amount;
+                if (!transactionsByDate[transaction.date]) {
+                    transactionsByDate[transaction.date] = [];
+                }
+                transactionsByDate[transaction.date].push(transaction);
+            });
+
+            const totalAmountHeader = document.createElement("h3");
+            totalAmountHeader.textContent = `Total Amount Spent This Week: $${totalAmount.toFixed(2)}`;
+            transactionContainer.appendChild(totalAmountHeader);
+
+            const sortedDates = Object.keys(transactionsByDate).sort((a, b) => new Date(b) - new Date(a));
+
+            sortedDates.forEach(date => {
+                const dateContainer = document.createElement("div");
+                dateContainer.className = "dates";
+                
+                const dateHeader = document.createElement("h3");
+                dateHeader.textContent = `Date: ${date}`;
+                dateContainer.appendChild(dateHeader);
+
+                transactionsByDate[date].forEach(transaction => {
+                    dateContainer.appendChild(renderTransaction(transaction));
+                });
+
+                transactionContainer.appendChild(dateContainer);
+            });
+        }
+
+        function generateRandomTransactions() {
+            const names = ["Grocery", "Food", "Birthday", "Shopping", "Subscriptions", "Transport", "Leisure"];
+            const transactions = [];
+            const today = new Date();
+            for (let i = 0; i < 7; i++) {
+                const date = new Date();
+                date.setDate(today.getDate() - i);
+                const dateString = date.toISOString().split('T')[0];
+
+                for (let j = 0; j < 3; j++) {
+                    const randomName = names[Math.floor(Math.random() * names.length)];
+                    const randomAmount = (Math.random() * 100).toFixed(2);
+                    transactions.push({ name: randomName, amount: parseFloat(randomAmount), date: dateString });
+                }
+            }
+            saveTransactions(transactions);
+        }
+
+        document.getElementById('transaction-form').onsubmit = function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('transaction-name').value;
+            const amount = parseFloat(document.getElementById('transaction-amount').value);
+
+            if (!name || isNaN(amount)) {
+                return;
+            }
+
+            const date = new Date().toISOString().split('T')[0];
+            const transactions = loadTransactions();
+            transactions.push({ name, amount, date });
+
+            saveTransactions(transactions);
+            renderTransactions();
+
+            $('#transactionModal').modal('hide');
+        };
+
+        // Generate random transactions if none exist
+        if (loadTransactions().length === 0) {
+            generateRandomTransactions();
+        }
+
+        renderTransactions();
+    });
+</script>
 </body>
 </html>
