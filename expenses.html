@@ -13,36 +13,102 @@
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-doughnutlabel-rebourne@2.0.3"></script>
+<style>
+    .transaction-card {
+        background-color: var(--dark-blue);
+        color: var(--white);
+    }
+
+    .btn-circle {
+        background-color: var(--white);
+        border-radius: 50%;
+        height: 4em;
+        width: 4em;
+        box-shadow: 0.2em 0.5em 1em grey;
+    }
+</style>
 </head>
 <body>
-<div class="head">
-    <h1>Expenses</h1>
-    <div class="week" id="weekContainer">
-        <!-- Dates will be appended here -->
+    <div class="head">
+        <h1>Expenses</h1>
+        <div class="week" id="weekContainer">
+            <!-- Dates will be appended here -->
+        </div>
     </div>
-</div>
-
-<div class="wow">
-    <div class="total-e">Spent: $<span id="totalAmount">0.00</span></div>
-    <div class="addExpenses">
-        <!-- Use Modal / OCR to Upload -->
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cameraModal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 13A6 6 0 1 1 8 2a6 6 0 0 1 0 12zm3-6a.5.5 0 0 1-.5.5H8.5v2.5a.5.5 0 0 1-1 0V8.5H5a.5.5 0 0 1 0-1h2.5V5a.5.5 0 0 1 1 0v2.5H10a.5.5 0 0 1 .5.5z"/>
-            </svg>
-        </button>
+    
+    <div class="wow">
+        <div class="total-e">Spent: $<span id="totalAmount">0.00</span></div>
+        <div class="addExpenses">
+            <!-- Use Modal / OCR to Upload -->
+            <button class="btn btn-circle" data-bs-toggle="modal" data-bs-target="#transactionModal" id="add-transaction">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 13A6 6 0 1 1 8 2a6 6 0 0 1 0 12zm3-6a.5.5 0 0 1-.5.5H8.5v2.5a.5.5 0 0 1-1 0V8.5H5a.5.5 0 0 1 0-1h2.5V5a.5.5 0 0 1 1 0v2.5H10a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </button>
+        </div>
     </div>
-</div>
+    
+    <div class="summary">
+        <!-- Generate Pie Chart Based on Cumulative Weekly Expenses -->
+        <canvas id="expenseChart" style="background-color: transparent;" width="400" height="400"></canvas>
+    </div>
 
-<div class="summary">
-    <!-- Generate Pie Chart Based on Cumulative Weekly Expenses -->
-    <canvas id="expenseChart" style="background-color: transparent;" width="400" height="400"></canvas>
-</div>
+    <div id="transactionContainer" style="margin-bottom: 4em;" class="w-100 mb-5"></div>
+    <div class="w-100 mb-5" style="margin-bottom: 4em;" id="transactionList">
+        <!-- Generated transactions will appear here -->
+    </div>
+    <div class="w-100" style="margin-bottom: 10em;" id="userInputTransactionList">
+        <h2>User Transactions</h2>
+        <!-- User self-input transactions will appear here -->
+    </div>
 
-<div class="transaction-list" style="margin-bottom: 4em;" id="transactionList">
-    <!-- Generated transactions will appear here -->
-</div>
-
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalLabel">Add New Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>      
+                <div class="modal-body">
+                    <form id="add-transaction-form">
+                        <div class="mb-3">
+                            <label for="transaction-name" class="form-label">Transaction Name</label>
+                            <input type="text" class="form-control" id="new-transaction-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="transaction-category" class="form-label">Category</label>
+                            <select class="form-select" id="transaction-category" required>
+                                <option value="Food">Food</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Groceries">Groceries</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Utilities">Utilities</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <label for="new-transaction-amount" class="form-label">Amount</label>
+                                <input type="number" class="form-control" id="new-transaction-amount" required>
+                            </div>
+                            <button type="button" class="btn btn-custom2 ms-2" data-bs-toggle="modal" data-bs-target="#cameraModal">Capture</button>
+                        </div>
+                        <div class="mb-3">
+                            <label for="transaction-payment" class="form-label">Payment Method</label>
+                            <select class="form-select" id="transaction-payment" required>
+                                <option value="Cash">Cash</option>
+                                <option value="PayNow">PayNow</option>
+                                <option value="PayLah">PayLah</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-custom1">Save Transaction</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 <!-- Camera Modal -->
 <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -84,7 +150,7 @@
         
         <li class="nav-item"><a href="settings.html" class="nav-link home1"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" id="home1" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
             <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292"/>
         </svg>Settings</a></li>
     </ul>
 </footer>

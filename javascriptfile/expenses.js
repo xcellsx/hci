@@ -263,3 +263,175 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('monthlySpending', JSON.stringify(monthlySpending));
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const transactionContainer = document.getElementById("transactions-container");
+    const transactionCount = document.getElementById("active-transaction-count");
+    const userTransactionList = document.getElementById("userInputTransactionList");
+
+    function saveUserTransactions(transactions) {
+        localStorage.setItem("userTransactions", JSON.stringify(transactions));
+    }
+
+    function loadUserTransactions() {
+        return JSON.parse(localStorage.getItem("userTransactions") || '[]');
+    }
+
+    function renderUserTransaction(transaction, index) {
+        const transactionCard = document.createElement('div');
+        transactionCard.className = 'transaction-card';
+        transactionCard.id = `user-transaction-${index}`;
+
+        transactionCard.innerHTML = `
+            <div class="transaction-name">${transaction.name}</div>
+            <div class="transaction-date">${transaction.date}</div>
+            <div class="transaction-cat">${transaction.category}</div>
+            <div class="transaction-payment">${transaction.paymentMethod}</div>
+            <div class="transaction-content box">
+                <div class="transaction-amount"><b>$${transaction.amount.toFixed(2)}</b></div>
+            </div>
+        `;
+
+        transactionCard.addEventListener('click', () => {
+            if (confirm(`Are you sure you want to delete ${transaction.name}?`)) {
+                const transactions = loadUserTransactions().filter((_, idx) => idx !== index);
+                saveUserTransactions(transactions);
+                userTransactionList.removeChild(transactionCard);
+                updateTotalAmount();
+            }
+        });
+
+        userTransactionList.appendChild(transactionCard);
+    }
+
+    const transactionForm = document.getElementById("add-transaction-form");
+    transactionForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const name = document.getElementById("new-transaction-name").value.trim();
+        const category = document.getElementById("transaction-category").value;
+        const amount = parseFloat(document.getElementById("new-transaction-amount").value);
+        const paymentMethod = document.getElementById("transaction-payment").value;
+
+        if (!name || isNaN(amount)) {
+            alert("Please enter valid transaction details.");
+            return;
+        }
+
+        const transactions = loadUserTransactions();
+        const newTransaction = { name, category, amount, paymentMethod, date: new Date().toISOString().split('T')[0] };
+        transactions.push(newTransaction);
+        saveUserTransactions(transactions);
+        renderUserTransaction(newTransaction, transactions.length - 1);
+
+        document.getElementById("new-transaction-name").value = '';
+        document.getElementById("transaction-amount").value = '';
+        transactionCount.innerText = transactions.length;
+
+        // Update total amount
+        updateTotalAmount();
+
+        // Close the transaction modal
+        const transactionModal = bootstrap.Modal.getInstance(document.getElementById('transactionModal'));
+        transactionModal.hide();
+    });
+
+    function updateTotalAmount() {
+        const transactionList = document.getElementById('userInputTransactionList').children;
+        let totalAmount = 0;
+
+        for (let transaction of transactionList) {
+            const amount = parseFloat(transaction.querySelector('.transaction-amount').textContent.replace('$', ''));
+            totalAmount += amount;
+        }
+
+        totalAmountElement.textContent = totalAmount.toFixed(2);
+    }
+
+    // Initially load transactions and render them
+    const transactions = loadUserTransactions();
+    transactions.forEach((transaction, index) => renderUserTransaction(transaction, index));
+    transactionCount.innerText = transactions.length;
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById('cameraStream');
+    const canvas = document.createElement('canvas');
+    const snap = document.getElementById('snap');
+
+    // Start camera stream
+    function startCamera() {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+                snap.onclick = () => captureImage(stream);
+            })
+            .catch(function(err) {
+                console.error("Error accessing the camera", err);
+                alert("Cannot access the camera. Please check device settings.");
+            });
+    }
+
+    // Capture image from video stream
+    function captureImage(stream) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageDataURL = canvas.toDataURL('image/png');
+        stream.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+        processImage(imageDataURL);
+    }
+
+    // Process the captured image
+    function processImage(imageDataURL) {
+        const image = new Image();
+        image.src = imageDataURL;
+        image.onload = () => {
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+            // Preprocess the image
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                data[i] = data[i + 1] = data[i + 2] = brightness > 128 ? 255 : 0;
+            }
+            ctx.putImageData(imageData, 0, 0);
+
+            Tesseract.recognize(
+                canvas,
+                'eng',
+                { logger: m => console.log("Tesseract.js logger:", m) }
+            ).then(({ data: { text } }) => {
+                console.log("OCR Text:", text);
+                fillTransactionForm(text);
+            }).catch(error => {
+                console.error("Error during OCR processing", error);
+            });
+        };
+    }
+
+    // Fill the transaction form with recognized data
+    function fillTransactionForm(text) {
+        const nameMatch = text.match(/[a-zA-Z\s]+/g);
+        const amountMatch = text.match(/\$?\d+(\.\d{1,2})?/);
+        if (nameMatch) {
+            document.getElementById('new-transaction-name').value = nameMatch.join(' ').trim();
+        }
+        if (amountMatch) {
+            document.getElementById('transaction-amount').value = amountMatch[0].replace(/[^\d.]/g, '');
+        }
+    }
+
+    // Modal event listeners
+    $('#cameraModal').on('show.bs.modal', startCamera);
+    $('#cameraModal').on('hidden.bs.modal', () => {
+        if (video.srcObject) {
+            video.srcObject.getTracks().forEach(track => track.stop());
+            video.srcObject = null;
+        }
+        // Ensure to re-open the transaction modal
+        $('#transactionModal').modal('show');
+    });
+});
